@@ -1,0 +1,43 @@
+.Navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 88px;
+    padding: 0px 15px;
+}
+
+.Navbar .logo img {
+    width: 100%;
+}
+
+.Navbar .right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.Navbar .right a {
+    display: block;
+    background-color: var(--fs-color-primary);
+    border-color: rgba(0, 0, 0, .05);
+    padding: 0px 10px;
+    color: #fff;
+    height: 2.5em;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Navbar a.accountBtn {
+    display: block;
+    background-color: var(--fs-color-primary);
+    border-color: rgba(0, 0, 0, .05);
+    color: #fff;
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
