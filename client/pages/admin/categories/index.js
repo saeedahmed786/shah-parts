@@ -2,6 +2,7 @@ import { CreateMainCategories } from '@/components/Admin/Categories/CreateMainCa
 import { CreateSubCategories } from '@/components/Admin/Categories/CreateSubCategories';
 import { UpdateCategories } from '@/components/Admin/Categories/UpdateCategories';
 import { isAuthenticated } from '@/components/Commons/Auth/Auth';
+import DeleteModal from '@/components/Commons/DeleteModal/DeleteModal'
 import { ErrorAlert, SuccessAlert } from '@/components/Commons/Messages/Messages';
 import AdminLayout from '@/components/Layouts/Admin/AdminLayout';
 import { DeleteOutlined } from '@ant-design/icons';
@@ -107,7 +108,7 @@ const Categories = () => {
         <>
           <div className='flex items-center gap-4'>
             <button className='btn p-2' style={{ textDecoration: 'none' }}><UpdateCategories updateFunction={updateFunction} cat={cat} userAuth={userAuth} categories={categoriesOptions} /></button>
-            <button className='btn p-2' onClick={() => deleteHandler(cat._id)}><DeleteOutlined /></button>
+            <DeleteModal id={cat?._id} deleteFun={deleteHandler} deleteBtn={<DeleteOutlined style={{ verticalAlign: "middle" }} />} />
           </div>
         </>
       ),

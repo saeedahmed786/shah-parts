@@ -6,10 +6,10 @@ import axios from 'axios'
 import moment from 'moment'
 import Link from 'next/link'
 import { ErrorAlert, SuccessAlert } from '@/components/Commons/Messages/Messages'
-import DeleteModal from '@/components/commons/DeleteModal'
 import AdminLayout from '@/components/Layouts/Admin/AdminLayout';
 import Image from 'next/image'
 import { ButtonComp } from '@/components/Commons/ButtonComp/ButtonComp'
+import DeleteModal from '@/components/Commons/DeleteModal/DeleteModal'
 
 const Products = () => {
     const router = useRouter();

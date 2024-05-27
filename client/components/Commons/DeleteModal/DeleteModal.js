@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Modal } from 'antd'
 import { CloseOutlined } from '@ant-design/icons';
 import { BsTrash } from 'react-icons/bs';
+import styles from "./DeleteModal.module.css";
 
 const DeleteModal = ({ deleteBtn, deleteFun, id }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,21 +19,15 @@ const DeleteModal = ({ deleteBtn, deleteFun, id }) => {
             <button className='p-0' onClick={showModal}>
                 {deleteBtn}
             </button>
-            <Modal centered className='deleteModal' title={false} footer={false} visible={isModalOpen} onCancel={handleCancel}>
-                <div>
-                    <div className='text-end closeIcon'>
-                        <button onClick={handleCancel}>
-                            <CloseOutlined />
-                        </button>
-                    </div>
+            <Modal centered title={false} footer={false} visible={isModalOpen} onCancel={handleCancel}>
+                <div className={styles.DeleteModal}>
                     <div className='text-center'>
-                        <BsTrash />
-                        <h2 className='mt-4'>
+                        <h2 className='mt-4 text-[19px]'>
                             Are you sure you want to delete?
                         </h2>
-                        <div className='mt-8 flex justify-between gap-4'>
-                            <button onClick={() => { deleteFun(id); handleCancel }}>Yes</button>
+                        <div className={styles.buttons}>
                             <button onClick={handleCancel}>No</button>
+                            <button onClick={() => { deleteFun(id); handleCancel() }}>Yes</button>
                         </div>
                     </div>
                 </div>
