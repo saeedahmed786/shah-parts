@@ -28,13 +28,6 @@ mongoose.connect(config.MONGO_URI, {
     useUnifiedTopology: true
 }).then(() => console.log('MongoDb Connected')).catch(err => console.log(err));
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('./client/build'));
-
-    app.get('/*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-    });
-}
 
 app.get("/server", (req, res) => {
     res.send("Server is running...")
