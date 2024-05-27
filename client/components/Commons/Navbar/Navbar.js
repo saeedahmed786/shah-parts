@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React from 'react'
+import { isAuthenticated } from '../Auth/Auth';
 import Logo from '../Logo/Logo';
 import styles from './Navbar.module.css';
 
@@ -10,9 +11,12 @@ const Navbar = () => {
                 <Logo />
             </div>
             <div className={styles.right}>
-                <Link href="/admin/dashboard">
-                    Dashboard
-                </Link>
+                {
+                    isAuthenticated()?.role === 1 &&
+                    <Link href="/admin/dashboard">
+                        Dashboard
+                    </Link>
+                }
                 <Link href="/login" className={styles.accountBtn}>
                     <i className="fa-solid fa-user"></i>
                 </Link>
