@@ -4,6 +4,7 @@ import Modal from "antd/lib/modal/Modal";
 import { ErrorAlert, SuccessAlert } from "@/components/Commons/Messages/Messages";
 import DragUpload from "@/components/Commons/DragUpload/DragUpload";
 import { ButtonComp } from "@/components/Commons/ButtonComp/ButtonComp";
+import { Input } from "antd";
 
 export const CreateMainCategories = ({ updateFunction }) => {
   const [loading, setLoading] = useState(false);

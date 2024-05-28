@@ -1,7 +1,6 @@
 import { CreateMainCategories } from '@/components/Admin/Categories/CreateMainCategories';
 import { CreateSubCategories } from '@/components/Admin/Categories/CreateSubCategories';
 import { UpdateCategories } from '@/components/Admin/Categories/UpdateCategories';
-import { isAuthenticated } from '@/components/Commons/Auth/Auth';
 import DeleteModal from '@/components/Commons/DeleteModal/DeleteModal'
 import { ErrorAlert, SuccessAlert } from '@/components/Commons/Messages/Messages';
 import AdminLayout from '@/components/Layouts/Admin/AdminLayout';
@@ -14,7 +13,6 @@ import styles from "./categories.module.css"
 const Categories = () => {
   const [categories, setCategories] = useState([]);
   const [categoriesOptions, setCategoriesOptions] = useState([]);
-  const [userAuth, setUserAuth] = useState({});
   const [loading, setLoading] = useState(false);
 
   const getAllCategories = async () => {
@@ -41,7 +39,6 @@ const Categories = () => {
   }
 
   useEffect(() => {
-    setUserAuth(isAuthenticated());
     getAllCategories();
     return () => {
     }
