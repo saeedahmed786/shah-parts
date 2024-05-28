@@ -59,7 +59,7 @@ export const CreateSubCategories = ({ updateFunction, categories }) => {
   return (
     <div>
       <ButtonComp onClick={showModal} text="Create Sub Category" />
-      <Modal destroyOnClose title="New Sub Category" footer={false} visible={isModalVisible} onCancel={handleCancel}>
+      <Modal destroyOnClose title="New Sub Category" footer={false} open={isModalVisible} onCancel={handleCancel}>
         <form onSubmit={submitHandler} className="create-categories">
           <div className="mt-4">
             <Select className="w-full" placeholder="Choose parent category" onChange={(val) => handleChange("parentId", val)} options={categories} />

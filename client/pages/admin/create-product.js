@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import AdminLayout from '@/components/Layouts/Admin/AdminLayout';
 import { ButtonComp } from '@/components/Commons/ButtonComp/ButtonComp';
 
+
 const CreateProduct = () => {
     const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
     const router = useRouter();

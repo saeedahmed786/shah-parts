@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import { Modal } from 'antd'
-import { CloseOutlined } from '@ant-design/icons';
-import { BsTrash } from 'react-icons/bs';
 import styles from "./DeleteModal.module.css";
 
 const DeleteModal = ({ deleteBtn, deleteFun, id }) => {
@@ -19,7 +17,7 @@ const DeleteModal = ({ deleteBtn, deleteFun, id }) => {
             <button className='p-0' onClick={showModal}>
                 {deleteBtn}
             </button>
-            <Modal centered title={false} footer={false} visible={isModalOpen} onCancel={handleCancel}>
+            <Modal centered title={false} footer={false} open={isModalOpen} onCancel={handleCancel}>
                 <div className={styles.DeleteModal}>
                     <div className='text-center'>
                         <h2 className='mt-4 text-[19px]'>

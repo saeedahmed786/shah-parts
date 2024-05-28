@@ -7,9 +7,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        <script src="https://kit.fontawesome.com/f78046fd3a.js" crossorigin="anonymous"></script>
-      </head>
       <body className="font-manrofe">
         {children}
       </body>

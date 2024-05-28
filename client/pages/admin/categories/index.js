@@ -107,7 +107,7 @@ const Categories = () => {
       render: (_, cat) => (
         <>
           <div className='flex items-center gap-4'>
-            <button className='btn p-2' style={{ textDecoration: 'none' }}><UpdateCategories updateFunction={updateFunction} cat={cat} userAuth={userAuth} categories={categoriesOptions} /></button>
+            <UpdateCategories updateFunction={updateFunction} cat={cat} categories={categoriesOptions} />
             <DeleteModal id={cat?._id} deleteFun={deleteHandler} deleteBtn={<DeleteOutlined style={{ verticalAlign: "middle" }} />} />
           </div>
         </>
@@ -122,8 +122,8 @@ const Categories = () => {
         <div className='flex justify-between items-center gap-4 my-4'>
           <h1 className='text-[33px] font-bold'>Categories</h1>
           <div className={styles.manageCategories}>
-            <CreateMainCategories updateFunction={updateFunction} userAuth={userAuth} />
-            <CreateSubCategories subCategory updateFunction={updateFunction} userAuth={userAuth} categories={categoriesOptions} />
+            <CreateMainCategories updateFunction={updateFunction} />
+            <CreateSubCategories subCategory updateFunction={updateFunction} categories={categoriesOptions} />
           </div>
         </div>
         {/* Show categories */}

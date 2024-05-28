@@ -8,7 +8,7 @@ import DragUpload from "@/components/Commons/DragUpload/DragUpload";
 import { ButtonComp } from "@/components/Commons/ButtonComp/ButtonComp";
 
 
-export const UpdateCategories = ({ updateFunction, cat, categories, subCategory }) => {
+export const UpdateCategories = ({ updateFunction, cat, categories }) => {
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [formData, setFormData] = useState({
@@ -73,7 +73,7 @@ export const UpdateCategories = ({ updateFunction, cat, categories, subCategory 
   return (
     <div>
       <button className="btn" onClick={showModal}><EditOutlined /></button>
-      <Modal destroyOnClose title="Update Category" footer={false} visible={isModalVisible} onCancel={handleCancel}>
+      <Modal destroyOnClose title="Update Category" footer={false} open={isModalVisible} onCancel={handleCancel}>
         <form className="create-posts" onSubmit={submitHandler}>
           {
             formData?.parentId &&

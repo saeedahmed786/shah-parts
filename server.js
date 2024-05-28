@@ -3,6 +3,7 @@ const config = require('./config/keys');
 const userRoutes = require('./routes/userRoutes');
 const fileRoutes = require('./routes/fileRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
+const brandRoutes = require('./routes/brandRoutes');
 const productRoutes = require('./routes/productRoutes');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -19,6 +20,7 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 app.use('/api/files', fileRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/brands', brandRoutes);
 app.use('/api/products', productRoutes);
 
 /******************************************  MongoDb Connection  ********************************************/
