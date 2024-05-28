@@ -32,6 +32,7 @@ const UpdateProduct = () => {
         description: "",
         mainCategory: "",
         subCategory: "",
+        specifications: []
     });
 
     /*********************************************** onChange *******************************************/
@@ -39,6 +40,32 @@ const UpdateProduct = () => {
         setFormData({
             ...formData,
             [key]: value
+        });
+    }
+
+
+    /******************************************** Specifications Handlers ************************************/
+    const handleSpecificationChange = (index, key, value) => {
+        const updatedSpecifications = [...formData.specifications];
+        updatedSpecifications[index][key] = value;
+        setFormData({
+            ...formData,
+            specifications: updatedSpecifications
+        });
+    }
+
+    const addSpecification = () => {
+        setFormData({
+            ...formData,
+            specifications: [...formData.specifications, { key: '', value: '' }]
+        });
+    }
+
+    const removeSpecification = (index) => {
+        const updatedSpecifications = formData.specifications.filter((_, specIndex) => specIndex !== index);
+        setFormData({
+            ...formData,
+            specifications: updatedSpecifications
         });
     }
 
@@ -214,6 +241,35 @@ const UpdateProduct = () => {
                                     className='mb-3 w-full'
                                     options={subCategories}
                                 />
+                            </div>
+                            {/* Specifications Section */}
+                            <div className='mt-4'>
+                                <label>Specifications</label>
+                                {formData.specifications.map((spec, index) => (
+                                    <div key={index} className="flex items-center ga-2 mb-2">
+                                        <Input
+                                            placeholder="Key"
+                                            value={spec.key}
+                                            className='mr-2 w-1/2'
+                                            onChange={(e) => handleSpecificationChange(index, 'key', e.target.value)}
+                                        />
+                                        <Input
+                                            placeholder="Value"
+                                            value={spec.value}
+                                            className='w-1/2'
+                                            onChange={(e) => handleSpecificationChange(index, 'value', e.target.value)}
+                                        />
+                                        <Button
+                                            type="danger"
+                                            onClick={() => removeSpecification(index)}
+                                        >
+                                            Remove
+                                        </Button>
+                                    </div>
+                                ))}
+                                <Button className='w-full my-3' type="dashed" onClick={addSpecification}>
+                                    Add Specification
+                                </Button>
                             </div>
                             <div className='mt-5'>
                                 <ButtonComp type='primary' htmlType="submit" loading={loading} disabled={loading} text="Submit" />

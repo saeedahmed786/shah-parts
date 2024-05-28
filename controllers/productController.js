@@ -169,7 +169,8 @@ exports.uploadProduct = async (req, res) => {
       featured: req.body.featured,
       mainCategory: req.body.mainCategory,
       subCategory: req.body.subCategory,
-      pictures: req.body.pictures
+      pictures: req.body.pictures,
+      specifications: req.body.specifications
     });
 
     await product.save(((error, result) => {
@@ -202,6 +203,7 @@ exports.updateProduct = async (req, res) => {
       findProduct.subCategory = req.body.subCategory;
       findProduct.pictures = req.body.pictures;
       findProduct.description = req.body.description;
+      findProduct.specifications = req.body.specifications;
 
       await findProduct.save(((error, result) => {
         if (error) {
