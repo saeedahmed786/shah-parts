@@ -236,7 +236,7 @@ const CreateProduct = () => {
                                 </Button>
                             </div>
                         ))}
-                        <Button type="dashed" onClick={addSpecification} className='mb-4 w-full'>
+                        <Button type="dashed" onClick={addSpecification} className='my-4 w-full'>
                             Add Specification
                         </Button>
                     </div>
