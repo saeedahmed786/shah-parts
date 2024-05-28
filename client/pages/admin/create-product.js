@@ -214,9 +214,6 @@ const CreateProduct = () => {
                     </div>
                     <div className='my-4'>
                         <label>Specifications</label>
-                        <Button type="dashed" onClick={addSpecification} className='mb-4 w-full'>
-                            Add Specification
-                        </Button>
                         {formData.specifications.map((spec, index) => (
                             <div key={index} className='flex items-center gap-2 mb-2'>
                                 <Input
@@ -239,6 +236,9 @@ const CreateProduct = () => {
                                 </Button>
                             </div>
                         ))}
+                        <Button type="dashed" onClick={addSpecification} className='mb-4 w-full'>
+                            Add Specification
+                        </Button>
                     </div>
                     <div className='mt-5'>
                         <ButtonComp type='primary' htmlType="submit" loading={loading} disabled={loading} text="Submit" />
