@@ -1,6 +1,5 @@
 import { CreateBrands } from '@/components/Admin/Brands/CreateBrands';
 import { UpdateBrands } from '@/components/Admin/Brands/UpdateBrands';
-import { isAuthenticated } from '@/components/Commons/Auth/Auth';
 import DeleteModal from '@/components/Commons/DeleteModal/DeleteModal';
 import { ErrorAlert, SuccessAlert } from '@/components/Commons/Messages/Messages';
 import AdminLayout from '@/components/Layouts/Admin/AdminLayout';
@@ -12,7 +11,6 @@ import styles from "./brands.module.css"
 
 const Brands = () => {
   const [brands, setBrands] = useState([]);
-  const [userAuth, setUserAuth] = useState({});
   const [loading, setLoading] = useState(false);
 
   const getAllBrands = async () => {
@@ -32,7 +30,6 @@ const Brands = () => {
   }
 
   useEffect(() => {
-    setUserAuth(isAuthenticated());
     getAllBrands();
     return () => {
     }
@@ -82,8 +79,8 @@ const Brands = () => {
             <div className='flex items-center gap-2'>
               <div className='profileImg'>
                 {
-                  picture?.response ?
-                    <img src={picture?.response?.url} alt="Category" className="w-[60px] h-[60px] rounded-[50%] object-cover" />
+                  picture ?
+                    <img src={picture?.url} alt="Category" className="w-[60px] h-[60px] rounded-[50%] object-cover" />
                     :
                     <div>No picture</div>
                 }

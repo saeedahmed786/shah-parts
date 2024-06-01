@@ -10,6 +10,7 @@ import DragUpload from '@/components/Commons/DragUpload/DragUpload';
 import { useRouter } from 'next/router';
 import AdminLayout from '@/components/Layouts/Admin/AdminLayout';
 import { ButtonComp } from '@/components/Commons/ButtonComp/ButtonComp';
+import { BulkProductsUpload } from '@/components/Admin/BulkProductsUpload/BulkProductsUpload';
 
 
 const CreateProduct = () => {

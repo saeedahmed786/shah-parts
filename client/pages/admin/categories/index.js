@@ -88,8 +88,8 @@ const Categories = () => {
             <div className='flex items-center gap-2'>
               <div className='profileImg'>
                 {
-                  picture?.response ?
-                    <img src={picture?.response?.url} alt="Category" className="w-[60px] h-[60px] rounded-[50%]" />
+                  picture ?
+                    <img src={picture?.url} alt="Category" className="w-[60px] h-[60px] rounded-[50%]" />
                     :
                     <div>No picture</div>
                 }

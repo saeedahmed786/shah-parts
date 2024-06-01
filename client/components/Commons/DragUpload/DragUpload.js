@@ -14,23 +14,27 @@ const DragUpload = ({ updateFiles, value, noMultiple }) => {
         name: 'file',
         multiple: true,
         action: `${process.env.NEXT_PUBLIC_BACKEND_URL}/files/upload`,
-        onChange(info) {
+        onChange: async (info) => {
             setUploading(true);
             const { status } = info.file;
+            await info.fileList?.map(f => f?.response);
+            let trimmedFilesArray = info.fileList?.map(f => f?.response);
             if (status !== 'uploading') {
                 setUploading(false)
             }
             if (status === 'done') {
                 if (noMultiple) {
-                    updateFiles([info?.fileList[0]]);
-                    setFileList([info?.fileList[0]]);
+                    updateFiles([trimmedFilesArray[0]])
+                    setFileList([trimmedFilesArray[0]])
                 } else {
                     if (fileList?.length > 0) {
-                        updateFiles([...fileList, info?.fileList[info?.fileList?.length - 1]]);
-                        setFileList([...fileList, info?.fileList[info?.fileList?.length - 1]])
+                        // updateFiles(info.fileList?.map(f => f?.response));
+                        // setFileList(info.fileList?.map(f => f?.response))
+                        updateFiles([...fileList, trimmedFilesArray[trimmedFilesArray?.length - 1]]);
+                        setFileList([...fileList, trimmedFilesArray[trimmedFilesArray?.length - 1]])
                     } else {
-                        updateFiles(info?.fileList)
-                        setFileList(info?.fileList)
+                        updateFiles([trimmedFilesArray[0]])
+                        setFileList([trimmedFilesArray[0]])
                     }
                 }
                 message.success(`${info.file.name} file uploaded successfully.`);
@@ -57,7 +61,7 @@ const DragUpload = ({ updateFiles, value, noMultiple }) => {
 
     return (
         <div>
-            <Dragger maxCount={noMultiple ? 1 : 10} {...props} className={styles.dragger} defaultFileList={value} showUploadList={false} previewFile={false}>
+            <Dragger maxCount={noMultiple ? 1 : 10} {...props} className={styles.dragger} showUploadList={false} previewFile={false}>
                 <div className='flex justify-center gap-3'>
                     <UploadOutlined />
                     <div className="text-[14px] font-[600] flex items-center justify-center w-auto gap-1">
@@ -72,7 +76,7 @@ const DragUpload = ({ updateFiles, value, noMultiple }) => {
                         <div className='text-end' >
                             <DeleteFilled onClick={() => handleDelete(index)} />
                         </div>
-                        <Image src={file.response?.url || file.response?.url} alt={file?.name} className={styles.image} width={64} height={64} />
+                        <Image src={file?.url} alt="File" className={styles.image} width={64} height={64} />
                     </div>
                 ))}
                 {uploading &&

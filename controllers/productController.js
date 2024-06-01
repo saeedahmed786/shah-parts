@@ -39,10 +39,10 @@ exports.getLimitedProducts = async (req, res) => {
     }
 
     const PAGE_SIZE = 20;
-    const page = parseInt(req.params.page || "0")
+    const page = parseInt(req.body.page || "0")
     const products = await Product.find(query).limit(PAGE_SIZE).skip(PAGE_SIZE * page)
       .populate('mainCategory subCategory').sort({ createdAt: -1 }).exec();
-    const count = await Product.countDocuments({});
+    const count = await Product.countDocuments(query);
     if (products) {
       res.status(200).send({ products, count });
     } else {
@@ -153,6 +153,19 @@ exports.filterProducts = async (req, res) => {
   }
 }
 
+
+exports.uploadBulkProducts = async (req, res) => {
+  const { products } = req.body;
+  try {
+    const result = await Product.insertMany(products);
+    if (result) {
+      res.status(200).send({ successMessage: 'Products uploaded successfully' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ errorMessage: 'Failed to create products. Please try again', error });
+  }
+}
 
 exports.uploadProduct = async (req, res) => {
   try {

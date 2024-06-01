@@ -110,14 +110,15 @@ const UpdateProduct = () => {
                 ErrorMessage(res.data.errorMessage);
             }
         }).catch(err => {
-            setLoading(false);
             console.log(err)
             ErrorAlert(err?.message);
         })
     }
 
     const getProductById = async (prId) => {
+        setLoading(true);
         await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/product/${prId}`).then(res => {
+            setLoading(false);
             if (res.statusText === "OK") {
                 setFormData(res.data);
                 setProduct(res.data);

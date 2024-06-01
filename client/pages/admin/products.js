@@ -1,6 +1,6 @@
-import { Button, Pagination, Table } from 'antd'
+import { Pagination, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined, RightOutlined } from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, EyeOutlined, RightOutlined } from '@ant-design/icons'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import moment from 'moment'
@@ -10,6 +10,7 @@ import AdminLayout from '@/components/Layouts/Admin/AdminLayout';
 import Image from 'next/image'
 import { ButtonComp } from '@/components/Commons/ButtonComp/ButtonComp'
 import DeleteModal from '@/components/Commons/DeleteModal/DeleteModal'
+import { BulkProductsUpload } from '@/components/Admin/BulkProductsUpload/BulkProductsUpload'
 
 const Products = () => {
     const router = useRouter();
@@ -20,7 +21,7 @@ const Products = () => {
 
     const getAllData = async () => {
         setLoading(true);
-        await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/get/${current - 1}`, { ss: "" }).then(res => {
+        await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/get`, { page: current - 1, pageSize: "20" }).then(res => {
             setLoading(false);
             if (res.status === 200) {
                 setProducts(res.data?.products);
@@ -30,6 +31,7 @@ const Products = () => {
                 ErrorAlert(res.data.errorMessage);
             }
         }).catch(err => {
+            setLoading(false);
             console.log(err)
         });
     }
@@ -52,13 +54,12 @@ const Products = () => {
         }).then(res => {
             if (res.statusText === "OK") {
                 SuccessAlert(res.data.successMessage)
-                getAllProducts();
+                getAllData();
             } else {
                 ErrorAlert(res.data.errorMessage)
             }
         }).catch(err => {
-            setLoading(false);
-            console.log(err)
+            console.log(err);
             ErrorAlert(err?.message);
         })
     }
@@ -66,6 +67,13 @@ const Products = () => {
     const columns = [
         {
             title: '#',
+            key: 'index',
+            render: (_, __, index) => (
+                <div>{(current - 1) * 20 + index + 1}</div>
+            ),
+        },
+        {
+            title: 'ID',
             dataIndex: '_id',
             key: '_id',
             sorter: (a, b) => a?._id > b?._id,
@@ -124,12 +132,12 @@ const Products = () => {
             dataIndex: 'pictures',
             key: 'pictures',
             render: (_, { pictures }) => (
-                <div className='flex gap-2 flex-wrap items-center'>
+                <div className='flex gap-2 flex-wrap items-center max-w-[130px]'>
                     {
                         pictures?.length > 0 &&
                         pictures?.map(pic => {
                             return (
-                                <Image src={pic?.response?.url} width={32} height={32} style={{ width: "32px", height: "32px" }} />
+                                <Image src={pic?.url} width={32} height={32} style={{ width: "32px", height: "32px" }} />
                             )
                         })
                     }
@@ -157,7 +165,7 @@ const Products = () => {
                 <div className='md:flex justify-between flex-wrap items-start pb-8'>
                     <div>
                         <div className='flex gap-2 justify-start items-center pb-4'>
-                            <span>Home</span> <RightOutlined /> <div className='text-[#0094DA] bg-transparent'>Products</div>
+                            <span>Admin</span> <RightOutlined /> <div className='text-[#0094DA] bg-transparent'>Products</div>
                         </div>
                         <h1 className='text-[33px] font-bold'>Create a Product</h1>
                     </div>
@@ -165,11 +173,13 @@ const Products = () => {
                         <ButtonComp type='primary' onClick={() => router.push("/admin/create-product")} htmlType="submit" loading={loading} disabled={loading} text="Add Product" />
                     </div>
                 </div>
+                <BulkProductsUpload updateParentData={getAllData} />
                 <div className='hidden md:block bg-white'>
+                    <h3 className='p-4 text-[28px]'>Total Results: {totalCount}</h3>
                     <Table loading={loading} showSorterTooltip columns={columns} pagination={false} dataSource={products} />
                 </div>
                 <div className='flex justify-center my-10'>
-                    <Pagination current={current} onChange={(page) => setCurrent(page)} total={totalCount} />
+                    <Pagination current={current} defaultPageSize={20} showSizeChanger={false} onChange={(page) => setCurrent(page)} total={totalCount} />
                 </div>
             </div>
         </AdminLayout>

@@ -11,7 +11,7 @@ AuthenticatorJWT = (req, res, next) => {
         const decoded = jwt.verify(token, JWT_SECRET);
         req.user = decoded.user;
         next();
- 
+
     } catch (error) {
         res.status(400).json({ errorMessage: 'You cannot access this route due to invalid token.' });
 
@@ -21,7 +21,7 @@ AuthenticatorJWT = (req, res, next) => {
 }
 
 isAdmin = (req, res, next) => {
-    if (req.user && req.user.role === 1 || req.user.role === 0.5) {
+    if (req.user && req.user.role === 1) {
         return next();
     } else {
         return res.status(401).send({ errorMessage: 'This route is protected!.' });
