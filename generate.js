@@ -25,7 +25,7 @@ const recordTemplate = {
     ]
 };
 
-const numRecords = 100000; // One million records
+const numRecords = 50000; // One million records
 const filename = 'products.json';
 
 const writeStream = fs.createWriteStream(filename);

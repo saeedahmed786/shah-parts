@@ -28,7 +28,7 @@ export const BulkProductsUpload = ({ updateParentData }) => {
                 }
             }).then(res => {
                 setLoading(false);
-                if (res.status === 200) {
+                if (res.statusText === "OK") {
                     SuccessAlert(res.data.successMessage);
                     updateParentData();
                 }
