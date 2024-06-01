@@ -167,7 +167,7 @@ const Products = () => {
                         <div className='flex gap-2 justify-start items-center pb-4'>
                             <span>Admin</span> <RightOutlined /> <div className='text-[#0094DA] bg-transparent'>Products</div>
                         </div>
-                        <h1 className='text-[33px] font-bold'>Create a Product</h1>
+                        <h1 className='text-[33px] font-bold'>Products</h1>
                     </div>
                     <div className='mt-8 md:mt-0'>
                         <ButtonComp type='primary' onClick={() => router.push("/admin/create-product")} htmlType="submit" loading={loading} disabled={loading} text="Add Product" />
