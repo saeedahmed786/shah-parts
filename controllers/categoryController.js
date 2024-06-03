@@ -1,27 +1,4 @@
 const Category = require('../models/categoryModel');
-const cloudinaryCon = require('../middlewares/cloudinary');
-
-function getAllCategoriesFunction(categories, parentId = null) {
-    const categoryList = [];
-    let category;
-    if (parentId == null) {
-        category = categories.filter(cat => cat.parentId == undefined);
-    } else {
-        category = categories.filter(cat => cat.parentId == parentId);
-    }
-
-    for (let cate of category) {
-        categoryList.push({
-            _id: cate._id,
-            name: cate.name,
-            picture: cate.picture,
-            parentId: cate.parentId,
-            children: getAllCategoriesFunction(categories, cate._id)
-        })
-    }
-    return categoryList;
-}
-
 
 exports.getAllCategories = async (req, res) => {
     try {
@@ -31,8 +8,8 @@ exports.getAllCategories = async (req, res) => {
                     res.status(404).json({ errorMessage: 'Error in finding categories' });
                 }
                 if (categories) {
-                    const categoryList = getAllCategoriesFunction(categories);
-                    res.status(200).send(categoryList);
+                    const sanitizedcategoris = categories?.map(category => ({ title: category?.title, children: category?.children }))
+                    res.status(200).send(sanitizedcategoris);
                 }
             });
 
@@ -42,100 +19,16 @@ exports.getAllCategories = async (req, res) => {
     }
 }
 
-exports.getAllSimpleCategories = async (req, res) => {
+exports.addCategories = async (req, res) => {
     try {
-        Category.find()
-            .exec((error, categories) => {
-                if (error) {
-                    res.status(404).json({ errorMessage: 'Error in finding categories' });
-                }
-                if (categories) {
-                    res.status(200).send(categories);
-                }
-            });
-    } catch (error) {
-        console.log(error);
-        res.status(400).send(error);
-    }
-}
-
-exports.getAllMainCategories = async (req, res) => {
-    try {
-        Category.find({ parentId: null })
-            .exec((error, categories) => {
-                if (error) {
-                    res.status(404).json({ errorMessage: 'Error in finding categories' });
-                }
-                if (categories) {
-                    res.status(200).send(categories);
-                }
-            });
-    } catch (error) {
-        console.log(error);
-        res.status(400).send(error);
-    }
-}
-
-exports.getAllSubCategories = async (req, res) => {
-    Category.find({ parentId: { $exists: true } })
-        .exec((error, categories) => {
-            if (error) {
-                res.status(404).json({ errorMessage: 'Error in finding categories' });
+        const deleteAll = await Category.deleteMany({});
+        if (deleteAll) {
+            const newCategory = await Category.insertMany(req.body.categories);
+            if (newCategory) {
+                res.status(200).json({ successMessage: `Categories added successfully` });
+            } else {
+                res.status(400).json('Category is not created. Please Try Again')
             }
-            if (categories) {
-                res.status(200).send(categories);
-            }
-        });
-}
-
-exports.getAllSubCategoriesById = async (req, res) => {
-    try {
-        Category.find({ parentId: req.params.id })
-            .exec((error, categories) => {
-                if (error) {
-                    res.status(404).json({ errorMessage: 'Error in finding categories' });
-                }
-                if (categories) {
-                    res.status(200).send(categories);
-                }
-            });
-    } catch (error) {
-        console.log(error);
-        res.status(400).send(error);
-    }
-}
-
-exports.createMainCategory = async (req, res) => {
-    try {
-        const category = new Category({
-            name: req.body.name,
-            picture: req.body.picture,
-        });
-
-        const newCategory = category.save();
-        if (newCategory) {
-            res.status(200).json({ successMessage: `Category created successfully` });
-        } else {
-            res.status(400).json('Category is not created. Please Try Again')
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(400).send(error);
-    }
-}
-
-exports.createSubCategory = async (req, res) => {
-    try {
-        const category = new Category({
-            name: req.body.name,
-            picture: req.body.picture,
-            parentId: req.body.parentId
-        });
-        const newCategory = category.save();
-        if (newCategory) {
-            res.status(200).json({ successMessage: `Category created successfully` });
-        } else {
-            res.status(400).json('Category is not created. Please Try Again')
         }
     } catch (error) {
         console.log(error);
@@ -187,8 +80,6 @@ exports.deleteCategory = async (req, res) => {
     try {
         const getCategory = await Category.findById({ _id: req.params.id })
         if (getCategory) {
-            await cloudinaryCon.uploader?.destroy(getCategory?.picture?.id);
-            getCategory.remove();
             res.status(200).json({ successMessage: `Category ${getCategory.name} has been deleted successfully` });
         } else {
             res.status(400).json({ errorMessage: 'Category could not be deleted. Please try again' });

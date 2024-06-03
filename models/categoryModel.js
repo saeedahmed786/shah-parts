@@ -1,16 +1,13 @@
 const mongoose = require('mongoose');
 
 const categorySchema = new mongoose.Schema({
-    name: {
+    title: {
         type: String,
         required: true
     },
-    picture: {
-        type: Object
+    children: {
+        type: Array
     },
-    parentId: {
-        type: String
-    }
 
 }, { timestamps: true }
 );

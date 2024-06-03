@@ -1,8 +1,6 @@
-import { Button, Input, Select } from 'antd'
-import React, { useEffect, useMemo, useState } from 'react'
+import { Input, Select } from 'antd'
+import React, { useState } from 'react'
 import { RightOutlined } from '@ant-design/icons'
-import dynamic from 'next/dynamic'
-import 'react-quill/dist/quill.snow.css';
 import axios from 'axios'
 import { ErrorAlert, SuccessAlert } from '@/components/Commons/Messages/Messages';
 import Link from 'next/link';
@@ -10,29 +8,38 @@ import DragUpload from '@/components/Commons/DragUpload/DragUpload';
 import { useRouter } from 'next/router';
 import AdminLayout from '@/components/Layouts/Admin/AdminLayout';
 import { ButtonComp } from '@/components/Commons/ButtonComp/ButtonComp';
-import { BulkProductsUpload } from '@/components/Admin/BulkProductsUpload/BulkProductsUpload';
 
 
 const CreateProduct = () => {
-    const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
     const router = useRouter();
-    const [untrimmedCategories, setUntrimmedCategories] = useState([]);
-    const [categories, setCategories] = useState([]);
-    const [subCategories, setSubCategories] = useState([]);
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         title: '',
-        subTitle: '',
-        featured: '',
-        originalPrice: '',
         price: '',
-        qty: '',
         pictures: "",
         description: "",
-        mainCategory: "",
-        subCategory: "",
-        specifications: []
+        featured: "",
+        make: '',
+        model: '',
+        part: '',
+        partaccessorries: '',
+        location: '',
+        condition: '',
+        modelCode: '',
+        regyearmonth: '',
+        mileage: '',
+        missiontype: '',
+        enginemodel: '',
+        enginesize: '',
+        fuel: '',
+        drive: '',
+        autopartsmaker: '',
+        genuinepartsno: '',
+        chassisno: '',
+        refno: '',
+        geartype: ''
     });
+
 
     /*********************************************** onChange *******************************************/
     const handleChange = (key, value) => {
@@ -67,77 +74,8 @@ const CreateProduct = () => {
         })
     }
 
+    console.log(formData);
 
-    const getAllCategories = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/categories/get`).then(res => {
-            if (res.statusText === "OK") {
-                setUntrimmedCategories(res.data);
-                let formatIt = res.data.map(obj => {
-                    return {
-                        value: obj._id,
-                        label: obj.name
-                    };
-                });
-                setCategories(formatIt);
-            } else {
-                ErrorMessage(res.data.errorMessage);
-            }
-        }).catch(err => {
-            setLoading(false);
-            console.log(err)
-            ErrorAlert(err?.message);
-        })
-    }
-
-    useEffect(() => {
-        getAllCategories()
-
-        return () => {
-
-        }
-    }, []);
-
-    const handleCategoryChange = (val) => {
-        handleChange("mainCategory", val);
-        let getChildCategories = untrimmedCategories?.filter(f => f?._id === val)[0]?.children;
-        let formatIt = getChildCategories.map(obj => {
-            return {
-                value: obj._id,
-                label: obj.name
-            };
-        });
-        setSubCategories(formatIt);
-    }
-
-
-    /*********************************************** Add Specification *******************************************/
-    const addSpecification = () => {
-        setFormData({
-            ...formData,
-            specifications: [...formData.specifications, { key: '', value: '' }]
-        });
-    }
-
-    const handleSpecificationChange = (index, key, value) => {
-        const updatedSpecifications = formData.specifications.map((spec, i) => {
-            if (i === index) {
-                return { ...spec, [key]: value };
-            }
-            return spec;
-        });
-        setFormData({
-            ...formData,
-            specifications: updatedSpecifications
-        });
-    }
-
-    const removeSpecification = (index) => {
-        const updatedSpecifications = formData.specifications.filter((_, specIndex) => specIndex !== index);
-        setFormData({
-            ...formData,
-            specifications: updatedSpecifications
-        });
-    }
 
     return (
         <AdminLayout sidebar>
@@ -150,7 +88,7 @@ const CreateProduct = () => {
                 <form onSubmit={submitHandler}>
                     <div className='d-flex justify-content-between'>
                         <div>
-                            <h1 className='text-[33px] font-bold'>Products</h1>
+                            <h1 className='text-[33px] font-bold'>Create Products</h1>
                         </div>
                         <div>
                             <Link href='/admin/products' type="button" className="btn-close" aria-label="Close"></Link>
@@ -161,24 +99,88 @@ const CreateProduct = () => {
                         <Input required type="text" className="form-control mb-2" placeholder="Enter Your Product Title" onChange={(e) => handleChange("title", e.target.value)} />
                     </div>
                     <div className="form-group mt-4">
-                        <label>Sub Title</label> < br />
-                        <Input required type="text" className="form-control mb-2" placeholder="Enter Your Product Sub Title" onChange={(e) => handleChange("subTitle", e.target.value)} />
-                    </div>
-                    <div className="form-group mt-4">
-                        <label>Original Price</label> < br />
-                        <Input required type="Number" className="form-control mb-2" placeholder="Enter Product's Original Price" onChange={(e) => handleChange("originalPrice", e.target.value)} />
-                    </div>
-                    <div className="form-group mt-4">
                         <label>Price</label> < br />
                         <Input required type="Number" className="form-control mb-2" placeholder="Enter Product's Price" onChange={(e) => handleChange("price", e.target.value)} />
                     </div>
                     <div className="form-group mt-4">
-                        <label>Quantity</label> < br />
-                        <Input type="qty" className="form-control mb-2" placeholder="Enter Product's Qty" onChange={(e) => handleChange("qty", e.target.value)} />
-                    </div>
-                    <div className='mt-3'>
                         <label>Description</label> < br />
-                        <ReactQuill placeholder="Product Description" theme="snow" value={formData.description} onChange={(value) => handleChange("description", value)} />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Description" onChange={(e) => handleChange("description", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Make</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Make" onChange={(e) => handleChange("make", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Model</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Model" onChange={(e) => handleChange("model", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Part</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Part" onChange={(e) => handleChange("part", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Part Accessories</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Part Accessories" onChange={(e) => handleChange("partaccessorries", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Location</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Location" onChange={(e) => handleChange("location", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Condition</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Condition" onChange={(e) => handleChange("condition", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Model Code</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Model Code" onChange={(e) => handleChange("modelCode", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Registration Year/Month</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Registration Year/Month" onChange={(e) => handleChange("regyearmonth", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Mileage</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Mileage" onChange={(e) => handleChange("mileage", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Mission Type</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Mission Type" onChange={(e) => handleChange("missiontype", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Engine Model</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Engine Model" onChange={(e) => handleChange("enginemodel", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Engine Size</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Engine Size" onChange={(e) => handleChange("enginesize", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Fuel</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Fuel" onChange={(e) => handleChange("fuel", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Drive</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Drive" onChange={(e) => handleChange("drive", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Autoparts Maker</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Autoparts Maker" onChange={(e) => handleChange("autopartsmaker", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Genuine Parts No</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Genuine Parts No" onChange={(e) => handleChange("genuinepartsno", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Chassis No</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Chassis No" onChange={(e) => handleChange("chassisno", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Reference No</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Reference No" onChange={(e) => handleChange("refno", e.target.value)} />
+                    </div>
+                    <div className="form-group mt-4">
+                        <label>Gear Type</label> < br />
+                        <Input type="text" className="form-control mb-2" placeholder="Enter Product's Gear Type" onChange={(e) => handleChange("geartype", e.target.value)} />
                     </div>
                     <div className='mt-3'>
                         <label>Featured</label> < br />
@@ -187,59 +189,9 @@ const CreateProduct = () => {
                             { value: "no", label: "No" }
                         ]} />
                     </div>
-                    <div className='my-3'>
+                    <div className='mt-3'>
                         <label>Pictures</label> < br />
                         <DragUpload updateFiles={(val) => handleChange("pictures", val)} />
-                    </div>
-                    <div>
-                        <label>Main Category</label> < br />
-                        <Select
-                            showSearch
-                            placeholder="Please select main category"
-                            allowClear
-                            onChange={handleCategoryChange}
-                            className='mb-3 w-full'
-                            options={categories}
-                        />
-                    </div>
-                    <div>
-                        <label>Sub Category</label> < br />
-                        <Select
-                            showSearch
-                            placeholder="Please select sub category"
-                            allowClear
-                            onChange={(val) => handleChange("subCategory", val)}
-                            className='mb-3 w-full'
-                            options={subCategories}
-                        />
-                    </div>
-                    <div className='my-4'>
-                        <label>Specifications</label>
-                        {formData.specifications.map((spec, index) => (
-                            <div key={index} className='flex items-center gap-2 mb-2'>
-                                <Input
-                                    placeholder="Key"
-                                    value={spec.key}
-                                    onChange={(e) => handleSpecificationChange(index, 'key', e.target.value)}
-                                    className='w-1/2'
-                                />
-                                <Input
-                                    placeholder="Value"
-                                    value={spec.value}
-                                    onChange={(e) => handleSpecificationChange(index, 'value', e.target.value)}
-                                    className='w-1/2'
-                                />
-                                <Button
-                                    type="danger"
-                                    onClick={() => removeSpecification(index)}
-                                >
-                                    Remove
-                                </Button>
-                            </div>
-                        ))}
-                        <Button type="dashed" onClick={addSpecification} className='my-4 w-full'>
-                            Add Specification
-                        </Button>
                     </div>
                     <div className='mt-5'>
                         <ButtonComp type='primary' htmlType="submit" loading={loading} disabled={loading} text="Submit" />

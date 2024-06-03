@@ -5,57 +5,32 @@ const productShema = new mongoose.Schema({
         type: String,
         required: true
     },
-    subTitle: {
-        type: String,
-    },
-    originalPrice: {
-        type: Number,
-        required: true
-    },
     price: {
         type: Number,
         required: true
     },
-    description: {
-        type: String,
-        required: true
-    },
-    seller: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    mainCategory: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
-    },
-    subCategory: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
-    },
-    qty: {
-        type: Number,
-        default: 0
-    },
-    featured: {
-        type: String,
-        default: "no"
-    },
-    status: {
-        type: String,
-        default: "Active"
-    },
-    pictures: {
-        type: Array
-    },
-    specifications: {
-        type: Array
-    },
+    featured: { type: String, default: "no" },
+    description: { type: String },
+    make: { type: String },
+    model: { type: String },
+    part: { type: String },
+    partaccessorries: { type: String },
+    location: { type: String },
+    condition: { type: String },
+    modelCode: { type: String },
+    regyearmonth: { type: String },
+    mileage: { type: String },
+    missiontype: { type: String },
+    enginemodel: { type: String },
+    enginesize: { type: String },
+    fuel: { type: String },
+    drive: { type: String },
+    autopartsmaker: { type: String },
+    genuinepartsno: { type: String },
+    chassisno: { type: String },
+    refno: { type: String },
+    geartype: { type: String },
+    pictures: { type: [String], required: true }
 }, { timestamps: true });
 
 const productModel = new mongoose.model('Product', productShema);

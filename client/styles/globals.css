@@ -102,3 +102,17 @@ h1 {
   padding: 0px;
   padding-right: 11px;
 }
+
+.ant-table-content {
+  width: 100% !important;
+  overflow-x: auto !important;
+}
+
+.textElipsisTwoLines {
+  width: 100%;
+  max-width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
+}

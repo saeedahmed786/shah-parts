@@ -4,7 +4,7 @@ const cloudinaryCon = require('../middlewares/cloudinary');
 exports.getAllProducts = async (req, res) => {
   try {
     const products = await Product.find().limit(20)
-      .populate('seller').exec();
+      .exec();
     if (products) {
       res.status(200).send(products);
     } else {
@@ -41,7 +41,7 @@ exports.getLimitedProducts = async (req, res) => {
     const PAGE_SIZE = 20;
     const page = parseInt(req.body.page || "0")
     const products = await Product.find(query).limit(PAGE_SIZE).skip(PAGE_SIZE * page)
-      .populate('mainCategory subCategory').sort({ createdAt: -1 }).exec();
+      .sort({ createdAt: -1 }).exec();
     const count = await Product.countDocuments(query);
     if (products) {
       res.status(200).send({ products, count });
@@ -56,7 +56,7 @@ exports.getLimitedProducts = async (req, res) => {
 
 exports.getFeaturedProducts = async (req, res) => {
   const products = await Product.find({ featured: true }).limit(20).sort({ "createdAt": '-1' })
-    .populate('mainCategory subCategory').exec();
+    .exec();
   try {
     if (products) {
       res.status(200).send(products);
@@ -72,7 +72,7 @@ exports.getFeaturedProducts = async (req, res) => {
 exports.getAllAdminProducts = async (req, res) => {
   try {
     const products = await Product.find()
-      .populate('mainCategory subCategory').exec();
+      .exec();
     if (products) {
       res.status(200).send(products);
     } else {
@@ -86,7 +86,7 @@ exports.getAllAdminProducts = async (req, res) => {
 
 exports.getProductById = async (req, res) => {
   try {
-    const findProduct = await Product.findOne({ _id: req.params.id }).populate('seller').exec();
+    const findProduct = await Product.findOne({ _id: req.params.id }).exec();
     if (findProduct) {
       res.status(200).send(findProduct);
     } else {
@@ -101,7 +101,7 @@ exports.getProductById = async (req, res) => {
 exports.searchProducts = async (req, res) => {
   try {
     const findProducts = await Product.find({ $or: [{ title: { $regex: new RegExp(req.body.title, 'i') } }, { subTitle: { $regex: new RegExp(req.body.title, 'i') } }] })
-      .populate('mainCategory subCategory')
+
       .exec();
     if (findProducts) {
       res.status(200).json(findProducts);
@@ -141,7 +141,7 @@ exports.filterProducts = async (req, res) => {
 
     const findProducts = await Product.find(query)
       .limit(PAGE_SIZE).skip(PAGE_SIZE * page)
-      .populate('mainCategory subCategory').exec();
+      .exec();
     if (findProducts) {
       res.status(200).json(findProducts);
     } else {
@@ -171,34 +171,42 @@ exports.uploadProduct = async (req, res) => {
   try {
     const product = new Product({
       title: req.body.title,
-      subTitle: req.body.subTitle,
-      description: req.body.description,
-      seller: req.user._id,
-      user: req.user._id,
       price: req.body.price,
-      originalPrice: req.body.originalPrice,
-      qty: req.body.qty,
-      shippingDetails: req.body.shippingDetails,
-      featured: req.body.featured,
-      mainCategory: req.body.mainCategory,
-      subCategory: req.body.subCategory,
+      description: req.body.description,
       pictures: req.body.pictures,
-      specifications: req.body.specifications
+      make: req.body.make,
+      model: req.body.model,
+      part: req.body.part,
+      partaccessorries: req.body.partaccessorries,
+      location: req.body.location,
+      condition: req.body.condition,
+      modelCode: req.body.modelCode,
+      regyearmonth: req.body.regyearmonth,
+      mileage: req.body.mileage,
+      missiontype: req.body.missiontype,
+      enginemodel: req.body.enginemodel,
+      enginesize: req.body.enginesize,
+      fuel: req.body.fuel,
+      drive: req.body.drive,
+      autopartsmaker: req.body.autopartsmaker,
+      genuinepartsno: req.body.genuinepartsno,
+      chassisno: req.body.chassisno,
+      refno: req.body.refno,
+      geartype: req.body.geartype
     });
 
-    await product.save(((error, result) => {
+    await product.save((error, result) => {
       if (error) {
-        res.status(400).json({ errorMessage: 'Failed to create product. Please try again', error })
-      }
-      if (result) {
+        res.status(400).json({ errorMessage: 'Failed to create product. Please try again', error });
+      } else {
         res.status(200).send({ successMessage: 'Product created successfully', result });
       }
-    }))
+    });
   } catch (error) {
     console.log(error);
     res.status(400).send(error);
   }
-}
+};
 
 
 
@@ -207,43 +215,51 @@ exports.updateProduct = async (req, res) => {
     const findProduct = await Product.findById({ _id: req.params.id });
     if (findProduct) {
       findProduct.title = req.body.title;
-      findProduct.subTitle = req.body.subTitle;
       findProduct.price = req.body.price;
-      findProduct.originalPrice = req.body.originalPrice;
-      findProduct.qty = req.body.qty;
-      findProduct.featured = req.body.featured;
-      findProduct.mainCategory = req.body.mainCategory;
-      findProduct.subCategory = req.body.subCategory;
-      findProduct.pictures = req.body.pictures;
       findProduct.description = req.body.description;
-      findProduct.specifications = req.body.specifications;
+      findProduct.pictures = req.body.pictures;
+      findProduct.make = req.body.make;
+      findProduct.model = req.body.model;
+      findProduct.part = req.body.part;
+      findProduct.partaccessorries = req.body.partaccessorries;
+      findProduct.location = req.body.location;
+      findProduct.condition = req.body.condition;
+      findProduct.modelCode = req.body.modelCode;
+      findProduct.regyearmonth = req.body.regyearmonth;
+      findProduct.mileage = req.body.mileage;
+      findProduct.missiontype = req.body.missiontype;
+      findProduct.enginemodel = req.body.enginemodel;
+      findProduct.enginesize = req.body.enginesize;
+      findProduct.fuel = req.body.fuel;
+      findProduct.drive = req.body.drive;
+      findProduct.autopartsmaker = req.body.autopartsmaker;
+      findProduct.genuinepartsno = req.body.genuinepartsno;
+      findProduct.chassisno = req.body.chassisno;
+      findProduct.refno = req.body.refno;
+      findProduct.geartype = req.body.geartype;
 
-      await findProduct.save(((error, result) => {
+      await findProduct.save((error, result) => {
         if (error) {
-          res.status(400).json({ errorMessage: 'Failed to update product. Please try again', error })
-        }
-        if (result) {
+          res.status(400).json({ errorMessage: 'Failed to update product. Please try again', error });
+        } else {
           res.status(200).send({ successMessage: 'Product updated successfully', result });
         }
-      }))
-    }
-    else {
+      });
+    } else {
       res.status(404).json({ errorMessage: 'Product not found' });
     }
   } catch (error) {
     console.log(error);
     res.status(400).send(error);
   }
-}
+};
+
 
 
 exports.deleteProduct = async (req, res) => {
   try {
     const product = await Product.findById({ _id: req.params.id });
     if (product) {
-      product.pictures.map(async pic => {
-        await cloudinaryCon.uploader?.destroy(pic?.cloudinary_id);
-      });
       product.remove();
       res.status(200).json({ successMessage: 'Product Deleted Successfully' });
     }

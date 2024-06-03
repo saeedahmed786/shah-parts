@@ -95,49 +95,147 @@ const Products = () => {
             ),
         },
         {
-            title: "Main Category",
-            dataIndex: 'mainCategory',
-            key: 'category',
-            sorter: (a, b) => a?.mainCategory?.name?.localeCompare(b?.mainCategory),
-            render: (_, { mainCategory }) => (
-                <>
-                    <div className='text-[#0094DA] text-[12px] font-[500]'>{mainCategory?.name}</div>
-                </>
-            ),
+            title: "Price",
+            dataIndex: 'price',
+            key: 'price',
+            sorter: (a, b) => a?.price - b?.price,
         },
         {
-            title: "Sub Category",
-            dataIndex: 'subCategory',
-            key: 'category',
-            sorter: (a, b) => a?.subCategory?.name?.localeCompare(b?.subCategory),
-            render: (_, { subCategory }) => (
-                <>
-                    <div className='text-[#0094DA] text-[12px] font-[500]'>{subCategory?.name}</div>
-                </>
-            ),
-        },
-        {
-            title: "Created Date",
-            dataIndex: 'createdAt',
-            key: 'createdAt',
-            sorter: (a, b) => a.createdAt.length - b.createdAt.length,
-            render: (_, { createdAt }) => (
+            title: "Description",
+            dataIndex: 'description',
+            key: 'description',
+            sorter: (a, b) => a?.description?.localeCompare(b?.description),
+            render: (_, { description }) => (
                 <p className='textElipsisTwoLines'>
-                    {moment(createdAt).format("DD/MM/YYYY")}
+                    {description}
                 </p>
             ),
+        },
+        {
+            title: "Make",
+            dataIndex: 'make',
+            key: 'make',
+            sorter: (a, b) => a?.make?.localeCompare(b?.make),
+        },
+        {
+            title: "Model",
+            dataIndex: 'model',
+            key: 'model',
+            sorter: (a, b) => a?.model?.localeCompare(b?.model),
+        },
+        {
+            title: "Part",
+            dataIndex: 'part',
+            key: 'part',
+            sorter: (a, b) => a?.part?.localeCompare(b?.part),
+        },
+        {
+            title: "Part Accessorries",
+            dataIndex: 'partaccessorries',
+            key: 'partaccessorries',
+            sorter: (a, b) => a?.partaccessorries?.localeCompare(b?.partaccessorries),
+        },
+        {
+            title: "Location",
+            dataIndex: 'location',
+            key: 'location',
+            sorter: (a, b) => a?.location?.localeCompare(b?.location),
+        },
+        {
+            title: "Condition",
+            dataIndex: 'condition',
+            key: 'condition',
+            sorter: (a, b) => a?.condition?.localeCompare(b?.condition),
+        },
+        {
+            title: "Model Code",
+            dataIndex: 'modelCode',
+            key: 'modelCode',
+            sorter: (a, b) => a?.modelCode?.localeCompare(b?.modelCode),
+        },
+        {
+            title: "Reg Year/Month",
+            dataIndex: 'regyearmonth',
+            key: 'regyearmonth',
+            sorter: (a, b) => a?.regyearmonth?.localeCompare(b?.regyearmonth),
+        },
+        {
+            title: "Mileage",
+            dataIndex: 'mileage',
+            key: 'mileage',
+            sorter: (a, b) => a?.mileage?.localeCompare(b?.mileage),
+        },
+        {
+            title: "Mission Type",
+            dataIndex: 'missiontype',
+            key: 'missiontype',
+            sorter: (a, b) => a?.missiontype?.localeCompare(b?.missiontype),
+        },
+        {
+            title: "Engine Model",
+            dataIndex: 'enginemodel',
+            key: 'enginemodel',
+            sorter: (a, b) => a?.enginemodel?.localeCompare(b?.enginemodel),
+        },
+        {
+            title: "Engine Size",
+            dataIndex: 'enginesize',
+            key: 'enginesize',
+            sorter: (a, b) => a?.enginesize?.localeCompare(b?.enginesize),
+        },
+        {
+            title: "Fuel",
+            dataIndex: 'fuel',
+            key: 'fuel',
+            sorter: (a, b) => a?.fuel?.localeCompare(b?.fuel),
+        },
+        {
+            title: "Drive",
+            dataIndex: 'drive',
+            key: 'drive',
+            sorter: (a, b) => a?.drive?.localeCompare(b?.drive),
+        },
+        {
+            title: "Auto Parts Maker",
+            dataIndex: 'autopartsmaker',
+            key: 'autopartsmaker',
+            sorter: (a, b) => a?.autopartsmaker?.localeCompare(b?.autopartsmaker),
+        },
+        {
+            title: "Genuine Parts No.",
+            dataIndex: 'genuinepartsno',
+            key: 'genuinepartsno',
+            sorter: (a, b) => a?.genuinepartsno?.localeCompare(b?.genuinepartsno),
+        },
+        {
+            title: "Chassis No.",
+            dataIndex: 'chassisno',
+            key: 'chassisno',
+            sorter: (a, b) => a?.chassisno?.localeCompare(b?.chassisno),
+        },
+        {
+            title: "Ref No.",
+            dataIndex: 'refno',
+            key: 'refno',
+            sorter: (a, b) => a?.refno?.localeCompare(b?.refno),
+        },
+        {
+            title: "Gear Type",
+            dataIndex: 'geartype',
+            key: 'geartype',
+            sorter: (a, b) => a?.geartype?.localeCompare(b?.geartype),
         },
         {
             title: "Pictures",
             dataIndex: 'pictures',
             key: 'pictures',
             render: (_, { pictures }) => (
-                <div className='flex gap-2 flex-wrap items-center max-w-[130px]'>
+                <div className='flex gap-2 flex-wrap items-center w-[130px]'>
                     {
                         pictures?.length > 0 &&
                         pictures?.map(pic => {
                             return (
-                                <Image src={pic?.url} width={32} height={32} style={{ width: "32px", height: "32px" }} />
+                                <Image src={pic} width={32} height={32} style={{ width: "32px", height: "32px" }} />
                             )
                         })
                     }
@@ -157,6 +255,7 @@ const Products = () => {
             ),
         },
     ];
+
 
 
     return (

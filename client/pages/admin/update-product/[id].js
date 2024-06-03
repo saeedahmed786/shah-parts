@@ -1,9 +1,8 @@
-import { Button, Input, Select } from 'antd'
-import React, { useEffect, useMemo, useState } from 'react'
-import { RightOutlined } from '@ant-design/icons'
-import dynamic from 'next/dynamic'
+import { Input, Select } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { RightOutlined } from '@ant-design/icons';
 import 'react-quill/dist/quill.snow.css';
-import axios from 'axios'
+import axios from 'axios';
 import AdminLayout from '@/components/Layouts/Admin/AdminLayout';
 import { ErrorAlert, SuccessAlert } from '@/components/Commons/Messages/Messages';
 import Link from 'next/link';
@@ -13,26 +12,34 @@ import { ButtonComp } from '@/components/Commons/ButtonComp/ButtonComp';
 import Loading from '@/components/Commons/Loading/Loading';
 
 const UpdateProduct = () => {
-    const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
     const router = useRouter();
     let productId = router?.query?.id;
-    const [untrimmedCategories, setUntrimmedCategories] = useState([]);
-    const [categories, setCategories] = useState([]);
-    const [subCategories, setSubCategories] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [product, setProduct] = useState({});
     const [formData, setFormData] = useState({
         title: '',
-        subTitle: '',
-        originalPrice: '',
-        featured: '',
         price: '',
-        qty: '',
-        pictures: "",
-        description: "",
-        mainCategory: "",
-        subCategory: "",
-        specifications: []
+        pictures: '',
+        description: '',
+        featured: '',
+        make: '',
+        model: '',
+        part: '',
+        partaccessorries: '',
+        location: '',
+        condition: '',
+        modelCode: '',
+        regyearmonth: '',
+        mileage: '',
+        missiontype: '',
+        enginemodel: '',
+        enginesize: '',
+        fuel: '',
+        drive: '',
+        autopartsmaker: '',
+        genuinepartsno: '',
+        chassisno: '',
+        refno: '',
+        geartype: ''
     });
 
     /*********************************************** onChange *******************************************/
@@ -40,32 +47,6 @@ const UpdateProduct = () => {
         setFormData({
             ...formData,
             [key]: value
-        });
-    }
-
-
-    /******************************************** Specifications Handlers ************************************/
-    const handleSpecificationChange = (index, key, value) => {
-        const updatedSpecifications = [...formData.specifications];
-        updatedSpecifications[index][key] = value;
-        setFormData({
-            ...formData,
-            specifications: updatedSpecifications
-        });
-    }
-
-    const addSpecification = () => {
-        setFormData({
-            ...formData,
-            specifications: [...formData.specifications, { key: '', value: '' }]
-        });
-    }
-
-    const removeSpecification = (index) => {
-        const updatedSpecifications = formData.specifications.filter((_, specIndex) => specIndex !== index);
-        setFormData({
-            ...formData,
-            specifications: updatedSpecifications
         });
     }
 
@@ -83,36 +64,14 @@ const UpdateProduct = () => {
             if (res.status === 200) {
                 SuccessAlert(res.data.successMessage);
                 router.push("/admin/products");
-            }
-            else {
+            } else {
                 ErrorAlert(res.data.errorMessage);
             }
         }).catch(err => {
             setLoading(false);
-            console.log(err)
+            console.log(err);
             ErrorAlert(err?.message);
-        })
-    }
-
-
-    const getAllCategories = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/categories/get`).then(res => {
-            if (res.statusText === "OK") {
-                setUntrimmedCategories(res.data);
-                let formatIt = res.data.map(obj => {
-                    return {
-                        value: obj._id,
-                        label: obj.name
-                    };
-                });
-                setCategories(formatIt);
-            } else {
-                ErrorMessage(res.data.errorMessage);
-            }
-        }).catch(err => {
-            console.log(err)
-            ErrorAlert(err?.message);
-        })
+        });
     }
 
     const getProductById = async (prId) => {
@@ -121,47 +80,23 @@ const UpdateProduct = () => {
             setLoading(false);
             if (res.statusText === "OK") {
                 setFormData(res.data);
-                setProduct(res.data);
-                let getChildCategories = untrimmedCategories?.filter(f => f?._id === res.data?.mainCategory)[0]?.children;
-                let formatSubCategories = getChildCategories?.map(obj => {
-                    return {
-                        value: obj._id,
-                        label: obj.name
-                    };
-                });
-                setSubCategories(formatSubCategories);
             } else {
-                ErrorMessage(res.data.errorMessage);
+                ErrorAlert(res.data.errorMessage);
             }
         }).catch(err => {
             setLoading(false);
-            console.log(err)
+            console.log(err);
             ErrorAlert(err?.message);
-        })
+        });
     }
 
     useEffect(() => {
-        getAllCategories();
         productId !== undefined && getProductById(productId);
 
         return () => {
 
         }
     }, [productId]);
-
-    const handleCategoryChange = (val) => {
-        handleChange("mainCategory", val);
-        // handleChange("subCategory", "");
-        let getChildCategories = untrimmedCategories?.filter(f => f?._id === val)[0]?.children;
-        let formatIt = getChildCategories.map(obj => {
-            return {
-                value: obj._id,
-                label: obj.name
-            };
-        });
-        setSubCategories(formatIt);
-    }
-
 
     return (
         <AdminLayout sidebar>
@@ -185,92 +120,103 @@ const UpdateProduct = () => {
                                 </div>
                             </div>
                             <div className="form-group mt-4">
-                                <label>Title</label> < br />
+                                <label>Title</label> <br />
                                 <Input value={formData?.title} required type="text" className="form-control mb-2" placeholder="Enter Your Product Title" onChange={(e) => handleChange("title", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
-                                <label>Sub Title</label> < br />
-                                <Input value={formData?.subTitle} required type="text" className="form-control mb-2" placeholder="Enter Your Product Sub Title" onChange={(e) => handleChange("subTitle", e.target.value)} />
+                                <label>Price</label> <br />
+                                <Input value={formData?.price} required type="number" className="form-control mb-2" placeholder="Enter Product's Price" onChange={(e) => handleChange("price", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
-                                <label>Original Price</label> < br />
-                                <Input value={formData?.originalPrice} required type="Number" className="form-control mb-2" placeholder="Enter Product's Original Price" onChange={(e) => handleChange("originalPrice", e.target.value)} />
+                                <label>Description</label> <br />
+                                <Input value={formData?.description} type="text" className="form-control mb-2" placeholder="Enter Product's Description" onChange={(e) => handleChange("description", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
-                                <label>Price</label> < br />
-                                <Input value={formData?.price} required type="Number" className="form-control mb-2" placeholder="Enter Product's Price" onChange={(e) => handleChange("price", e.target.value)} />
-                            </div>
-                            <div className="form-group mt-4">
-                                <label>Quantity</label> < br />
-                                <Input value={formData?.qty} type="qty" className="form-control mb-2" placeholder="Enter Product's Qty" onChange={(e) => handleChange("qty", e.target.value)} />
-                            </div>
-                            <div className='mt-3'>
-                                <label>Description</label> < br />
-                                <ReactQuill placeholder="Product Description" theme="snow" value={formData.description} onChange={(value) => handleChange("description", value)} />
-                            </div>
-                            <div className='mt-3'>
-                                <label>Featured</label> < br />
+                                <label>Featured</label> <br />
                                 <Select className='w-full' value={formData.featured} placeholder="Featured" onChange={(value) => handleChange("featured", value)} options={[
                                     { value: "yes", label: "Yes" },
                                     { value: "no", label: "No" }
                                 ]} />
                             </div>
+                            <div className="form-group mt-4">
+                                <label>Make</label> <br />
+                                <Input value={formData?.make} type="text" className="form-control mb-2" placeholder="Enter Product's Make" onChange={(e) => handleChange("make", e.target.value)} />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Model</label> <br />
+                                <Input value={formData?.model} type="text" className="form-control mb-2" placeholder="Enter Product's Model" onChange={(e) => handleChange("model", e.target.value)} />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Part</label> <br />
+                                <Input value={formData?.part} type="text" className="form-control mb-2" placeholder="Enter Product's Part" onChange={(e) => handleChange("part", e.target.value)} />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Part Accessories</label> <br />
+                                <Input value={formData?.partaccessorries} type="text" className="form-control mb-2" placeholder="Enter Product's Part Accessories" onChange={(e) => handleChange("partaccessorries", e.target.value)} />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Location</label> <br />
+                                <Input value={formData?.location} type="text" className="form-control mb-2" placeholder="Enter Product's Location" onChange={(e) => handleChange("location", e.target.value)} />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Condition</label> <br />
+                                <Input value={formData?.condition} type="text" className="form-control mb-2" placeholder="Enter Product's Condition" onChange={(e) => handleChange("condition", e.target.value)} />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Model Code</label> <br />
+                                <Input value={formData?.modelCode} type="text" className="form-control mb-2" placeholder="Enter Product's Model Code" onChange={(e) => handleChange("modelCode", e.target.value)} />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Registration Year/Month</label> <br />
+                                <Input value={formData?.regyearmonth} type="text" className="form-control mb-2" placeholder="Enter Product's Registration Year/Month" onChange={(e) => handleChange("regyearmonth", e.target.value)} />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Mileage</label> <br />
+                                <Input value={formData?.mileage} type="text" className="form-control mb-2" placeholder="Enter Product's Mileage" onChange={(e) => handleChange("mileage", e.target.value)} />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Mission Type</label> <br />
+                                <Input value={formData?.missiontype} type="text" className="form-control mb-2" placeholder="Enter Product's Mission Type" onChange={(e) => handleChange("missiontype", e.target.value)} />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Engine Model</label> < br />
+                                <Input value={formData?.enginemodel} type="text" className="form-control mb-2" placeholder="Enter Product's Engine Model" onChange={(e) => handleChange("enginemodel", e.target.value)} />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Engine Size</label> <br />
+                                <Input value={formData?.enginesize} type="text" className="form-control mb-2" placeholder="Enter Product's Engine Size" onChange={(e) => handleChange("enginesize", e.target.value)} />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Fuel</label> <br />
+                                <Input value={formData?.fuel} type="text" className="form-control mb-2" placeholder="Enter Product's Fuel" onChange={(e) => handleChange("fuel", e.target.value)} />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Drive</label> <br />
+                                <Input value={formData?.drive} type="text" className="form-control mb-2" placeholder="Enter Product's Drive" onChange={(e) => handleChange("drive", e.target.value)} />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Auto Parts Maker</label> <br />
+                                <Input value={formData?.autopartsmaker} type="text" className="form-control mb-2" placeholder="Enter Product's Auto Parts Maker" onChange={(e) => handleChange("autopartsmaker", e.target.value)} />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Genuine Parts Number</label> <br />
+                                <Input value={formData?.genuinepartsno} type="text" className="form-control mb-2" placeholder="Enter Product's Genuine Parts Number" onChange={(e) => handleChange("genuinepartsno", e.target.value)} />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Chassis Number</label> <br />
+                                <Input value={formData?.chassisno} type="text" className="form-control mb-2" placeholder="Enter Product's Chassis Number" onChange={(e) => handleChange("chassisno", e.target.value)} />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Reference Number</label> <br />
+                                <Input value={formData?.refno} type="text" className="form-control mb-2" placeholder="Enter Product's Reference Number" onChange={(e) => handleChange("refno", e.target.value)} />
+                            </div>
+                            <div className="form-group mt-4">
+                                <label>Gear Type</label> < br />
+                                <Input value={formData?.geartype} type="text" className="form-control mb-2" placeholder="Enter Product's Gear Type" onChange={(e) => handleChange("geartype", e.target.value)} />
+                            </div>
                             <div className='my-3'>
                                 <label>Pictures</label> < br />
                                 <DragUpload value={formData?.pictures} updateFiles={(val) => handleChange("pictures", val)} />
-                            </div>
-                            <div>
-                                <label>Main Category</label> < br />
-                                <Select
-                                    value={formData?.mainCategory}
-                                    showSearch
-                                    placeholder="Please select main category"
-                                    allowClear
-                                    onChange={handleCategoryChange}
-                                    className='mb-3 w-full'
-                                    options={categories}
-                                />
-                            </div>
-                            <div>
-                                <label>Sub Category</label> < br />
-                                <Select
-                                    value={formData?.subCategory}
-                                    showSearch
-                                    placeholder="Please select sub category"
-                                    allowClear
-                                    onChange={(val) => handleChange("subCategory", val)}
-                                    className='mb-3 w-full'
-                                    options={subCategories}
-                                />
-                            </div>
-                            {/* Specifications Section */}
-                            <div className='mt-4'>
-                                <label>Specifications</label>
-                                {formData.specifications.map((spec, index) => (
-                                    <div key={index} className="flex items-center ga-2 mb-2">
-                                        <Input
-                                            placeholder="Key"
-                                            value={spec.key}
-                                            className='mr-2 w-1/2'
-                                            onChange={(e) => handleSpecificationChange(index, 'key', e.target.value)}
-                                        />
-                                        <Input
-                                            placeholder="Value"
-                                            value={spec.value}
-                                            className='w-1/2'
-                                            onChange={(e) => handleSpecificationChange(index, 'value', e.target.value)}
-                                        />
-                                        <Button
-                                            type="danger"
-                                            onClick={() => removeSpecification(index)}
-                                        >
-                                            Remove
-                                        </Button>
-                                    </div>
-                                ))}
-                                <Button className='w-full my-3' type="dashed" onClick={addSpecification}>
-                                    Add Specification
-                                </Button>
                             </div>
                             <div className='mt-5'>
                                 <ButtonComp type='primary' htmlType="submit" loading={loading} disabled={loading} text="Submit" />
@@ -278,8 +224,8 @@ const UpdateProduct = () => {
                         </form>
                 }
             </div>
-        </AdminLayout >
-    )
+        </AdminLayout>
+    );
 }
 
 export default UpdateProduct;

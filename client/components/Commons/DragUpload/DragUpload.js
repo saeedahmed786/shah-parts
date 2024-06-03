@@ -17,8 +17,8 @@ const DragUpload = ({ updateFiles, value, noMultiple }) => {
         onChange: async (info) => {
             setUploading(true);
             const { status } = info.file;
-            await info.fileList?.map(f => f?.response);
-            let trimmedFilesArray = info.fileList?.map(f => f?.response);
+            await info.fileList?.map(f => f?.response?.url);
+            let trimmedFilesArray = info.fileList?.map(f => f?.response?.url);
             if (status !== 'uploading') {
                 setUploading(false)
             }
@@ -76,7 +76,7 @@ const DragUpload = ({ updateFiles, value, noMultiple }) => {
                         <div className='text-end' >
                             <DeleteFilled onClick={() => handleDelete(index)} />
                         </div>
-                        <Image src={file?.url} alt="File" className={styles.image} width={64} height={64} />
+                        <Image src={file} alt="File" className={styles.image} width={64} height={64} />
                     </div>
                 ))}
                 {uploading &&
