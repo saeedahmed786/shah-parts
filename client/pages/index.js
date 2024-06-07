@@ -215,7 +215,7 @@ const Home = () => {
               brands?.map((brand, index) => {
                 return (
                   <Link key={index} href={`/brand/${brand?._id}`}>
-                    <Image src={brand?.picture?.url} alt={brand?.name} width={200} height={200} />
+                    <Image src={brand?.picture} alt={brand?.name} width={200} height={200} />
                   </Link>
                 )
               })

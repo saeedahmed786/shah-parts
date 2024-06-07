@@ -80,7 +80,7 @@ const Brands = () => {
               <div className='profileImg'>
                 {
                   picture ?
-                    <img src={picture?.url} alt="Category" className="w-[60px] h-[60px] rounded-[50%] object-cover" />
+                    <img src={picture} alt="Category" className="w-[60px] h-[60px] rounded-[50%] object-cover" />
                     :
                     <div>No picture</div>
                 }
