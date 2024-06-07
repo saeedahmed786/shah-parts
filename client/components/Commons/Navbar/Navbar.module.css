@@ -11,13 +11,24 @@
     max-width: 110px;
 }
 
+.Navbar .left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.Navbar .left .ovisBtn button {
+    padding: 6px 12px !important;
+    border-radius: 0px !important;
+}
+
 .Navbar .right {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
-.Navbar .right a {
+.Navbar .right .accountBtn {
     display: block;
     background-color: var(--fs-color-primary);
     border-color: rgba(0, 0, 0, .05);

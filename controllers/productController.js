@@ -55,7 +55,7 @@ exports.getLimitedProducts = async (req, res) => {
 }
 
 exports.getFeaturedProducts = async (req, res) => {
-  const products = await Product.find({ featured: true }).limit(20).sort({ "createdAt": '-1' })
+  const products = await Product.find({ featured: "yes" }).limit(20).sort({ "createdAt": '-1' })
     .exec();
   try {
     if (products) {
@@ -174,6 +174,7 @@ exports.uploadProduct = async (req, res) => {
       price: req.body.price,
       description: req.body.description,
       pictures: req.body.pictures,
+      featured: req.body.featured,
       make: req.body.make,
       model: req.body.model,
       part: req.body.part,
@@ -218,6 +219,7 @@ exports.updateProduct = async (req, res) => {
       findProduct.price = req.body.price;
       findProduct.description = req.body.description;
       findProduct.pictures = req.body.pictures;
+      findProduct.featured = req.body.featured;
       findProduct.make = req.body.make;
       findProduct.model = req.body.model;
       findProduct.part = req.body.part;

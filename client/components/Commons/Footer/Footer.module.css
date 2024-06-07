@@ -1,0 +1,103 @@
+.Footer .top {
+    background-color: #494949;
+    padding: 30px;
+}
+
+.Footer .top>div {
+    max-width: 1300px;
+    margin: 0px auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.Footer .top>div>div {
+    max-width: 500px;
+    color: white;
+}
+
+.Footer .top p {
+    margin-bottom: 23px !important;
+    color: white;
+}
+
+.Footer .top img {
+    width: 171px !important;
+}
+
+.Footer .title {
+    color: white;
+    font-size: 23px;
+}
+
+.Footer .top ul {
+    display: flex;
+    flex-direction: column;
+}
+
+.Footer .top ul li {
+    padding: 10px 0px;
+    border-bottom: 1px solid rgb(124, 117, 117);
+}
+
+.Footer .images {
+    display: flex;
+    flex-direction: column;
+    row-gap: 36px;
+}
+
+.Footer .bottom {
+    background-color: #5B5B62;
+    display: flex;
+    justify-content: center;
+    row-gap: 15px;
+    padding: 30px;
+    color: hsla(0, 0%, 100%, .5);
+}
+
+.Footer .bottom svg {
+    width: 43px !important;
+}
+
+.Footer .bottom .paymentIcon {
+    cursor: pointer;
+    background-color: hsla(0, 0%, 100%, .1);
+    border-radius: 5px;
+    display: inline-block;
+    margin: 3px 3px 0;
+    opacity: .6;
+    padding: 3px 5px 5px;
+    transition: opacity .3s;
+}
+
+.Footer .bottom svg {
+    fill: #fff;
+}
+
+.Footer .bottom ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px !important;
+    margin: 15px 0px;
+    text-align: center;
+}
+
+.Footer ul li {
+    margin: 0 .4em;
+    text-transform: uppercase;
+    font-size: .85em;
+    font-weight: 300;
+}
+
+.Footer .copyright {
+    margin: 0 .4em;
+    text-transform: uppercase;
+    font-size: .85em;
+    font-weight: 300;
+}
+
+.Footer .copyright strong {
+    font-weight: 600;
+}

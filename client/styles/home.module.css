@@ -1,56 +1,128 @@
-.home {
-    background-color: var(--main-body-bg-color);
+.Home .title {
+    font-size: 36px;
+    font-weight: bolder;
+    border-bottom: 1px solid rgb(214, 217, 218);
+    padding-bottom: 15px;
+    margin-bottom: 36px;
+    text-transform: uppercase;
 }
 
-.home header {
-    margin-bottom: 100px;
+.Home .featuredParts,
+.Home .featuredProducts {
+    margin-top: 60px;
 }
 
-.home .specialSection {
-    background-color: rgba(207, 204, 204, 0.3);
-    padding: 40px;
+.Home .imagesContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    row-gap: 23px;
+    text-align: end;
 }
 
-.home .title {
-    font-size: 43px;
+.Home .imagesContainer img {
+    margin: 0px auto;
+    width: 100%;
+    max-width: 260px;
+}
+
+.Home .subTitle {
+    font-size: 21px;
     font-weight: 600;
+    border-bottom: 1px solid rgb(214, 217, 218);
+    padding-bottom: 15px;
     margin-bottom: 23px;
 }
 
-.home .homeFooter {
+.Home .browseContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: "url('../public/assets/browseBg1.jpg')";
+    background-size: "cover";
+    width: 300px;
+    height: 300px;
+    padding: 36px;
+    position: relative;
+}
+
+.Home .browseContainer h2 {
+    color: white;
+}
+
+.Home .bgColor {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.54);
+    z-index: 1;
+}
+
+.Home div {
+    color: white;
+    font-size: 23px;
+    z-index: 10000 !important;
+}
+
+.Home .textContainer {
+    margin-top: 60px;
+}
+
+.Home .textContainer ul {
+    list-style: disc;
+    padding-left: 17px;
+}
+
+.Home .textContainer p,
+.Home .textContainer li {
+    color: #777;
+    font-size: 16px !important;
+    margin-bottom: 10px;
+}
+
+.Home .textContainer h3 {
+    color: #777;
+    font-size: 23px !important;
+    font-weight: 600;
+}
+
+.Home .emailListContainer {
+    position: relative;
+    background-size: contain;
+}
+
+.Home .emailListContainer .inner {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    align-items: center;
+    padding: 43px;
+    margin-top: 80px;
+    z-index: 10000 !important;
+}
+
+.Home .emailListContainer h3 {
+    color: white;
+    font-size: 23px !important;
     text-align: center;
-    padding: 23px 100px;
 }
 
-.home .homeFooter p {
-    font-size: 15px;
-    margin-bottom: 15px;
+.Home .emailListContainer form {
+    z-index: 10000 !important;
+    display: flex;
+    flex-direction: column;
+    row-gap: 19px;
+    width: 100%;
+    max-width: 400px;
 }
 
-.home .categories {
-    padding: 100px 30px;
+.Home .emailListContainer form label {
+    color: white;
+    font-size: 14px !important;
+    text-align: center;
 }
 
-.home .categories a div {
-    width: 100% !important;
-    height: 300px !important;
-}
-
-.home .categories a div img {
-    height: 300px !important;
-}
-
-@media (max-width: 700px) {
-    .home .categories {
-        flex-wrap: wrap;
-    }
-
-    .home .categories a div img {
-        height: 260px !important;
-    }
-
-    .home .homeFooter {
-        text-align: center;
-        padding: 23px;
-    }
+.Home .emailListContainer form button {
+    margin-top: 15px;
+    max-width: 130px;
 }

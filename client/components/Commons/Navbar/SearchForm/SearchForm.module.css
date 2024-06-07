@@ -1,0 +1,39 @@
+.SearchForm {
+    display: flex;
+    align-items: center;
+}
+
+.SearchForm .input {
+    height: 33px;
+    border-radius: 50px !important;
+}
+
+.SearchForm .input input {
+    padding-left: 0px !important;
+}
+
+.SearchForm .select {
+    width: 100%;
+    /* min-width: 53px; */
+    font-size: .97em;
+    max-width: 100%;
+    padding: 0 0.75em;
+    height: auto !important;
+}
+
+.SearchForm .select>div {
+    border-radius: 30px !important;
+    height: 33px !important;
+}
+
+.SearchForm .select>span {
+    padding-right: 8px !important;
+}
+
+.dropdown {
+    width: 130px !important;
+}
+
+.SearchForm .input input {
+    height: auto;
+}

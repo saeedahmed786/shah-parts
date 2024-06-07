@@ -1,0 +1,24 @@
+.TopMenu {
+    background-color: #F1892B;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 33px;
+    padding: 0px 15px;
+    color: white;
+    font-size: .75em;
+}
+
+.TopMenu ul {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.TopMenu a {
+    color: hsla(0, 0%, 100%, .8);
+}
+
+.TopMenu li {
+    margin-left: 0px !important;
+}

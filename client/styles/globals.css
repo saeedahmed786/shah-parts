@@ -21,8 +21,17 @@ html {
   overflow-x: hidden !important;
 }
 
-h1 {
-  line-height: 100% !important;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #555;
+  margin-bottom: 0.5em;
+  margin-top: 0;
+  text-rendering: optimizeSpeed;
+  width: 100%;
 }
 
 .ant-checkbox-inner {
@@ -115,4 +124,8 @@ h1 {
   overflow: hidden;
   display: block;
   text-overflow: ellipsis;
+}
+
+.ant-dropdown {
+  z-index: 10000 !important;
 }

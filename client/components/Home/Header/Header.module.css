@@ -1,0 +1,14 @@
+.Header img {
+    width: 100%;
+}
+
+.Header .swiperSlide {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.Header .swiper {
+    z-index: 100 !important;
+}
