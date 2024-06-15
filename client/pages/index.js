@@ -17,6 +17,9 @@ import axios from 'axios';
 import { ProductCard } from '@/components/Commons/ProductCard/ProductCard';
 import { ButtonComp } from '@/components/Commons/ButtonComp/ButtonComp';
 import { useRouter } from 'next/router';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation } from 'swiper/modules';
+import { CarOutlined, DeliveredProcedureOutlined, DollarCircleOutlined, GlobalOutlined, PhoneFilled, SearchOutlined } from '@ant-design/icons';
 
 const Home = () => {
   const router = useRouter();
@@ -123,6 +126,42 @@ const Home = () => {
       ]
     },
     {
+      title: "LIGHT SECTION",
+      image: "https://shahparts.com/wp-content/uploads/lighting-electronics.png",
+      items: [
+        {
+          link: "https://shahparts.com/product-category/parts/lightings/fog-lights-left/",
+          text: "Fog Lamps"
+        },
+        {
+          link: "https://shahparts.com/product-category/parts/lightings/headlights-right/",
+          text: "Headlights"
+        },
+        {
+          link: "https://shahparts.com/product-category/parts/lightings/tail-lights-right/",
+          text: "Tail Lights"
+        }
+      ]
+    },
+    {
+      title: "LIGHT SECTION",
+      image: "https://shahparts.com/wp-content/uploads/lighting-electronics.png",
+      items: [
+        {
+          link: "https://shahparts.com/product-category/parts/lightings/fog-lights-left/",
+          text: "Fog Lamps"
+        },
+        {
+          link: "https://shahparts.com/product-category/parts/lightings/headlights-right/",
+          text: "Headlights"
+        },
+        {
+          link: "https://shahparts.com/product-category/parts/lightings/tail-lights-right/",
+          text: "Tail Lights"
+        }
+      ]
+    },
+    {
       title: "Body Parts",
       image: "https://shahparts.com/wp-content/uploads/body-parts.png",
       items: [
@@ -143,126 +182,288 @@ const Home = () => {
           text: "Spoilers"
         }
       ]
-    }
+    },
+    {
+      title: "Engines",
+      image: featuredImg1,
+      items: [
+        {
+          link: "https://shahparts.com/product-category/parts/body-parts/bonnet-hoods/",
+          text: "Engines"
+        },
+      ]
+    },
+    {
+      title: "ECU",
+      image: featuredImg2,
+      items: [
+        {
+          link: "https://shahparts.com/product-category/parts/body-parts/bonnet-hoods/",
+          text: "ECU"
+        },
+      ]
+    },
+    {
+      title: "Headlights",
+      image: featuredImg3,
+      items: [
+        {
+          link: "https://shahparts.com/product-category/parts/body-parts/bonnet-hoods/",
+          text: "Headlights"
+        },
+      ]
+    },
   ];
 
   return (
     <div className={styles.Home}>
-      <main className="container mx-auto py-8">
+      <main className="pb-8">
         <Header />
         <section className={styles.featuredParts}>
-          <Row gutter={[23, 23]}>
-            <Col xs={24} md={16}>
-              <h1 className={styles.title}>Featured auto parts categories</h1>
-              <div className='flex gap-[100px] flex-wrap justify-between'>
-                {
-                  featuredData?.map((data, index) => {
-                    return (
-                      <div key={index}>
+          <h1 className={styles.title}>Featured auto parts categories</h1>
+          <div className=''>
+            <Swiper
+              spaceBetween={50}
+              slidesPerView={1}
+              navigation={true}
+              autoplay={{
+                delay: 1500,
+                disableOnInteraction: true,
+              }}
+              loop={true}
+              modules={[Navigation, Autoplay]}
+              breakpoints={{
+                640: {
+                  slidesPerView: 1,
+                  spaceBetween: 20,
+                },
+                768: {
+                  slidesPerView: 2,
+                  spaceBetween: 40,
+                },
+                1024: {
+                  slidesPerView: 4,
+                  spaceBetween: 50,
+                },
+              }}
+            >
+              {
+                featuredData?.map((data, index) => {
+                  return (
+                    <SwiperSlide className={styles.swiperSlide} key={index}>
+                      <div>
                         <h3 className={styles.subTitle}>{data?.title}</h3>
                         <div className="flex flex-wrap items-center gap-6">
                           <div>
                             <Image
+                              style={{ height: "200px", width: "auto" }}
                               width={200}
-                              height={145}
+                              height={200}
                               src={data?.image}
                               alt=""
                             />
                           </div>
-                          <div className='flex flex-col gap-y-2'>
+                          <div className='flex flex-col gap-y-2 justify-center'>
                             {data?.items?.map((item, index) => {
                               return (
-                                <Link key={index} href={item?.link} className="text-black">{item?.text}</Link>
+                                <Link key={index} href={item?.link} className="text-black text-[17px]">{item?.text}</Link>
                               )
                             })}
                           </div>
                         </div>
                       </div>
-                    )
-                  })
-                }
-              </div>
-            </Col>
-            <Col xs={24} md={8} className={styles.imagesContainer}>
-              <Image src={featuredImg1} alt="Engine" />
-              <Image src={featuredImg2} alt="ECU" />
-              <Image src={featuredImg3} alt="Headlights" />
-              <Image src={likeOnFacebook} alt="Like us on Facebook Banner" />
-              <Image src={featuredBadge} alt="Featured Banner" />
-            </Col>
-          </Row>
+                    </SwiperSlide>
+                  )
+                })
+              }
+            </Swiper>
+          </div>
         </section>
         <section className={styles.featuredProducts}>
-          <h1 className={styles.title}>Featured Products</h1>
-          <Row gutter={[23, 23]}>
+          <div className='flex justify-between items-center'>
+            <h1 className={`${styles.title}`}>Featured Products</h1>
+            <Image width={130} src={featuredBadge} alt="Featured Banner" />
+          </div>
+          <Swiper
+            spaceBetween={50}
+            slidesPerView={1}
+            navigation={true}
+            autoplay={{
+              delay: 1500,
+              disableOnInteraction: true,
+            }}
+            loop={true}
+            modules={[Navigation, Autoplay]}
+            breakpoints={{
+              640: {
+                slidesPerView: 1,
+                spaceBetween: 20,
+              },
+              768: {
+                slidesPerView: 2,
+                spaceBetween: 40,
+              },
+              1024: {
+                slidesPerView: 4,
+                spaceBetween: 50,
+              },
+            }}
+          >
             {
               featuredProductsArray?.map((product, index) => {
                 return (
-                  <Col xs={12} md={3} xl={5} key={index}>
+                  <SwiperSlide className={styles.swiperSlide} key={index}>
                     <Link href={`/product/${product?._id}`}>
                       <ProductCard product={product} />
                     </Link>
-                  </Col>
+                  </SwiperSlide>
                 )
               })
             }
-          </Row>
+          </Swiper>
         </section>
         <section className="mt-[60px]">
           <h1 className={styles.title}>car auto parts by brands</h1>
-          <div className='flex items-center gap-[30px] flex-wrap'>
+          <Swiper
+            spaceBetween={50}
+            slidesPerView={1}
+            navigation={true}
+            autoplay={{
+              delay: 1500,
+              disableOnInteraction: true,
+            }}
+            loop={true}
+            modules={[Navigation, Autoplay]}
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+              768: {
+                slidesPerView: 3,
+                spaceBetween: 40,
+              },
+              1024: {
+                slidesPerView: 6,
+                spaceBetween: 50,
+              },
+            }}
+          >
             {
               brands?.map((brand, index) => {
                 return (
-                  <Link key={index} href={`/brand/${brand?._id}`}>
-                    <Image src={brand?.picture} alt={brand?.name} width={200} height={200} />
-                  </Link>
+                  <SwiperSlide className="border-2 border-[rgba(244,244,244,1)]" key={index}>
+                    <Link key={index} href={`/brand/${brand?._id}`}>
+                      <Image src={brand?.picture} alt={brand?.name} width={200} height={200} style={{ height: "180px", objectFit: "cover" }} />
+                    </Link>
+                  </SwiperSlide>
                 )
               })
             }
-          </div>
+          </Swiper>
         </section>
         <section className="mt-[60px]">
-          <div className='flex items-center gap-[30px] flex-wrap'>
-            <div className={styles.browseContainer} style={{ backgroundImage: `url('/assets/browseBg1.jpg')` }}>
-              <div className={styles.bgColor} />
-              <div>
-                <h2>Shah Motors Auto Parts Online</h2>
-                <h2 className='mb-4'>NOW OPEN</h2>
-                <ButtonComp text={"Browse"} onClick={() => router.push("/shop")} />
-              </div>
-            </div>
-            <div className={styles.browseContainer} style={{ backgroundImage: `url('/assets/browseBg2.png')` }}>
-              <div className={styles.bgColor} />
-              <div>
-                <h2>All New Dismantling Factory</h2>
-                <h2 className='mb-4'>NOW OPEN</h2>
-                <ButtonComp text={"Browse"} onClick={() => router.push("/shop")} />
-              </div>
-            </div>
-          </div>
+          <Row gutter={[23, 23]} className={styles.browseContainer}>
+            <Col xs={24} md={12} className={styles.left}>
+              <Image src="/assets/browseBg1.jpg" width={100} height={100} />
+            </Col>
+            <Col xs={24} md={12}>
+              <h2 className={styles.title}>Shah Motors Auto Parts Online</h2>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+              <h2 className='mb-4 mt-10'>NOW OPEN</h2>
+              <ButtonComp text={"Browse"} onClick={() => router.push("/shop")} />
+            </Col>
+          </Row>
+          <Row gutter={[23, 23]} className={styles.browseContainer}>
+            <Col xs={24} md={12}>
+              <h2 className={styles.title}>All New Dismantling Factory</h2>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+              <h2 className='mb-4 mt-10'>NOW OPEN</h2>
+              <ButtonComp text={"Browse"} onClick={() => router.push("/shop")} />
+            </Col>
+            <Col xs={24} md={12} className={styles.left}>
+              <Image src="/assets/browseBg2.png" width={100} height={100} />
+            </Col>
+          </Row>
           <div className={styles.textContainer}>
+            <h2 className={styles.title}>Auto Parts you get</h2>
             <p>As Japan’s leading used automobile and auto parts exporter, SHAH PARTS provides an extensive selection of top-of-the-line used parts and accessories available for worldwide delivery. Our stock is sourced daily from a network of registered and professional representatives who review all auction markets throughout Japan, as well as private owners and car dealerships.</p>
-            <div className='my-4'>
-              <h3>Auto Parts you get</h3>
-              <ul>
-                <li>Access to over 400,000 genuine parts and accessories with new stock arriving every day.</li>
-                <li>Easy-to-use search results that show only the parts you need.</li>
-                <li>Quick and efficient shipping direct from Japan.</li>
-                <li>Expert guidance in 30 languages.</li>
-                <li>Quality parts at reasonable prices.</li>
-                <li>Extensive listings by Japan’s top auto makers: Toyota, Nissan, Honda, Mazda, and more!</li>
-              </ul>
-            </div>
             <p>We pride ourselves not only in providing quality Japanese automobiles and auto parts at prices you can afford, but also maintaining the highest level of Japanese customer service throughout the shopping process. Buy from us once and you will see why our number of loyal customers continues to grow.</p>
+            <div className='my-0'>
+              <Swiper
+                className={styles.swiper}
+                spaceBetween={50}
+                slidesPerView={1}
+                navigation={true}
+                autoplay={{
+                  delay: 1500,
+                  disableOnInteraction: true,
+                }}
+                loop={true}
+                modules={[Navigation, Autoplay]}
+                breakpoints={{
+                  640: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                  },
+                  768: {
+                    slidesPerView: 2,
+                    spaceBetween: 40,
+                  },
+                  1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 50,
+                  },
+                }}
+              >
+                <SwiperSlide className={styles.swiperSlide}>
+                  <div className={styles.icon}>
+                    <DeliveredProcedureOutlined />
+                  </div>
+                  <li>Access to over 400,000 genuine parts and accessories with new stock arriving every day.</li>
+                </SwiperSlide>
+                <SwiperSlide className={styles.swiperSlide}>
+                  <div className={styles.icon}>
+                    <SearchOutlined />
+                  </div>
+                  <li>Easy-to-use search results that show only the parts you need.</li>
+                </SwiperSlide>
+                <SwiperSlide className={styles.swiperSlide}>
+                  <div className={styles.icon}>
+                    <GlobalOutlined />
+                  </div>
+                  <li>Quick and efficient shipping direct from Japan.</li>
+                </SwiperSlide>
+                <SwiperSlide className={styles.swiperSlide}>
+                  <div className={styles.icon}>
+                    <PhoneFilled />
+                  </div>
+                  <li>Expert guidance in 30 languages.</li>
+                </SwiperSlide>
+                <SwiperSlide className={styles.swiperSlide}>
+                  <div className={styles.icon}>
+                    <DollarCircleOutlined />
+                  </div>
+                  <li>Quality parts at reasonable prices.</li>
+                </SwiperSlide>
+                <SwiperSlide className={styles.swiperSlide}>
+                  <div className={styles.icon}>
+                    <CarOutlined />
+                  </div>
+                  <li>Extensive listings by Japan’s top auto makers: Toyota, Nissan, Honda, Mazda, and more!</li>
+                </SwiperSlide>
+              </Swiper>
+            </div>
           </div>
         </section>
       </main>
-      <section className={styles.emailListContainer} style={{ backgroundImage: `url('/assets/car.jpg')` }}>
-        <div className={styles.bgColor} />
-        <div className={styles.inner}>
-          <div className='max-w-[600px]'>
-            <h3>Expert advice to your inbox</h3>
+      <Row gutter={[23, 23]} className={styles.emailListContainer}>
+        <Col xs={24} md={12}>
+          <Image src="/assets/car.jpg" width={100} height={100} />
+        </Col>
+        <Col xs={24} md={12} className={styles.inner}>
+          <div>
+            <h2 className={styles.title}>Expert advice to your inbox</h2>
             <h3>Subscribe to our Emailing List for Updated Prices and Sales Alert on Auto Parts and Electronics</h3>
           </div>
           <form>
@@ -276,8 +477,8 @@ const Home = () => {
             </div>
             <ButtonComp text="Submit" />
           </form>
-        </div>
-      </section>
+        </Col>
+      </Row>
     </div>
   );
 };

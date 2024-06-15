@@ -1,6 +1,15 @@
-.Footer .top {
-    background-color: #494949;
+.Footer {
+    background-color: #000000;
     padding: 30px;
+}
+
+
+.Footer a {
+    color: white !important;
+}
+
+.Footer p {
+    color: white !important;
 }
 
 .Footer .top>div {
@@ -22,10 +31,6 @@
     color: white;
 }
 
-.Footer .top img {
-    width: 171px !important;
-}
-
 .Footer .title {
     color: white;
     font-size: 23px;
@@ -38,17 +43,33 @@
 
 .Footer .top ul li {
     padding: 10px 0px;
-    border-bottom: 1px solid rgb(124, 117, 117);
+    color: white !important;
 }
 
 .Footer .images {
     display: flex;
     flex-direction: column;
-    row-gap: 36px;
+    gap: 36px;
 }
 
+.Footer .images>div {
+    display: flex;
+    gap: 19px;
+}
+
+.Footer img {
+    width: 60px !important;
+    /* height: 100% !important; */
+}
+
+.paymentPartners img {
+    width: 100px !important;
+    height: 60px !important;
+}
+
+
 .Footer .bottom {
-    background-color: #5B5B62;
+    background-color: #000000;
     display: flex;
     justify-content: center;
     row-gap: 15px;
@@ -96,6 +117,7 @@
     text-transform: uppercase;
     font-size: .85em;
     font-weight: 300;
+    color: #fff;
 }
 
 .Footer .copyright strong {

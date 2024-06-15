@@ -1,10 +1,26 @@
 .Home .title {
-    font-size: 36px;
+    font-size: 28px;
     font-weight: bolder;
     border-bottom: 1px solid rgb(214, 217, 218);
     padding-bottom: 15px;
     margin-bottom: 36px;
     text-transform: uppercase;
+    color: var(--fs-color-primary);
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+.Home .title::before {
+    content: "";
+    display: block;
+    width: 15px;
+    height: 32px;
+    background-color: var(--fs-color-primary);
+}
+
+.Home section {
+    padding: 23px;
 }
 
 .Home .featuredParts,
@@ -14,10 +30,11 @@
 
 .Home .imagesContainer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: flex-end;
-    row-gap: 23px;
+    gap: 23px;
     text-align: end;
+    margin-top: 100px;
 }
 
 .Home .imagesContainer img {
@@ -35,19 +52,23 @@
 }
 
 .Home .browseContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: "url('../public/assets/browseBg1.jpg')";
-    background-size: "cover";
-    width: 300px;
-    height: 300px;
     padding: 36px;
     position: relative;
+    align-items: center;
+    margin-bottom: 60px;
 }
 
-.Home .browseContainer h2 {
-    color: white;
+.Home .browseContainer img {
+    width: 100%;
+}
+
+.Home .browseContainer p {
+    color: #000;
+    font-size: 17px;
+}
+
+.Home .browseContainer button {
+    max-width: 200px;
 }
 
 .Home .bgColor {
@@ -65,7 +86,37 @@
 }
 
 .Home .textContainer {
+    margin-top: 80px;
+}
+
+.Home .textContainer .swiper {
+    height: 343px;
+}
+
+.Home .textContainer .swiperSlide {
     margin-top: 60px;
+    text-align: center;
+    border: 1px solid rgb(230, 227, 227);
+    border-radius: 10px;
+    padding: 30px 10px;
+    height: 240px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.Home .textContainer .swiperSlide .icon {
+    margin: 0px auto;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px !important;
+    padding: 10px;
+    font-size: 60px;
+    color: white;
+    margin-bottom: 23px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .Home .textContainer ul {
@@ -75,7 +126,7 @@
 
 .Home .textContainer p,
 .Home .textContainer li {
-    color: #777;
+    color: #000;
     font-size: 16px !important;
     margin-bottom: 10px;
 }
@@ -88,23 +139,18 @@
 
 .Home .emailListContainer {
     position: relative;
-    background-size: contain;
+    margin: 60px 20px !important;
 }
 
-.Home .emailListContainer .inner {
-    display: flex;
-    justify-content: center;
-    gap: 60px;
-    align-items: center;
-    padding: 43px;
-    margin-top: 80px;
-    z-index: 10000 !important;
+.Home .emailListContainer img {
+    width: 100%;
 }
 
-.Home .emailListContainer h3 {
-    color: white;
+.Home .emailListContainer h2 {
+    /* color: white; */
     font-size: 23px !important;
-    text-align: center;
+    text-align: left;
+    margin-bottom: 10px !important;
 }
 
 .Home .emailListContainer form {

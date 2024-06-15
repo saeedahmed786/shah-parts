@@ -11,4 +11,9 @@
 
 .Header .swiper {
     z-index: 100 !important;
+    height: 80vh;
+}
+
+.Header .swiper .swiperSlide {
+    height: 80vh;
 }

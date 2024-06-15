@@ -99,58 +99,36 @@ const Footer = () => {
                         </div>
                     </div>
                     <div className={styles.images}>
-                        <h4 className={styles.title}>We Ship Worldwide</h4>
-                        <div >
-                            <div>
-                                <Image
-                                    width={1599}
-                                    height={224}
-                                    src={dhl}
-                                />
-                            </div>
-                        </div>
+                        <h4 className={styles.title}>Shipping partners</h4>
                         <div>
-                            <div>
-                                <Image
-                                    width={1280}
-                                    height={261}
-                                    src={jp}
-                                />
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                <Image
-                                    width={835}
-                                    height={516}
-                                    src={ups}
-                                />
-                            </div>
+                            <Image
+                                src={dhl}
+                            />
+                            <Image
+                                src={jp}
+                            />
+                            <Image
+                                src={ups}
+                            />
                         </div>
                         <h4 className={styles.title}>Payment Partners</h4>
-                        <div>
+                        <div className={styles.paymentPartners}>
                             <div>
                                 <Image
-                                    width={905}
-                                    height={272}
                                     src={paypal}
                                     alt=""
                                 />
                             </div>
-                        </div>
-                        <div>
-                            <Image
-                                width={513}
-                                height={359}
-                                src={wu}
-                            />
-                        </div>
-                        <div>
-                            <Image
-                                width={512}
-                                height={512}
-                                src={bank}
-                            />
+                            <div>
+                                <Image
+                                    src={wu}
+                                />
+                            </div>
+                            <div>
+                                <Image
+                                    src={bank}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -203,13 +181,13 @@ const Footer = () => {
                     </div>
                     <ul>
                         <li>
-                            <a>Help</a>
+                            <Link href="/help">Help</Link>
                         </li>
                         <li>
-                            <a>Company</a>
+                            <Link href="/company">Company</Link>
                         </li>
                         <li>
-                            <a href="/contact-us">Contact Us</a>
+                            <Link href="/contact-us">Contact Us</Link>
                         </li>
                     </ul>
                     <div className={styles.copyright}>

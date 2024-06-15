@@ -7,13 +7,13 @@ const { Option } = Select;
 const SearchForm = () => {
     return (
         <form method="get" className={styles.SearchForm}>
-            <div>
+            {/* <div>
                 <Select popupClassName={styles.dropdown} className={styles.select} defaultValue="">
                     <Option value="" selected>All</Option>
                     <Option value="parts">Parts</Option>
                     <Option value="uncategorized">Uncategorized</Option>
                 </Select>
-            </div>
+            </div> */}
             <Input className={styles.input} placeholder="Search Products" suffix={<SearchOutlined />} />
         </form>
     );

@@ -1,5 +1,4 @@
 const Product = require('../models/productModel');
-const cloudinaryCon = require('../middlewares/cloudinary');
 
 exports.getAllProducts = async (req, res) => {
   try {
@@ -30,8 +29,21 @@ exports.getLimitedProducts = async (req, res) => {
 
     let query = {};
 
-    if (req.body.category) {
-      query.subCategory = req.body.category;
+
+    if (req.body.make) {
+      query.make = req.body.make;
+    }
+
+    if (req.body.model) {
+      query.model = req.body.model;
+    }
+
+    if (req.body.part) {
+      query.part = req.body.part;
+    }
+
+    if (req.body.partAccessory) {
+      query.partaccessories = req.body.partAccessory;
     }
 
     if (minPrice && maxPrice) {
@@ -67,6 +79,151 @@ exports.getFeaturedProducts = async (req, res) => {
     res.status(404).json({ errorMessage: 'Error in finding products', error });
   }
 
+}
+
+exports.getAllProductsParts = async (req, res) => {
+  try {
+    const categories = await Product.aggregate([
+      {
+        $group: {
+          _id: '$part'
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          part: '$_id'
+        }
+      }
+    ]);
+
+    res.json(categories.map(c => c.part));
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err.message);
+  }
+}
+
+exports.getAllProductsMakes = async (req, res) => {
+  try {
+    const makes = await Product.aggregate([
+      {
+        $group: {
+          _id: '$make'
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          make: '$_id'
+        }
+      }
+    ]);
+
+    res.json(makes.map(c => c.make));
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err.message);
+  }
+}
+
+exports.getAllProductsModelsByMake = async (req, res) => {
+  const { make } = req.body;
+
+  if (!make) {
+    return res.status(400).json({ error: 'Make is required' });
+  }
+
+  try {
+    const models = await Product.aggregate([
+      {
+        $match: {
+          make: make
+        }
+      },
+      {
+        $group: {
+          _id: '$model'
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          model: '$_id'
+        }
+      }
+    ]);
+
+    res.json(models.map(m => m.model));
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}
+
+exports.getAllProductsPartsByModel = async (req, res) => {
+  const { model } = req.body;
+
+  if (!model) {
+    return res.status(400).json({ error: 'Model is required' });
+  }
+
+  try {
+    const parts = await Product.aggregate([
+      {
+        $match: {
+          model: model
+        }
+      },
+      {
+        $group: {
+          _id: '$part'
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          part: '$_id'
+        }
+      }
+    ]);
+
+    res.json(parts.map(m => m.part));
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}
+
+exports.getAllProductsPartaccessoriesByPart = async (req, res) => {
+  const { part } = req.body;
+
+  if (!part) {
+    return res.status(400).json({ error: 'Part is required' });
+  }
+
+  try {
+    const partaccessories = await Product.aggregate([
+      {
+        $match: {
+          part: part
+        }
+      },
+      {
+        $group: {
+          _id: '$partaccessorries'
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          partaccessorries: '$_id'
+        }
+      }
+    ]);
+
+    res.json(partaccessories.map(m => m.partaccessorries));
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 }
 
 exports.getAllAdminProducts = async (req, res) => {

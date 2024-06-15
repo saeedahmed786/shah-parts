@@ -4,12 +4,19 @@
 }
 
 .SearchForm .input {
-    height: 33px;
-    border-radius: 50px !important;
+    height: 43px;
+    border-radius: 4px !important;
+    width: 300px;
+    background-color: rgb(250, 250, 250);
 }
 
 .SearchForm .input input {
-    padding-left: 0px !important;
+    padding-left: 6px !important;
+    background-color: rgb(250, 250, 250) !important;
+}
+
+.SearchForm .input span {
+    font-size: 23px;
 }
 
 .SearchForm .select {
@@ -21,14 +28,15 @@
     height: auto !important;
 }
 
-.SearchForm .select>div {
-    border-radius: 30px !important;
-    height: 33px !important;
+/* .SearchForm .select>div {
+    border-radius: 6px !important;
+    height: 43px !important;
+    width: 100%;
 }
 
 .SearchForm .select>span {
     padding-right: 8px !important;
-}
+} */
 
 .dropdown {
     width: 130px !important;

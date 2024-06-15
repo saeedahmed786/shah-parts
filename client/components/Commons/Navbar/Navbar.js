@@ -19,8 +19,7 @@ const Navbar = () => {
                 <div className={styles.logo}>
                     <Logo />
                 </div>
-                <div className="flex items-center gap-3">
-                    <SearchForm />
+                {/* <div className="flex items-center gap-3">
                     <Divider type='vertical' />
                     <div>
                         <ButtonWithHoverComp text="Popular Auto Parts" />
@@ -28,9 +27,21 @@ const Navbar = () => {
                     <div className={styles.ovisBtn}>
                         <ButtonComp text="OVIS" />
                     </div>
-                </div>
+                </div> */}
+            </div>
+            <div className="flex items-center gap-10">
+                <Link href="/">
+                    Home
+                </Link>
+                <Link href="/about">
+                    About
+                </Link>
+                <Link href="/contact">
+                    Contact
+                </Link>
             </div>
             <div className={styles.right}>
+                <SearchForm />
                 {
                     userAuth?.role === 1 &&
                     <Link href="/admin/products">
@@ -38,13 +49,11 @@ const Navbar = () => {
                     </Link>
                 }
                 <Link href="/login" className={styles.accountBtn}>
-                    <UserOutlined />
+                    <UserOutlined className='text-[23px]' />
                 </Link>
-                <Divider type='vertical' className='h-[30px]' />
                 <Link href="/cart" className="flex gap-2 items-center">
-                    <div>Cart / 0.00$</div>
                     <Badge count={5}>
-                        <ShoppingOutlined className='text-[23px]' />
+                        <ShoppingCartOutlined className='text-[23px]' />
                     </Badge>
                 </Link>
             </div>

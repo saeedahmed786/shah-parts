@@ -3,51 +3,52 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import sliderImg1 from "../../../public/assets/imgpsh_fullsize-2.png"
+import sliderImg2 from "../../../public/assets/car.jpg"
 import whatsApp from "../../../public/assets/whatsapp123.jpg"
 import stripesBanner from "../../../public/assets/Stripes-Banner.jpg"
 import Image from 'next/image';
 import { Col, Row } from 'antd';
 import Link from 'next/link';
 import styles from "./Header.module.css";
-import { Pagination, Navigation } from 'swiper/modules';
+import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 
 const Header = () => {
     return (
         <header className={styles.Header}>
-            <Row gutter={[23, 23]}>
-                <Col xs={24} md={16}>
-                    <Swiper
-                        spaceBetween={50}
-                        slidesPerView={1}
-                        navigation={true}
-                        loop={true}
-                        autoplay
-                        onSlideChange={() => console.log('slide change')}
-                        onSwiper={(swiper) => console.log(swiper)}
-                        pagination={{
-                            clickable: true,
-                        }}
-                        className={styles.swiper}
-                        modules={[Pagination, Navigation]}
-                    >
-                        <SwiperSlide className={styles.swiperSlide}>
-                            <Link href="https://shahparts.com/customize-your-car/">
-                                <Image src={sliderImg1} alt="Engine Banner" />
-                            </Link>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <Link href="https://shahparts.com/customize-your-car/">
-                                <Image src={sliderImg1} alt="Engine Banner" />
-                            </Link>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <Link href="https://shahparts.com/customize-your-car/">
-                                <Image src={sliderImg1} alt="Engine Banner" />
-                            </Link>
-                        </SwiperSlide>
-                    </Swiper>
-                </Col>
-                <Col xs={24} md={8}>
+            <Swiper
+                spaceBetween={0}
+                slidesPerView={1}
+                navigation={true}
+                autoplay={{
+                    delay: 1500,
+                    disableOnInteraction: true,
+                }}
+                loop={true}
+                onSlideChange={() => console.log('slide change')}
+                onSwiper={(swiper) => console.log(swiper)}
+                pagination={{
+                    clickable: true,
+                }}
+                className={styles.swiper}
+                modules={[Pagination, Navigation, Autoplay]}
+            >
+                <SwiperSlide className={styles.swiperSlide}>
+                    <Link href="https://shahparts.com/customize-your-car/">
+                        <Image src={sliderImg1} alt="Engine Banner" />
+                    </Link>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <Link href="https://shahparts.com/customize-your-car/">
+                        <Image src={sliderImg2} alt="Engine Banner" />
+                    </Link>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <Link href="https://shahparts.com/customize-your-car/">
+                        <Image src={sliderImg1} alt="Engine Banner" />
+                    </Link>
+                </SwiperSlide>
+            </Swiper>
+            {/* <Col xs={24} md={8}>
                     <Link href="https://shahparts.com/product-category/brand/toyota">
                         <Image className='h-[110px] object-cover' src={whatsApp} alt="WhatsApp Banner" />
                     </Link>
@@ -56,9 +57,8 @@ const Header = () => {
                             <Image src={stripesBanner} alt="Stripes Banner" />
                         </Link>
                     </div>
-                </Col>
-            </Row>
-        </header >
+                </Col> */}
+        </header>
     );
 };
 

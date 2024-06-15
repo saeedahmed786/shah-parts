@@ -1,17 +1,16 @@
 .TopMenu {
-    background-color: #F1892B;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    background-color: #000;
     min-height: 33px;
-    padding: 0px 15px;
+    padding: 19px 15px;
     color: white;
-    font-size: .75em;
+    font-size: 17px;
+    text-align: center;
 }
 
 .TopMenu ul {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 15px;
 }
 
