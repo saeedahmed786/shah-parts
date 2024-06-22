@@ -37,7 +37,7 @@
     overflow-x: hidden !important;
 }
 
-.ShopPage .filters .sortSection {
+.ShopPage .sortSection {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -49,7 +49,7 @@
     padding-top: 15px;
 }
 
-.ShopPage .filters .sortSection .right {
+.ShopPage .sortSection .right {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -74,8 +74,9 @@
     color: #999;
 }
 
-.ShopPage .filters .filterSection {
-    padding: 40px;
+.ShopPage .filters {
+    margin: 10px 40px;
+    margin-bottom: 40px;
 }
 
 .ShopPage .filters .filterSection .select {
@@ -83,7 +84,7 @@
 }
 
 .ShopPage .filters .filterSection .select>div {
-    padding-bottom: 15px;
+    padding-bottom: 0px;
     padding-left: 0px !important;
     border-bottom: 1px solid #999 !important;
     border-radius: 0px !important;
@@ -102,7 +103,7 @@
 }
 
 .ShopPage .filters .filterSection .select span:last-of-type {
-    margin-top: -11px !important;
+    margin-top: -6px !important;
 }
 
 

@@ -20,7 +20,7 @@ const Header = () => {
                 slidesPerView={1}
                 navigation={true}
                 autoplay={{
-                    delay: 1500,
+                    delay: 200000,
                     disableOnInteraction: true,
                 }}
                 loop={true}

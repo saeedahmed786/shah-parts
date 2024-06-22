@@ -138,39 +138,19 @@ const ShopPage = () => {
 
   return (
     <div className={styles.ShopPage}>
-      <div className={styles.top}>
-        <h1 className={styles.title}>Shop</h1>
-        <p>has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
-      </div>
       <div className={styles.filters}>
-        <div className={styles.sortSection}>
-          <div className='flex items-center gap-6'>
-            <h4 className='mb-0'>Products</h4>
-            <p className='w-full'>{productsArray?.length} of {totalCount} items</p>
-          </div>
-          <div className={styles.right}>
-            <h4 className='mb-0'>Sort By:</h4>
-            <Select className={styles.sortSelect} defaultValue={"createdAt"} onChange={handleSortChange} placeholder="Sort" options={[
-              { value: "lth", label: "Price: Low to High" },
-              { value: "htl", label: "Price: High to Low" },
-              { value: "a-z", label: "Product Name: A-Z" },
-              { value: "z-a", label: "Product Name: Z-A" },
-              { value: "createdAt", label: "Released Date" },
-            ]} />
-          </div>
-        </div>
         <div className={styles.filterSection}>
-          <Row gutter={[23, 23]}>
+          <Row gutter={[23, 23]} justify="end">
             <Col xs={12} md={8} lg={6}>
-              <div className='mb-3'>Make</div>
+              <div className='mb-0'>Make</div>
               <Select allowClear className={styles.select} value={make} onChange={(val) => setMake(val)} placeholder="Makes" options={makes} />
             </Col>
             <Col xs={12} md={8} lg={6}>
-              <div className='mb-3'>Part</div>
-              <Select allowClear className={styles.select} value={part} onChange={(val) => setPart(val)} placeholder="Categories" options={parts} />
+              <div className='mb-0'>Part</div>
+              <Select allowClear className={styles.select} value={part} onChange={(val) => setPart(val)} placeholder="Parts" options={parts} />
             </Col>
             <Col xs={12} md={8} lg={6}>
-              <div className='mb-3'>Price Range</div>
+              <div className='mb-0'>Price Range</div>
               <Select allowClear className={styles.select} value={priceRange} onChange={(val) => setPriceRange(val)} placeholder="Price" options={[
                 { value: "50-100", label: "$50 - $100" },
                 { value: "100-200", label: "$100 - $200" },
@@ -186,6 +166,22 @@ const ShopPage = () => {
               </div>
             </Col>
           </Row>
+        </div>
+      </div>
+      <div className={styles.sortSection}>
+        <div className='flex items-center gap-6'>
+          <h4 className='mb-0'>Products</h4>
+          <p className='w-full'>{productsArray?.length} of {totalCount} items</p>
+        </div>
+        <div className={styles.right}>
+          <h4 className='mb-0'>Sort By:</h4>
+          <Select className={styles.sortSelect} defaultValue={"createdAt"} onChange={handleSortChange} placeholder="Sort" options={[
+            { value: "lth", label: "Price: Low to High" },
+            { value: "htl", label: "Price: High to Low" },
+            { value: "a-z", label: "Product Name: A-Z" },
+            { value: "z-a", label: "Product Name: Z-A" },
+            { value: "createdAt", label: "Released Date" },
+          ]} />
         </div>
       </div>
       {

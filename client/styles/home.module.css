@@ -19,6 +19,26 @@
     background-color: var(--fs-color-primary);
 }
 
+.Home .viewAllContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgb(214, 217, 218);
+    padding-bottom: 15px;
+    margin-bottom: 36px;
+}
+
+.Home .viewAllContainer .title {
+    border-bottom: none;
+    margin-bottom: 0px !important;
+}
+
+.Home .viewAllContainer a {
+    text-align: right;
+    width: 160px;
+    color: var(--fs-color-primary);
+}
+
 .Home section {
     padding: 23px;
 }
@@ -82,7 +102,7 @@
 .Home div {
     color: white;
     font-size: 23px;
-    z-index: 10000 !important;
+    /* z-index: 10001 !important; */
 }
 
 .Home .textContainer {

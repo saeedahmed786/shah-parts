@@ -126,42 +126,6 @@ const Home = () => {
       ]
     },
     {
-      title: "LIGHT SECTION",
-      image: "https://shahparts.com/wp-content/uploads/lighting-electronics.png",
-      items: [
-        {
-          link: "https://shahparts.com/product-category/parts/lightings/fog-lights-left/",
-          text: "Fog Lamps"
-        },
-        {
-          link: "https://shahparts.com/product-category/parts/lightings/headlights-right/",
-          text: "Headlights"
-        },
-        {
-          link: "https://shahparts.com/product-category/parts/lightings/tail-lights-right/",
-          text: "Tail Lights"
-        }
-      ]
-    },
-    {
-      title: "LIGHT SECTION",
-      image: "https://shahparts.com/wp-content/uploads/lighting-electronics.png",
-      items: [
-        {
-          link: "https://shahparts.com/product-category/parts/lightings/fog-lights-left/",
-          text: "Fog Lamps"
-        },
-        {
-          link: "https://shahparts.com/product-category/parts/lightings/headlights-right/",
-          text: "Headlights"
-        },
-        {
-          link: "https://shahparts.com/product-category/parts/lightings/tail-lights-right/",
-          text: "Tail Lights"
-        }
-      ]
-    },
-    {
       title: "Body Parts",
       image: "https://shahparts.com/wp-content/uploads/body-parts.png",
       items: [
@@ -220,40 +184,19 @@ const Home = () => {
       <main className="pb-8">
         <Header />
         <section className={styles.featuredParts}>
-          <h1 className={styles.title}>Featured auto parts categories</h1>
+          <div className={styles.viewAllContainer}>
+            <h1 className={styles.title}>Featured auto parts categories</h1>
+            <Link href="/categories">View All &gt;</Link>
+          </div>
           <div className=''>
-            <Swiper
-              spaceBetween={50}
-              slidesPerView={1}
-              navigation={true}
-              autoplay={{
-                delay: 1500,
-                disableOnInteraction: true,
-              }}
-              loop={true}
-              modules={[Navigation, Autoplay]}
-              breakpoints={{
-                640: {
-                  slidesPerView: 1,
-                  spaceBetween: 20,
-                },
-                768: {
-                  slidesPerView: 2,
-                  spaceBetween: 40,
-                },
-                1024: {
-                  slidesPerView: 4,
-                  spaceBetween: 50,
-                },
-              }}
-            >
+            <div className='flex gap-10 flex-wrap'>
               {
                 featuredData?.map((data, index) => {
                   return (
-                    <SwiperSlide className={styles.swiperSlide} key={index}>
+                    <div key={index}>
                       <div>
                         <h3 className={styles.subTitle}>{data?.title}</h3>
-                        <div className="flex flex-wrap items-center gap-6">
+                        <div className="flex flex-wrap flex-col items-center gap-6">
                           <div>
                             <Image
                               style={{ height: "200px", width: "auto" }}
@@ -272,11 +215,11 @@ const Home = () => {
                           </div>
                         </div>
                       </div>
-                    </SwiperSlide>
+                    </div>
                   )
                 })
               }
-            </Swiper>
+            </div>
           </div>
         </section>
         <section className={styles.featuredProducts}>
@@ -289,7 +232,7 @@ const Home = () => {
             slidesPerView={1}
             navigation={true}
             autoplay={{
-              delay: 1500,
+              delay: 3500,
               disableOnInteraction: true,
             }}
             loop={true}
@@ -323,44 +266,23 @@ const Home = () => {
           </Swiper>
         </section>
         <section className="mt-[60px]">
-          <h1 className={styles.title}>car auto parts by brands</h1>
-          <Swiper
-            spaceBetween={50}
-            slidesPerView={1}
-            navigation={true}
-            autoplay={{
-              delay: 1500,
-              disableOnInteraction: true,
-            }}
-            loop={true}
-            modules={[Navigation, Autoplay]}
-            breakpoints={{
-              640: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-              },
-              768: {
-                slidesPerView: 3,
-                spaceBetween: 40,
-              },
-              1024: {
-                slidesPerView: 6,
-                spaceBetween: 50,
-              },
-            }}
-          >
+          <div className={styles.viewAllContainer}>
+            <h1 className={styles.title}>car auto parts by brands</h1>
+            <Link href="/brands">View All &gt;</Link>
+          </div>
+          <div className='flex gap-10 flex-wrap'>
             {
               brands?.map((brand, index) => {
                 return (
-                  <SwiperSlide className="border-2 border-[rgba(244,244,244,1)]" key={index}>
+                  <div className="border-2 border-[rgba(244,244,244,1)]" key={index}>
                     <Link key={index} href={`/brand/${brand?._id}`}>
                       <Image src={brand?.picture} alt={brand?.name} width={200} height={200} style={{ height: "180px", objectFit: "cover" }} />
                     </Link>
-                  </SwiperSlide>
+                  </div>
                 )
               })
             }
-          </Swiper>
+          </div>
         </section>
         <section className="mt-[60px]">
           <Row gutter={[23, 23]} className={styles.browseContainer}>
@@ -396,7 +318,7 @@ const Home = () => {
                 slidesPerView={1}
                 navigation={true}
                 autoplay={{
-                  delay: 1500,
+                  delay: 3500,
                   disableOnInteraction: true,
                 }}
                 loop={true}

@@ -10,9 +10,10 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import '../styles/globals.css'
 import FixedButtons from '@/components/Commons/FixedButtons/FixedButtons';
+import { useRouter } from 'next/router';
 
 function MyApp({ Component, pageProps }) {
-
+    const router = useRouter();
 
     return (
         <>
@@ -23,7 +24,10 @@ function MyApp({ Component, pageProps }) {
                 <FixedButtons />
                 <TopMenu />
                 <Navbar />
-                <SearchBar />
+                {
+                    router.pathname !== "/shop" &&
+                    <SearchBar />
+                }
                 <div className='min-h-[60vh]'>
                     <Component {...pageProps} />
                 </div>
