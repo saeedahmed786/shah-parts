@@ -130,3 +130,9 @@ h6 {
 .ant-dropdown {
   z-index: 10000 !important;
 }
+
+.ant-tabs-ink-bar {
+  height: 4px !important;
+  border-radius: 2px !important;
+  background: var(--fs-color-alert) !important;
+}

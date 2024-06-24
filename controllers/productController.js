@@ -431,7 +431,7 @@ exports.deleteProduct = async (req, res) => {
 exports.getRelatedProducts = async (req, res) => {
   try {
     if (req.params.id) {
-      const products = await Product.find({ $or: [{ mainCategory: req.params.id }, { subCategory: req.params.id }] }).exec();
+      const products = await Product.find({ $or: [{ partaccessories: req.params.id }, { part: req.params.id }] }).limit(8).exec();
       if (products) {
         res.status(200).send(products);
       } else {

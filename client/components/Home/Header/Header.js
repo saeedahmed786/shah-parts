@@ -33,17 +33,17 @@ const Header = () => {
                 modules={[Pagination, Navigation, Autoplay]}
             >
                 <SwiperSlide className={styles.swiperSlide}>
-                    <Link href="https://shahparts.com/customize-your-car/">
+                    <Link href="/">
                         <Image src={sliderImg1} alt="Engine Banner" />
                     </Link>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <Link href="https://shahparts.com/customize-your-car/">
+                    <Link href="/">
                         <Image src={sliderImg2} alt="Engine Banner" />
                     </Link>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <Link href="https://shahparts.com/customize-your-car/">
+                    <Link href="/">
                         <Image src={sliderImg1} alt="Engine Banner" />
                     </Link>
                 </SwiperSlide>

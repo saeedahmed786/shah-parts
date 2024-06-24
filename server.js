@@ -5,6 +5,7 @@ const fileRoutes = require('./routes/fileRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const brandRoutes = require('./routes/brandRoutes');
 const productRoutes = require('./routes/productRoutes');
+const cartRoutes = require('./routes/cartRoutes');
 const mongoose = require('mongoose');
 const path = require('path');
 const cors = require('cors');
@@ -22,6 +23,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/brands', brandRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/cart', cartRoutes);
 
 /******************************************  MongoDb Connection  ********************************************/
 

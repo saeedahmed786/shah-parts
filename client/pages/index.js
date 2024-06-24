@@ -146,37 +146,7 @@ const Home = () => {
           text: "Spoilers"
         }
       ]
-    },
-    {
-      title: "Engines",
-      image: featuredImg1,
-      items: [
-        {
-          link: "https://shahparts.com/product-category/parts/body-parts/bonnet-hoods/",
-          text: "Engines"
-        },
-      ]
-    },
-    {
-      title: "ECU",
-      image: featuredImg2,
-      items: [
-        {
-          link: "https://shahparts.com/product-category/parts/body-parts/bonnet-hoods/",
-          text: "ECU"
-        },
-      ]
-    },
-    {
-      title: "Headlights",
-      image: featuredImg3,
-      items: [
-        {
-          link: "https://shahparts.com/product-category/parts/body-parts/bonnet-hoods/",
-          text: "Headlights"
-        },
-      ]
-    },
+    }
   ];
 
   return (
@@ -256,9 +226,7 @@ const Home = () => {
               featuredProductsArray?.map((product, index) => {
                 return (
                   <SwiperSlide className={styles.swiperSlide} key={index}>
-                    <Link href={`/product/${product?._id}`}>
-                      <ProductCard product={product} />
-                    </Link>
+                    <ProductCard product={product} />
                   </SwiperSlide>
                 )
               })

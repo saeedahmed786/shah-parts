@@ -11,6 +11,7 @@ import 'swiper/css/navigation';
 import '../styles/globals.css'
 import FixedButtons from '@/components/Commons/FixedButtons/FixedButtons';
 import { useRouter } from 'next/router';
+import { CartProvider } from '@/context/CartContext';
 
 function MyApp({ Component, pageProps }) {
     const router = useRouter();
@@ -21,16 +22,18 @@ function MyApp({ Component, pageProps }) {
                 <title>Shah Parts</title>
             </Head>
             <GlobalContextProvider>
-                <FixedButtons />
-                <TopMenu />
-                <Navbar />
-                {
-                    router.pathname !== "/shop" &&
-                    <SearchBar />
-                }
-                <div className='min-h-[60vh]'>
-                    <Component {...pageProps} />
-                </div>
+                <CartProvider>
+                    <FixedButtons />
+                    <TopMenu />
+                    <Navbar />
+                    {
+                        router.pathname !== "/shop" &&
+                        <SearchBar />
+                    }
+                    <div className='min-h-[60vh]'>
+                        <Component {...pageProps} />
+                    </div>
+                </CartProvider>
             </GlobalContextProvider>
             <Footer />
         </>

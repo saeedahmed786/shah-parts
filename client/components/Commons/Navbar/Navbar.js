@@ -1,16 +1,16 @@
+import { useCartContext } from '@/context/CartContext';
 import { useGlobalContext } from '@/context/GlobalContext';
-import { ShoppingCartOutlined, ShoppingFilled, ShoppingOutlined, UserOutlined } from '@ant-design/icons';
-import { Badge, Divider } from 'antd';
+import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
+import { Badge } from 'antd';
 import Link from 'next/link';
 import React from 'react'
-import { ButtonComp } from '../ButtonComp/ButtonComp';
-import { ButtonWithHoverComp } from '../ButtonWithHoverComp/ButtonWithHoverComp';
 import Logo from '../Logo/Logo';
 import styles from './Navbar.module.css';
 import SearchForm from './SearchForm/SearchForm';
 
 const Navbar = () => {
     const { userAuth } = useGlobalContext();
+    const { cart } = useCartContext();
 
 
     return (
@@ -52,7 +52,7 @@ const Navbar = () => {
                     <UserOutlined className='text-[23px]' />
                 </Link>
                 <Link href="/cart" className="flex gap-2 items-center">
-                    <Badge count={5}>
+                    <Badge count={cart?.length}>
                         <ShoppingCartOutlined className='text-[23px]' />
                     </Badge>
                 </Link>

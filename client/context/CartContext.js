@@ -13,7 +13,7 @@ export function CartProvider({ children }) {
         if (isAuthenticated()) {
             await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/add`, data, {
                 headers: {
-                    'authorization': 'Bearer ' + localStorage.getItem('token')
+                    authorization: 'Bearer ' + localStorage.getItem('token')
                 }
             }).then(res => {
                 if (res.status === 200) {
@@ -51,10 +51,10 @@ export function CartProvider({ children }) {
     };
 
     const getCartProducts = async () => {
-        if (isAuthenticated()) {
+        if (isAuthenticated() && isAuthenticated()?.role) {
             await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/get`, {
                 headers: {
-                    'authorization': 'Bearer ' + localStorage.getItem('token')
+                    authorization: 'Bearer ' + localStorage.getItem('token')
                 }
             }).then(res => {
                 if (res.status === 200) {
@@ -97,7 +97,7 @@ export function CartProvider({ children }) {
         } else {
             await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/update/qty/${product?._id}`, { qtyToShop: qty, userId: isAuthenticated()?._id, productId: product?._id }, {
                 headers: {
-                    'authorization': 'Bearer ' + localStorage.getItem('token')
+                    authorization: 'Bearer ' + localStorage.getItem('token')
                 }
             }).then(res => {
                 if (res.status === 200) {
@@ -135,6 +135,6 @@ export function CartProvider({ children }) {
     );
 }
 
-export function useCart() {
+export function useCartContext() {
     return useContext(CartContext);
 }
