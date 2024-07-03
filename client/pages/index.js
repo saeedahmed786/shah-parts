@@ -150,8 +150,11 @@ const Home = () => {
           text: "Spoilers"
         }
       ]
-    }
+    }      
   ];
+
+
+
 
   const handleReferCategoryToShop = (part) => {
     if (part) {
