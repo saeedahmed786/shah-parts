@@ -22,8 +22,8 @@ export const BulkProductsUpload = ({ updateParentData }) => {
     };
 
     const transformKeysToLowerCase = (obj) => {
-        return Object.keys(obj).reduce((acc, key) => {
-            acc[key.toLowerCase()] = obj[key];
+        return Object.keys(obj)?.reduce((acc, key) => {
+            acc[key?.toLowerCase()] = obj[key];
             return acc;
         }, {});
     };

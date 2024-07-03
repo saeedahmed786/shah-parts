@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { DeleteOutlined, EditOutlined, EyeOutlined, RightOutlined } from '@ant-design/icons'
 import { useRouter } from 'next/router'
 import axios from 'axios'
-import moment from 'moment'
 import Link from 'next/link'
 import { ErrorAlert, SuccessAlert } from '@/components/Commons/Messages/Messages'
 import AdminLayout from '@/components/Layouts/Admin/AdminLayout';
