@@ -75,7 +75,7 @@ const Login = () => {
               onFinish={onFinish}
             >
               <Form.Item
-                name='Email'
+                name='email'
                 label="Username or email address"
                 rules={[
                   {

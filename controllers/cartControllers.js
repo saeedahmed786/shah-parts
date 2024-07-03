@@ -1,7 +1,7 @@
 const Cart = require('../models/cartModel');
 
 exports.getProducts = async (req, res) => {
-    const getCart = await Cart.findOne({}).where('userId').in(req.user._id).exec();
+    const getCart = await Cart.findOne({ userId: req.user._id });
     if (getCart) {
         res.status(200).json(getCart);
     } else {

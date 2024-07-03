@@ -1,6 +1,7 @@
 .product>div {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 20px auto;
+    margin-top: 60px;
 }
 
 .product .mainTitle {
@@ -17,24 +18,25 @@
     max-height: 80vh;
 }
 
+.product img {
+    border-radius: 10px !important;
+}
+
 .product .thumbContainer,
 .product .thumbContainer img {
     width: 100px;
     height: 100px;
+    border-radius: 10px !important;
     object-fit: cover;
 }
 
 .product .right {
-    margin-top: 60px;
-}
-
-.product .right {
-    margin-top: 60px;
+    margin-top: 45px;
     max-width: 600px;
 }
 
 .product .right h1 {
-    font-size: 28px;
+    font-size: 36px;
     font-weight: 600;
     color: var(--main-bg-color);
 }
@@ -53,8 +55,8 @@
 }
 
 .product .right h5 {
-    font-size: 23px;
-    font-weight: 500;
+    font-size: 28px;
+    font-weight: 600;
     color: var(--main-bg-color);
     padding: 5px;
     display: flex;
@@ -75,15 +77,20 @@
 }
 
 
-.product .right .save {
-    color: #f7235b;
-    font-size: 23px;
+.product .right h3 {
+    color: var(--primary-color);
+    font-size: 21px;
+    text-transform: uppercase;
 }
 
 .product .description h4 {
     font-size: 28px;
     font-weight: 600;
     color: var(--main-bg-color);
+}
+
+.product .right button {
+    border-radius: 4px !important;
 }
 
 .product .productTabs div[role="tab"] {

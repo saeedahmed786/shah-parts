@@ -1,9 +1,9 @@
 .TopMenu {
-    background-color: #000;
+    background-color: var(--primary-color);
     min-height: 33px;
-    padding: 19px 15px;
+    padding: 10px 15px;
     color: white;
-    font-size: 17px;
+    font-size: 15px;
     text-align: center;
 }
 

@@ -40,7 +40,7 @@ const CategoriesPage = () => {
     if (id) {
       const query = new URLSearchParams();
 
-      if (id) query.append('partAccessory', id);
+      if (id) query.append('part', id);
       router.push(`/shop?${query.toString()}`);
     }
   };

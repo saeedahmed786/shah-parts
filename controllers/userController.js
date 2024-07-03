@@ -33,7 +33,7 @@ exports.getUserById = async (req, res) => {
     }
 }
 
-exports.SignUp = async (req, res) => {
+exports.signUp = async (req, res) => {
     try {
         const ifEmailAlreadyPresent = await User.findOne({ email: req.body.email });
         if (ifEmailAlreadyPresent) {
@@ -62,11 +62,9 @@ exports.SignUp = async (req, res) => {
 }
 
 
-exports.Login = async (req, res) => {
+exports.login = async (req, res) => {
     try {
-        const findUser = await User.findOne({
-            $or: [{ email: req.body.email }, { username: req.body.email }]
-        });
+        const findUser = await User.findOne({ email: req.body.email });
         if (findUser) {
             const checkPassword = bcrypt.compareSync(req.body.password, findUser.password);
             if (checkPassword) {
@@ -103,52 +101,6 @@ exports.Login = async (req, res) => {
     }
 }
 
-exports.adminLogin = async (req, res) => {
-    try {
-        const findUser = await User.findOne({
-            $or: [{ email: req.body.email }, { username: req.body.email }]
-        });
-
-        if (findUser && findUser.role === 1) {
-            const checkPassword = bcrypt.compareSync(req.body.password, findUser.password);
-            if (checkPassword) {
-                const payload = {
-                    user: {
-                        _id: findUser._id,
-                        role: findUser.role
-                    }
-                }
-                jwt.sign(payload, config.JWT_SECRET, (err, token) => {
-                    if (err) res.status(400).json({ errorMessage: 'Jwt Error' })
-
-                    const {
-                        _id,
-                        role,
-                        username,
-                        email,
-                    } = findUser;
-                    res.status(200).json({
-                        _id,
-                        role,
-                        username,
-                        email,
-                        token,
-                        successMessage: 'Logged In Successfully',
-
-                    });
-                });
-            } else {
-                res.status(201).json({ errorMessage: 'Incorrect username or password.' })
-            }
-
-        } else {
-            res.status(201).json({ errorMessage: 'Incorrect username or password.' })
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(400).send(error);
-    }
-}
 
 exports.updateUser = async (req, res) => {
     try {
@@ -158,66 +110,21 @@ exports.updateUser = async (req, res) => {
             findUser.firstName = req.body.firstName;
             findUser.lastName = req.body.lastName;
             findUser.gender = req.body.gender;
-            findUser.username = req.body.username;
             findUser.phone = req.body.phone;
             findUser.birthday = req.body.birthday;
 
             const saveUser = await findUser.save();
             if (saveUser) {
-                delete findUser["password"];
-                delete findUser["resetToken"];
-                delete findUser["expireToken"];
+                delete saveUser["password"];
+                delete saveUser["resetToken"];
+                delete saveUser["expireToken"];
 
-                res.status(200).json({ successMessage: 'User Updated Successfully', user: findUser })
+                res.status(200).json({ successMessage: 'User Updated Successfully', user: saveUser })
             } else (
                 res.status(400).json({ errorMessage: 'User could not be Updated.' })
             )
         } else {
             res.status(404).json({ errorMessage: 'User code not found.' })
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(400).send(error);
-    }
-}
-
-exports.updateUserByAdmin = async (req, res) => {
-    try {
-        const findUser = await User.findOne({ _id: req.params.id });
-        if (findUser) {
-            findUser.email = req.body.email;
-            findUser.username = req.body.username;
-            findUser.role = req.body.role;
-
-            const saveUser = await findUser.save();
-            if (saveUser) {
-                res.status(200).json({ successMessage: 'User Updated Successfully' })
-            } else (
-                res.status(400).json({ errorMessage: 'User could not be Updated.' })
-            )
-        } else {
-            res.status(404).json({ errorMessage: 'User code not found.' })
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(400).send(error);
-    }
-}
-
-exports.updateEmail = async (req, res) => {
-    try {
-        const findUser = await User.findOne({ _id: req.user._id });
-        if (findUser) {
-            findUser.email = req.body.email;
-
-            const saveUser = await findUser.save();
-            if (saveUser) {
-                res.status(200).json({ successMessage: 'Email Updated Successfully' })
-            } else (
-                res.status(400).json({ errorMessage: 'Email could not be Updated.' })
-            )
-        } else {
-            res.status(404).json({ errorMessage: 'User not found.' })
         }
     } catch (error) {
         console.log(error);
@@ -251,28 +158,6 @@ exports.changePassword = async (req, res) => {
         res.status(400).send(error);
     }
 }
-
-
-
-exports.addUserByAdmin = async (req, res) => {
-    var salt = bcrypt.genSaltSync(10);
-    var hash = bcrypt.hashSync(req.body.password, salt);
-    const user = new User({
-        email: req.body.email,
-        username: req.body.username,
-        password: hash,
-        role: 0.5
-    });
-
-    const saveUser = await user.save();
-    if (saveUser) {
-        res.status(200).json({ successMessage: 'Account created successfuly!. Please Sign in.' });
-    } else {
-        res.status(400).json({ errorMessage: 'Account not created. Please try again' });
-    }
-}
-
-
 
 
 /****************************************************** Forgot Password ***********************************************/

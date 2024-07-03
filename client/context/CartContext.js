@@ -35,7 +35,7 @@ export function CartProvider({ children }) {
     const removeFromCart = async (cartId) => {
         await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/delete/${cartId}`, {
             headers: {
-                'authorization': 'Bearer ' + localStorage.getItem('token')
+                Authorization: 'Bearer ' + localStorage.getItem('token')
             }
         }).then(res => {
             if (res.status === 200) {
@@ -51,10 +51,10 @@ export function CartProvider({ children }) {
     };
 
     const getCartProducts = async () => {
-        if (isAuthenticated() && isAuthenticated()?.role) {
+        if (isAuthenticated()) {
             await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/get`, {
                 headers: {
-                    authorization: 'Bearer ' + localStorage.getItem('token')
+                    Authorization: 'Bearer ' + localStorage.getItem('token')
                 }
             }).then(res => {
                 if (res.status === 200) {
@@ -75,7 +75,7 @@ export function CartProvider({ children }) {
     const clearCart = async () => {
         await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/empty`, {
             headers: {
-                'authorization': 'Bearer ' + localStorage.getItem('token')
+                Authorization: 'Bearer ' + localStorage.getItem('token')
             }
         }).then(res => {
             if (res.status === 200) {

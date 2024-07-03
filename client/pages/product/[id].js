@@ -5,13 +5,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import styles from './product.module.css';
 import { ButtonComp } from '@/components/Commons/ButtonComp/ButtonComp';
-import { IoCheckmarkDone } from 'react-icons/io5';
 import { ProductCard } from '@/components/Commons/ProductCard/ProductCard';
 import { useCartContext } from '@/context/CartContext';
+import ReviewsAndRatings from '@/components/ReviewsAndRatings/ReviewsAndRatings';
 
 
 const ProductPage = () => {
@@ -90,7 +90,7 @@ const ProductPage = () => {
         };
 
         // Keys to exclude
-        const keysToExclude = ["_id", "createdAt", "updatedAt", "pictures", "__v", "featured"];
+        const keysToExclude = ["_id", "createdAt", "updatedAt", "pictures", "__v", "featured", "title", "description", "price"];
 
         // Use the function
         const filteredData = filterObject(product, keysToExclude);
@@ -121,27 +121,15 @@ const ProductPage = () => {
         {
             key: '2',
             label: 'Reviews',
-            children: 'Content of Tab Pane 2',
-        },
-        {
-            key: '3',
-            label: 'Message us on Whatsapp',
-            children:
-                <div className={styles.descriptionItemContainer}>
-                    <div className='text-[17px] text-center'>
-                        Here is our contact number: <b>+81-80-5082-1650</b> <br />
-                        Please message us before ordering, as some items listed might be sold before we update our database.
-                        Thanks.
-                    </div>
-                </div>
-        },
+            children: <ReviewsAndRatings />,
+        }
     ];
 
     return (
         <>
             <div className={styles.product}>
                 <div>
-                    <Row gutter={[23, 23]} className="mb-[100px]">
+                    <Row gutter={[80, 23]} className="mb-[100px]">
                         <Col xs={24} md={12} lg={12}>
                             <Carousel className={styles.Carousel} showArrows={true} autoPlay showIndicators={false} renderThumbs={() => {
                                 return (
@@ -169,21 +157,22 @@ const ProductPage = () => {
                         </Col>
                         <Col xs={24} md={12} lg={12} className={styles.right}>
                             <div className='p-[17px] md:p-0 md:ml-3'>
+                                <h3>
+                                    {product?.partaccessorries}
+                                </h3>
                                 <h1>
-                                    {product.title}
+                                    {product?.title}
                                 </h1>
                                 <h5>
-                                    ${product.price}   <IoCheckmarkDone /> <br />
+                                    ${product?.price}
                                 </h5>
-                                <div className='mt-4'>
-                                    <h4>Add Quantity</h4>
-                                    <InputNumber className='w-full py-1' min={1} max={100000} defaultValue={1} onChange={(value) => setQtyToShop(value)} />
-                                    {
-                                        <p className='mt-2'>{product.qty <= 1 && <span className='text-danger fw-bolder'>Product is almost out of stock!</span>}</p>
-                                    }
-                                </div>
-                                <div className='product-btn my-4 mt-[43px]'>
-                                    <ButtonComp text="Add to cart" loading={loading} disabled={loading} onClick={handleAddToCart} />
+                                <div className='mt-4 flex gap-2 flex-wrap items-center'>
+                                    <div className='flex-2'>
+                                        <InputNumber className='py-[6px]' min={1} max={100000} defaultValue={1} onChange={(value) => setQtyToShop(value)} />
+                                    </div>
+                                    <div className='flex-1'>
+                                        <ButtonComp text="Add to cart" loading={loading} disabled={loading} onClick={handleAddToCart} />
+                                    </div>
                                 </div>
                             </div>
                         </Col>

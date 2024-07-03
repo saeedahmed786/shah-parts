@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { BranchesOutlined, GroupOutlined, HomeOutlined, LogoutOutlined, ShopFilled } from '@ant-design/icons';
+import { BranchesOutlined, GroupOutlined, HomeOutlined, LogoutOutlined, OrderedListOutlined, ShopFilled } from '@ant-design/icons';
 import { logout } from '@/components/Commons/Auth/Auth';
 import styles from './AdminSidebar.module.css';
 
@@ -41,6 +41,14 @@ const AdminSidebar = () => {
                             <button className={`${router.pathname === "/admin/products" ? styles.activeLink : styles.inactiveLink}`}>
                                 <ShopFilled />
                                 <span>Products</span>
+                            </button>
+                        </Link>
+                    </div>
+                    <div className={styles.linkWrapper}>
+                        <Link href="/admin/orders">
+                            <button className={`${router.pathname === "/admin/orders" ? styles.activeLink : styles.inactiveLink}`}>
+                                <OrderedListOutlined />
+                                <span>Orders</span>
                             </button>
                         </Link>
                     </div>

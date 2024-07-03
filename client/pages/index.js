@@ -73,6 +73,7 @@ const Home = () => {
   const featuredData = [
     {
       title: "Engine Parts",
+      link: "Engine & Components",
       image: "https://shahparts.com/wp-content/uploads/engines-components.png",
       items: [
         {
@@ -91,6 +92,7 @@ const Home = () => {
     },
     {
       title: "Transmissions & Suspension",
+      link: "Suspension & Components",
       image: "https://shahparts.com/wp-content/uploads/transmissions-suspension.png",
       items: [
         {
@@ -109,6 +111,7 @@ const Home = () => {
     },
     {
       title: "LIGHT SECTION",
+      link: "Lightings",
       image: "https://shahparts.com/wp-content/uploads/lighting-electronics.png",
       items: [
         {
@@ -127,6 +130,7 @@ const Home = () => {
     },
     {
       title: "Body Parts",
+      link: "Exterior Parts",
       image: "https://shahparts.com/wp-content/uploads/body-parts.png",
       items: [
         {
@@ -149,6 +153,15 @@ const Home = () => {
     }
   ];
 
+  const handleReferCategoryToShop = (part) => {
+    if (part) {
+      const query = new URLSearchParams();
+      if (part) query.append('part', part);
+
+      router.push(`/shop?${query.toString()}`);
+    }
+  };
+
   return (
     <div className={styles.Home}>
       <main className="pb-8">
@@ -163,8 +176,8 @@ const Home = () => {
               {
                 featuredData?.map((data, index) => {
                   return (
-                    <div key={index}>
-                      <div>
+                    <button onClick={() => handleReferCategoryToShop(data?.link)} key={index}>
+                      <div className='text-left'>
                         <h3 className={styles.subTitle}>{data?.title}</h3>
                         <div className="flex flex-wrap flex-col items-center gap-6">
                           <div>
@@ -176,16 +189,16 @@ const Home = () => {
                               alt=""
                             />
                           </div>
-                          <div className='flex flex-col gap-y-2 justify-center'>
+                          {/* <div className='flex flex-col gap-y-2 justify-center'>
                             {data?.items?.map((item, index) => {
                               return (
                                 <Link key={index} href={item?.link} className="text-black text-[17px]">{item?.text}</Link>
                               )
                             })}
-                          </div>
+                          </div> */}
                         </div>
                       </div>
-                    </div>
+                    </button>
                   )
                 })
               }
@@ -243,7 +256,7 @@ const Home = () => {
               brands?.map((brand, index) => {
                 return (
                   <div className="border-2 border-[rgba(244,244,244,1)]" key={index}>
-                    <Link key={index} href={`/brand/${brand?._id}`}>
+                    <Link key={index} href={`/shop?make=${brand?.name?.toUpperCase()}`}>
                       <Image src={brand?.picture} alt={brand?.name} width={200} height={200} style={{ height: "180px", objectFit: "cover" }} />
                     </Link>
                   </div>
@@ -258,7 +271,7 @@ const Home = () => {
               <Image src="/assets/browseBg1.jpg" width={100} height={100} />
             </Col>
             <Col xs={24} md={12}>
-              <h2 className={styles.title}>Shah Motors Auto Parts Online</h2>
+              <h1 className={styles.title}>Shah Motors Auto Parts Online</h1>
               <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
               <h2 className='mb-4 mt-10'>NOW OPEN</h2>
               <ButtonComp text={"Browse"} onClick={() => router.push("/shop")} />
@@ -266,7 +279,7 @@ const Home = () => {
           </Row>
           <Row gutter={[23, 23]} className={styles.browseContainer}>
             <Col xs={24} md={12}>
-              <h2 className={styles.title}>All New Dismantling Factory</h2>
+              <h1 className={styles.title}>All New Dismantling Factory</h1>
               <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
               <h2 className='mb-4 mt-10'>NOW OPEN</h2>
               <ButtonComp text={"Browse"} onClick={() => router.push("/shop")} />
@@ -276,7 +289,7 @@ const Home = () => {
             </Col>
           </Row>
           <div className={styles.textContainer}>
-            <h2 className={styles.title}>Auto Parts you get</h2>
+            <h1 className={styles.title}>Auto Parts you get</h1>
             <p>As Japan’s leading used automobile and auto parts exporter, SHAH PARTS provides an extensive selection of top-of-the-line used parts and accessories available for worldwide delivery. Our stock is sourced daily from a network of registered and professional representatives who review all auction markets throughout Japan, as well as private owners and car dealerships.</p>
             <p>We pride ourselves not only in providing quality Japanese automobiles and auto parts at prices you can afford, but also maintaining the highest level of Japanese customer service throughout the shopping process. Buy from us once and you will see why our number of loyal customers continues to grow.</p>
             <div className='my-0'>
@@ -353,7 +366,7 @@ const Home = () => {
         </Col>
         <Col xs={24} md={12} className={styles.inner}>
           <div>
-            <h2 className={styles.title}>Expert advice to your inbox</h2>
+            <h1 className={styles.title}>Expert advice to your inbox</h1>
             <h3>Subscribe to our Emailing List for Updated Prices and Sales Alert on Auto Parts and Electronics</h3>
           </div>
           <form>

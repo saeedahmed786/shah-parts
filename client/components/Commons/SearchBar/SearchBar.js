@@ -101,63 +101,49 @@ const SearchBar = () => {
 
     return (
         <div className={styles.SearchBar}>
-            <div className='flex gap-6 flex-wrap'>
-                <Space wrap>
-                    <label>Make</label>
-                    <Select
-                        className={styles.select}
-                        loading={loading}
-                        placeholder="Make"
-                        style={{ minWidth: 120 }}
-                        onChange={(val) => {
-                            setSelectedMake(val);
-                            getAllModelsByMake(val);
-                        }}
-                        options={makesArray}
-                    />
-                </Space>
-                <Space wrap>
-                    <label>Model</label>
-                    <Select
-                        className={styles.select}
-                        loading={loading}
-                        placeholder="Model"
-                        style={{ minWidth: 120 }}
-                        onChange={(val) => {
-                            setSelectedModel(val);
-                            getAllPartByModel(val);
-                        }}
-                        options={modelsArray}
-                    />
-                </Space>
-                <Space wrap>
-                    <label>Part</label>
-                    <Select
-                        className={styles.select}
-                        loading={loading}
-                        placeholder="Part"
-                        style={{ minWidth: 120 }}
-                        onChange={(val) => {
-                            setSelectedPart(val);
-                            getAllPartAccessoriesByPart(val);
-                        }}
-                        options={partsArray}
-                    />
-                </Space>
-                <Space wrap>
-                    <label>Accessories</label>
-                    <Select
-                        className={styles.select}
-                        loading={loading}
-                        placeholder="Accessories"
-                        style={{ minWidth: 120 }}
-                        onChange={(val) => setSelectedAccessory(val)}
-                        options={partAccessoriesArray}
-                    />
-                </Space>
-                <Space className={styles.button}>
-                    <ButtonComp text="Search" onClick={handleSearch} />
-                </Space>
+            <div className='flex gap-6 justify-center flex-wrap w-full'>
+                {/* <label>Make</label> */}
+                <Select
+                    className={styles.select}
+                    loading={loading}
+                    placeholder="Make"
+                    onChange={(val) => {
+                        setSelectedMake(val);
+                        getAllModelsByMake(val);
+                    }}
+                    options={makesArray}
+                />
+                {/* <label>Model</label> */}
+                <Select
+                    className={styles.select}
+                    loading={loading}
+                    placeholder="Model"
+                    onChange={(val) => {
+                        setSelectedModel(val);
+                        getAllPartByModel(val);
+                    }}
+                    options={modelsArray}
+                />
+                {/* <label>Part</label> */}
+                <Select
+                    className={styles.select}
+                    loading={loading}
+                    placeholder="Part"
+                    onChange={(val) => {
+                        setSelectedPart(val);
+                        getAllPartAccessoriesByPart(val);
+                    }}
+                    options={partsArray}
+                />
+                {/* <label>Accessories</label> */}
+                <Select
+                    className={styles.select}
+                    loading={loading}
+                    placeholder="Accessories"
+                    onChange={(val) => setSelectedAccessory(val)}
+                    options={partAccessoriesArray}
+                />
+                <ButtonComp text="Search" onClick={handleSearch} />
             </div>
         </div>
     );

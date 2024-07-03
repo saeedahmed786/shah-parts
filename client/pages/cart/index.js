@@ -6,6 +6,7 @@ import { DeleteFilled } from "@ant-design/icons";
 import { ButtonComp } from "@/components/Commons/ButtonComp/ButtonComp";
 import { useRouter } from "next/router";
 import { useCartContext } from "@/context/CartContext";
+import CheckoutSteps from "@/components/CheckoutSteps/CheckoutSteps";
 
 const CartPage = () => {
   const router = useRouter();
@@ -13,7 +14,10 @@ const CartPage = () => {
 
 
   return (
-    <div className={styles.cart} data-aos="fade-right" data-aos-duration="1000">
+    <div className={styles.cart}>
+      <div className="p-[30px]">
+        <CheckoutSteps step={0} loading={false} />
+      </div>
       <h1 className={styles.title}>My Cart</h1>
       <Row gutter={[23, 23]}>
         <Col xs={24} md={17}>
@@ -52,7 +56,7 @@ const CartPage = () => {
                     <h2 className={styles.subTitle}>
                       Your Cart is Empty!
                     </h2>
-                    <ButtonComp text="Start Shopping Now" onClick={() => router.push("/products")} />
+                    <ButtonComp text="Start Shopping Now" onClick={() => router.push("/shop")} />
                   </div>
                 </div>
             }
