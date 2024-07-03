@@ -27,7 +27,7 @@ const ShopPage = () => {
 
   const getAllData = async () => {
     setLoading(true);
-    await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/get`, { page: current - 1, priceRange, make, model, part, partAccessory }).then(res => {
+    await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/get`, { page: current - 1, pageSize: "20", priceRange, make, model, part, partAccessory }).then(res => {
       setLoading(false);
       if (res.status === 200) {
         setProductsArray(res.data?.products);
@@ -207,7 +207,7 @@ const ShopPage = () => {
           </Row>
       }
       <div className='flex justify-center my-10'>
-        <Pagination current={current} showSizeChanger={false} onChange={(page) => setCurrent(page)} total={totalCount} />
+        <Pagination current={current} defaultPageSize={20} showSizeChanger={false} onChange={(page) => setCurrent(page)} total={totalCount} />
       </div>
     </div >
   )
