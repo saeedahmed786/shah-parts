@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { ErrorAlert, SuccessAlert } from '@/components/Commons/Messages/Messages';
-import styles from "./BulkProductsUpload.module.css"
+import styles from './BulkProductsUpload.module.css';
 import { ButtonComp } from '@/components/Commons/ButtonComp/ButtonComp';
 
 export const BulkProductsUpload = ({ updateParentData }) => {
@@ -13,7 +13,6 @@ export const BulkProductsUpload = ({ updateParentData }) => {
         setFile(e.target.files[0]);
     };
 
-
     const transformImages = (product) => {
         const imageKeys = Object.keys(product).filter(key => key.startsWith('image'));
         const pictures = imageKeys.map(key => product[key]).filter(link => link);
@@ -22,12 +21,12 @@ export const BulkProductsUpload = ({ updateParentData }) => {
     };
 
     const transformKeysToLowerCase = (obj) => {
-        return Object.keys(obj)?.reduce((acc, key) => {
-            acc[key?.toLowerCase()] = obj[key];
+        if (!obj) return {};
+        return Object.keys(obj).reduce((acc, key) => {
+            acc[key.toLowerCase()] = obj[key];
             return acc;
         }, {});
     };
-
 
     const handleUpload = async () => {
         if (!file) return;
@@ -36,38 +35,50 @@ export const BulkProductsUpload = ({ updateParentData }) => {
         const reader = new FileReader();
         reader.onload = async (e) => {
             setFileLoading(false);
-            const data = JSON.parse(e.target.result);
-            const products = await data.map(product => {
+            let data;
+            try {
+                data = JSON.parse(e.target.result);
+            } catch (error) {
+                ErrorAlert('Invalid JSON file');
+                return;
+            }
+
+            const products = data.map(product => {
                 let categories = product?.categories?.split(' > ');
-                if (categories && categories?.length > 0) {
-                    return ({
+                if (categories && categories.length > 0) {
+                    return {
                         ...product,
                         part: categories[2],
                         partaccessorries: categories[3],
                         ...transformImages(product)
-                    })
+                    };
                 }
+                return product;
             });
+
             setLoading(true);
-            const finalProducts = products?.map(product => transformKeysToLowerCase(product));
-            await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/bulk-upload`, { products: finalProducts }, {
-                headers: {
-                    authorization: 'Bearer ' + localStorage.getItem('token')
+            const finalProducts = products.map(product => transformKeysToLowerCase(product));
+            if (!finalProducts.includes(null)) {
+                try {
+                    const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/bulk-upload`, { products: finalProducts }, {
+                        headers: {
+                            authorization: 'Bearer ' + localStorage.getItem('token')
+                        }
+                    });
+
+                    setLoading(false);
+                    if (res.statusText === 'OK') {
+                        SuccessAlert(res.data.successMessage);
+                        updateParentData();
+                    } else {
+                        ErrorAlert(res.data.errorMessage);
+                    }
+                } catch (err) {
+                    setLoading(false);
+                    console.log(err);
+                    ErrorAlert(err?.message);
                 }
-            }).then(res => {
-                setLoading(false);
-                if (res.statusText === "OK") {
-                    SuccessAlert(res.data.successMessage);
-                    updateParentData();
-                }
-                else {
-                    ErrorAlert(res.data.errorMessage);
-                }
-            }).catch(err => {
-                setLoading(false);
-                console.log(err)
-                ErrorAlert(err?.message);
-            })
+            }
         };
 
         reader.readAsText(file);
@@ -86,4 +97,4 @@ export const BulkProductsUpload = ({ updateParentData }) => {
             </div>
         </div>
     );
-}
+};
