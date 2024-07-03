@@ -52,9 +52,8 @@ const ProfilePage = () => {
 
 
     return (
-        user && user?.email &&
-        <div className={styles.profile}>
-            <AccountLayout sidebar>
+        <AccountLayout sidebar>
+            <div className={styles.profile}>
                 <Form
                     layout="vertical"
                     form={form}
@@ -162,8 +161,8 @@ const ProfilePage = () => {
                         <ButtonComp type='submit' text="Submit" loading={loading} disabled={loading} />
                     </Form.Item>
                 </Form>
-            </AccountLayout>
-        </div>
+            </div>
+        </AccountLayout>
     )
 }
 
