@@ -30,7 +30,7 @@ const CartPage = () => {
                       <div className={styles.crtimg}>
                         <Image src={prod?.pictures[0]} width={100} height={100} alt={prod?.title} />
                       </div>
-                      <div className="md:px-4">
+                      <div className="md:px-4 flex-1">
                         <h2>
                           {prod?.title}
                         </h2>
