@@ -10,8 +10,9 @@ import Loading from "@/components/Commons/Loading/Loading";
 import { isAuthenticated } from "@/components/Commons/Auth/Auth";
 import { useCartContext } from "@/context/CartContext";
 import countryList from 'react-select-country-list'
-import { PaypalButton } from "@/components/Payments/PaypalButton";
 import CheckoutSteps from "@/components/CheckoutSteps/CheckoutSteps";
+import { PaypalButtonWrapper } from "@/components/Payments/PaypalButtonWrapper";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 const { TextArea } = Input;
 
@@ -23,13 +24,15 @@ const CheckoutPage = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [notes, setNotes] = useState("");
   const [shipToDifferentAddress, setShipToDifferentAddress] = useState(false);
+  const [savedBillingAddress, setSavedBillingAddress] = useState({});
+  const [savedShippingAddress, setSavedShippingAddress] = useState({});
   const { cart, clearCart } = useCartContext();
   const countryOptions = useMemo(() => countryList().getData(), [])
 
   const totalAmount = cart?.reduce((a, b) => a + parseInt(b?.price) * parseInt(b?.qtyToShop), 0);
   const shippingCost = 210;
 
-  const transactionSuccess = async (billingAddress, shippingAddress, data) => {
+  const transactionSuccess = async (data) => {
     await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/orders/place-order`, {
       notes,
       placed: moment().format("DD/MM/YYYY"),
@@ -39,8 +42,8 @@ const CheckoutPage = () => {
       totalAmount: totalAmount + shippingCost,
       user: isAuthenticated(),
       cartProducts: cart,
-      billingAddress,
-      shippingAddress,
+      billingAddress: savedBillingAddress,
+      shippingAddress: savedShippingAddress,
       paymentData: data
     }, {
       headers: {
@@ -94,10 +97,10 @@ const CheckoutPage = () => {
   const handlePaymentClick = () => {
     form.submit();
     const { billingAddress, shippingAddress } = form.getFieldsValue();
-    transactionSuccess(billingAddress, shippingAddress);
+    setSavedBillingAddress(billingAddress)
+    setSavedShippingAddress(shippingAddress)
+    setShowPayment(true);
   }
-
-  console.log(form.getFieldsValue())
 
   return (
     <div className={styles.checkout}>
@@ -395,17 +398,24 @@ const CheckoutPage = () => {
                   }
                 </Form>
                 :
-                showPayment &&
+                // showPayment &&
                 (
                   <>
                     <h2 className="text-[28px]">Please pay total amount of <b>${totalAmount + shippingCost}</b> to process your order.</h2>
-                    <Divider>Or</Divider>
-                    <PaypalButton
-                      toPay={totalAmount + shippingCost}
-                      onSuccess={transactionSuccess}
-                      transactionError={transactionError}
-                      transactionCanceled={transactionCanceled}
-                    />
+                    <PayPalScriptProvider
+                      options={{
+                        "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
+                        components: "buttons",
+                        currency: "USD"
+                      }}
+                    >
+                      <PaypalButtonWrapper
+                        amount={totalAmount + shippingCost}
+                        placeOrder={transactionSuccess}
+                        currency={"USD"}
+                        showSpinner={false}
+                      />
+                    </PayPalScriptProvider>
                   </>
                 )
             }

@@ -11,7 +11,7 @@ export const AccountLayout = (props) => {
       <>
         <div>
           <h1 className='text-[47px] font-bold'>My Account</h1>
-          <p className='text-[28px] font-[500]'>{user?.firstName} {user?.lastName}</p>
+          <p className='text-[28px] font-[500]'>{user?.fullName}</p>
         </div>
         <Row style={{ borderTop: '1px solid #d4d5d9' }}>
           <Col xs={24} md={6}>

@@ -1,9 +1,7 @@
-const User = require('../models/userModel');
 const Order = require('../models/orderModel');
 const Template = require('../email-template');
 const sendEmail = require('../nodemailer');
 const config = require('../config/keys');
-const stripe = require('stripe')(config.STRIPE_SECRET);
 
 exports.getAllOrders = async (req, res) => {
     try {
@@ -61,57 +59,6 @@ exports.getAllOrderById = async (req, res) => {
         res.status(400).send(error);
     }
 }
-
-exports.createStripePaymentIntent = async (req, res) => {
-    const { totalPrice } = req.body;
-    try {
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount: parseInt(totalPrice) * 100,
-            currency: "EUR",
-            automatic_payment_methods: {
-                enabled: true,
-            },
-        })
-
-        res.status(200).json({
-            clientSecret: paymentIntent.client_secret,
-        });
-    } catch (err) {
-        console.log(err);
-        res.status(400).json({ err, errorMessage: "Error while creating stripe payment intent" })
-    }
-}
-
-exports.paymentController = async (req, res) => {
-    try {
-        const { token } = req.body;
-        stripe.charges.create({
-            description: 'Buying My Shop Product',
-            source: token.id,
-            currency: 'USD',
-            amount: parseInt(10 * 100),
-            receipt_email: token.email
-        })
-            .then(result => {
-                User.findOne({ _id: req.user._id }).exec((error, user) => {
-                    if (error) {
-                        res.status.json({ errorMessage: 'User not found' });
-                    }
-                    if (user) {
-                        user.save();
-                        res.status(200).json({ successMessage: 'Paid Successfully!', result });
-                    }
-                })
-            }).catch(err => {
-                console.log(err);
-                res.status(400).json({ errorMessage: 'Payment failed. Try again!', err });
-            });
-    } catch (error) {
-        console.log(error);
-        res.status(400).send(error);
-    }
-}
-
 
 exports.placeOrder = async (req, res) => {
     try {
