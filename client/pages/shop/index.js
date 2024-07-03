@@ -184,28 +184,30 @@ const ShopPage = () => {
           ]} />
         </div>
       </div>
-      {
-        loading ?
-          <Loading />
-          :
-          <Row gutter={[23, 23]} className="p-4">
+      <div className='mt-4'>
+        {
+          loading ?
+            <Loading />
+            :
+            <Row gutter={[23, 23]} className="p-4">
 
-            {
-              productsArray?.length > 0 ?
-                productsArray?.map((product, index) => {
-                  return (
-                    <Col xs={12} md={8} lg={6} key={index}>
-                      <ProductCard product={product} />
-                    </Col>
-                  )
-                })
-                :
-                <Col xs={24} className="text-center">
-                  <h3 className='text-[36px] font-bold'>No Products Found!</h3>
-                </Col>
-            }
-          </Row>
-      }
+              {
+                productsArray?.length > 0 ?
+                  productsArray?.map((product, index) => {
+                    return (
+                      <Col xs={12} md={8} lg={6} key={index}>
+                        <ProductCard product={product} />
+                      </Col>
+                    )
+                  })
+                  :
+                  <Col xs={24} className="text-center">
+                    <h3 className='text-[36px] font-bold'>No Products Found!</h3>
+                  </Col>
+              }
+            </Row>
+        }
+      </div>
       <div className='flex justify-center my-10'>
         <Pagination current={current} defaultPageSize={20} showSizeChanger={false} onChange={(page) => setCurrent(page)} total={totalCount} />
       </div>

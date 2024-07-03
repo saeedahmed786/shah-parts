@@ -2,7 +2,6 @@ import { ErrorAlert } from '@/components/Commons/Messages/Messages';
 import { Col, InputNumber, Row, Tabs } from 'antd';
 import axios from 'axios';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -187,9 +186,7 @@ const ProductPage = () => {
                                 relatedProducts?.map((product, index) => {
                                     return (
                                         <Col xs={12} md={8} lg={6} key={index}>
-                                            <Link href={`/product/${product?._id}`}>
-                                                <ProductCard product={product} />
-                                            </Link>
+                                            <ProductCard product={product} />
                                         </Col>
                                     )
                                 })

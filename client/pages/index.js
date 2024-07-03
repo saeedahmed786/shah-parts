@@ -5,13 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import styles from "../styles/home.module.css"
-import featuredImg1 from "../public/assets/Sidebar-1.png";
-import featuredImg2 from "../public/assets/Sidebar-2.png";
-import featuredImg3 from "../public/assets/Sidebar-3.png";
-import likeOnFacebook from "../public/assets/followonfb.png";
 import featuredBadge from "../public/assets/sidebar-badge-1.png";
-import browseBg1 from "../public/assets/browseBg1.jpg";
-import browseBg2 from "../public/assets/browseBg2.png";
 import { ErrorAlert } from '@/components/Commons/Messages/Messages';
 import axios from 'axios';
 import { ProductCard } from '@/components/Commons/ProductCard/ProductCard';
@@ -150,7 +144,7 @@ const Home = () => {
           text: "Spoilers"
         }
       ]
-    }      
+    }
   ];
 
 
