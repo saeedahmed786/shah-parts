@@ -1,5 +1,22 @@
 const Product = require('../models/productModel');
 
+const createIndexes = async () => {
+  try {
+    await Product.collection.dropIndexes();
+
+    await Product.collection.createIndex({ title: 1 });
+    await Product.collection.createIndex({ make: 1 });
+    await Product.collection.createIndex({ model: 1 });
+    await Product.collection.createIndex({ part: 1 });
+    await Product.collection.createIndex({ partaccessorries: 1 });
+    await Product.collection.createIndex({ featured: 1 });
+
+    console.log('Indexes created successfully.');
+  } catch (error) {
+    console.error('Error creating indexes:', error);
+  }
+};
+
 exports.getAllProducts = async (req, res) => {
   try {
     const products = await Product.find().limit(20)

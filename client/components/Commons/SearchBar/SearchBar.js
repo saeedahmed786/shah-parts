@@ -105,7 +105,6 @@ const SearchBar = () => {
                 {/* <label>Make</label> */}
                 <Select
                     className={styles.select}
-                    loading={loading}
                     placeholder="Make"
                     onChange={(val) => {
                         setSelectedMake(val);
@@ -116,7 +115,6 @@ const SearchBar = () => {
                 {/* <label>Model</label> */}
                 <Select
                     className={styles.select}
-                    loading={loading}
                     placeholder="Model"
                     onChange={(val) => {
                         setSelectedModel(val);
@@ -127,7 +125,6 @@ const SearchBar = () => {
                 {/* <label>Part</label> */}
                 <Select
                     className={styles.select}
-                    loading={loading}
                     placeholder="Part"
                     onChange={(val) => {
                         setSelectedPart(val);
@@ -138,7 +135,6 @@ const SearchBar = () => {
                 {/* <label>Accessories</label> */}
                 <Select
                     className={styles.select}
-                    loading={loading}
                     placeholder="Accessories"
                     onChange={(val) => setSelectedAccessory(val)}
                     options={partAccessoriesArray}
