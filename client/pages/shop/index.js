@@ -26,7 +26,7 @@ const ShopPage = () => {
 
   const getAllData = async () => {
     setLoading(true);
-    await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/get`, { page: current - 1, pageSize: "20", priceRange, make, model, part, partAccessory }).then(res => {
+    await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/get`, { page: current - 1, pageSize: "20", priceRange, Make: make, Model: model, Part: part, PartAccessorries: partAccessory }).then(res => {
       setLoading(false);
       if (res.status === 200) {
         setProductsArray(res.data?.products);
