@@ -15,7 +15,7 @@ const Navbar = () => {
 
 
     return (
-        <nav className={styles.Navbar}>
+        <div className={styles.Navbar}>
             <div className={styles.left}>
                 <div className={styles.logo}>
                     <Logo />
@@ -35,7 +35,7 @@ const Navbar = () => {
             <div className={styles.right}>
                 <SearchForm />
                 {
-                    userAuth?.role === 1 &&
+                    userAuth?.role === 1 && 
                     <Link href="/admin/products">
                         Dashboard
                     </Link>
@@ -55,7 +55,7 @@ const Navbar = () => {
                     </a>
                 }
             </div>
-        </nav>
+        </div>
     )
 }
 

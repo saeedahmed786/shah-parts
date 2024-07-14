@@ -1,7 +1,6 @@
 import { ErrorAlert } from '@/components/Commons/Messages/Messages';
 import { Col, Pagination, Row, Select } from 'antd';
 import axios from 'axios';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import styles from './shop.module.css';
@@ -16,10 +15,10 @@ const ShopPage = () => {
   const [sortValue, setSortValue] = useState("");
   const [parts, setParts] = useState([]);
   const [makes, setMakes] = useState([]);
-  const [make, setMake] = useState(router.query.make);
-  const [part, setPart] = useState(router.query.part);
-  const [model, setModel] = useState(router.query.model);
-  const [partAccessory, setPartAccessory] = useState(router.query.partAccessory);
+  const [make, setMake] = useState(router.query.Make);
+  const [part, setPart] = useState(router.query.Part);
+  const [model, setModel] = useState(router.query.Model);
+  const [partAccessory, setPartAccessory] = useState(router.query.PartAccessory);
   const [priceRange, setPriceRange] = useState();
   const [loading, setLoading] = useState(false);
   const [totalCount, setTotalCount] = useState();
@@ -47,7 +46,7 @@ const ShopPage = () => {
     await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/parts`).then((res) => {
       setLoading(false);
       if (res.status === 200) {
-        setParts(res.data?.map(f => ({ value: f, label: f })));
+        setParts(res.data?.map(f => ({ value: f?.part, label: f?.part })));
       }
       else {
         ErrorAlert(res.data.errorMessage);
@@ -63,7 +62,7 @@ const ShopPage = () => {
     await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/makes`).then((res) => {
       setLoading(false);
       if (res.status === 200) {
-        setMakes(res.data?.map(f => ({ value: f, label: f })));
+        setMakes(res.data?.map(f => ({ value: f?.make, label: f?.make })));
       }
       else {
         ErrorAlert(res.data.errorMessage);
@@ -77,17 +76,17 @@ const ShopPage = () => {
   useEffect(() => {
     getAllParts();
     getAllMakes();
-    if (router.query?.make) {
-      setMake(router.query?.make)
+    if (router.query?.Make) {
+      setMake(router.query?.Make)
     }
-    if (router.query?.model) {
-      setModel(router.query?.model)
+    if (router.query?.Model) {
+      setModel(router.query?.Model)
     }
-    if (router.query?.part) {
-      setPart(router.query?.part)
+    if (router.query?.Part) {
+      setPart(router.query?.Part)
     }
-    if (router.query?.partAccessory) {
-      setPartAccessory(router.query?.partAccessory)
+    if (router.query?.PartAccessory) {
+      setPartAccessory(router.query?.PartAccessory)
     }
     return () => {
 
@@ -190,20 +189,19 @@ const ShopPage = () => {
             <Loading />
             :
             <Row gutter={[23, 23]} className="p-4">
-
               {
-                productsArray?.length > 0 ?
-                  productsArray?.map((product, index) => {
-                    return (
-                      <Col xs={12} md={8} lg={6} key={index}>
-                        <ProductCard product={product} />
-                      </Col>
-                    )
-                  })
-                  :
-                  <Col xs={24} className="text-center">
-                    <h3 className='text-[36px] font-bold'>No Products Found!</h3>
-                  </Col>
+                // productsArray?.length > 0 ?
+                productsArray?.map((product, index) => {
+                  return (
+                    <Col xs={12} md={8} lg={6} key={index}>
+                      <ProductCard product={product} />
+                    </Col>
+                  )
+                })
+                // :
+                // <Col xs={24} className="text-center">
+                //   <h3 className='text-[36px] font-bold'>No Products Found!</h3>
+                // </Col>
               }
             </Row>
         }

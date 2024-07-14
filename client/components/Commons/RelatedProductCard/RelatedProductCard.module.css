@@ -1,0 +1,44 @@
+.RelatedProductCard {
+    color: white;
+    width: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+
+.RelatedProductCard button {
+    background-color: #000 !important;
+}
+
+.RelatedProductCard img {
+    width: 121px !important;
+    height: 121px;
+    object-fit: cover;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.RelatedProductCard h2 {
+    color: black;
+    margin-bottom: 6px;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.RelatedProductCard p {
+    color: black;
+    margin-bottom: 0px;
+    color: var(--fs-color-primary);
+    font-weight: bolder;
+}
+
+/* Cart */
+
+
+@media (max-width: 600px) {
+    .RelatedProductCard img {
+        height: 220px !important;
+    }
+}

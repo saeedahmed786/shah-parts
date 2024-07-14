@@ -8,7 +8,7 @@ router.get('/get/order/:id', AuthenticatorJWT, getAllOrderById);
 router.get('/completed-orders', AuthenticatorJWT, getAllCompletedOrders);
 router.get('/admin/all-orders', AuthenticatorJWT, isAdmin, getAllOrders);
 router.get('/customer/orders/:id', AuthenticatorJWT, getAllCustomerOrdersById);
-router.post('/place-order', AuthenticatorJWT, placeOrder);
+router.post('/place-order', placeOrder);
 router.put('/set/status', AuthenticatorJWT, isAdmin, setOrderStatus);
 
 module.exports = router;

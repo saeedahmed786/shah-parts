@@ -15,7 +15,7 @@
 
 .product .Carousel img {
     width: 100% !important;
-    max-height: 80vh;
+    height: 73vh;
 }
 
 .product img {
@@ -31,7 +31,7 @@
 }
 
 .product .right {
-    margin-top: 45px;
+    margin-top: -100px !important;
     max-width: 600px;
 }
 
@@ -39,6 +39,7 @@
     font-size: 36px;
     font-weight: 600;
     color: var(--main-bg-color);
+    margin-bottom: 6px;
 }
 
 .product .right h2 {
@@ -91,11 +92,51 @@
 
 .product .right button {
     border-radius: 4px !important;
+    background-color: #ff7d19 !important;
+    height: 56px;
+    max-width: 280px;
+}
+
+.product .right button svg {
+    font-size: 19px;
+}
+
+.product .right .qtyContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 160px;
+    gap: 32px;
+    background-color: #f7f8fd;
+    height: 57px;
+    border-radius: 10px;
+}
+
+.product .right .qtyContainer div {
+    font-weight: bold;
+    font-size: 19px;
+}
+
+.product .right .qtyContainer svg {
+    color: #ff7d19;
+    font-weight: bold;
+    font-size: 19px;
+}
+
+.specicificationsContainer {
+    background-color: white !important;
+    border: 1px solid rgb(214, 217, 218) !important;
+    padding: 23px !important;
 }
 
 .product .productTabs div[role="tab"] {
     color: var(--primary-color) !important;
     font-size: 23px;
+}
+
+.product .productTabs>div>div {
+    justify-content: flex-start !important;
 }
 
 .product .descriptionItemContainer {
@@ -112,11 +153,6 @@
 
 .product .descriptionItems {
     margin-bottom: 23px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    /* justify-content: space-between; */
     gap: 36px;
     row-gap: 0px;
 }
@@ -126,14 +162,20 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    border-bottom: 1px solid rgb(214, 217, 218);
+    border: 1px solid rgb(214, 217, 218);
+    border-bottom: none;
+    padding: 0px 15px;
     padding-bottom: 0px;
+}
+
+.product .descriptionItems li:last-of-type {
+    border-bottom: 1px solid rgb(214, 217, 218);
 }
 
 .product .descriptionItems strong {
     display: block;
     text-transform: capitalize;
-    background-color: rgb(231, 237, 239);
+    /* background-color: rgb(231, 237, 239); */
     padding: 2px 4px;
     width: 160px !important;
 }
@@ -142,14 +184,19 @@
     display: block;
     text-transform: capitalize;
     padding: 10px;
-    width: 230px !important;
+}
+
+.product .relatedProducts {
+    background-color: white !important;
+    border: 1px solid rgb(214, 217, 218) !important;
+    padding: 23px !important;
 }
 
 .product .relatedProducts h1 {
-    font-size: 36px;
+    font-size: 19px;
     font-weight: 600;
     color: var(--main-bg-color);
-    text-align: center;
+    text-align: left;
     margin-bottom: 28px;
 }
 

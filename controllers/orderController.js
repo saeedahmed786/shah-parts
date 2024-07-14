@@ -64,11 +64,10 @@ exports.placeOrder = async (req, res) => {
     try {
         const { cartProducts, user, paymentData, placed, billingAddress, shippingAddress, totalAmount, subTotal, shipping, notes, paymentMethod } = req.body;
         const order = new Order({
-            userId: req.user._id,
             user,
             products: cartProducts,
             user: {
-                name: user?.firstName + user?.lastName,
+                name: user?.fullName,
                 email: user?.email
             },
             paymentData,
@@ -81,6 +80,9 @@ exports.placeOrder = async (req, res) => {
             totalPrice: totalAmount,
             paymentMethod
         });
+        if (req?.user?._id) {
+            order.userId = req.user._id;
+        }
         await order.save(async (err, result) => {
             if (err) { console.log('Payment Failed', err) }
             if (result) {

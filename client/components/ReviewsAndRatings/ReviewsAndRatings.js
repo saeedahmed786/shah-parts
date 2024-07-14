@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { Rate, Button, Input, List, Card, Avatar } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Rate, Input, List, Card } from 'antd';
 import styles from "./ReviewsAndRatings.module.css"
 import { ButtonComp } from '../Commons/ButtonComp/ButtonComp';
-import { isAuthenticated } from '../Commons/Auth/Auth';
+import { ErrorAlert, SuccessAlert } from '../Commons/Messages/Messages';
+import axios from 'axios';
+import { UserOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
 
-const ReviewsAndRatings = () => {
-    const [reviews, setReviews] = useState([]);
+const ReviewsAndRatings = ({ reviews, product, updateParent }) => {
     const [currentReview, setCurrentReview] = useState('');
     const [currentRating, setCurrentRating] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     const handleReviewChange = (e) => {
         setCurrentReview(e.target.value);
@@ -20,16 +21,26 @@ const ReviewsAndRatings = () => {
         setCurrentRating(value);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (currentReview && currentRating) {
-            const newReview = {
-                review: currentReview,
-                rating: currentRating,
-                userName: isAuthenticated()?.fullName ? isAuthenticated()?.fullName : isAuthenticated()?.email,
-                _id: isAuthenticated()?._id,
-                userAvatar: <Avatar icon={<UserOutlined />} />,
-            };
-            setReviews([newReview, ...reviews]);
+            setLoading(true);
+            await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/add-review/${product?._id}`, { review: currentReview, rating: currentRating }, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then(async (res) => {
+                setLoading(false);
+                if (res.status === 200) {
+                    SuccessAlert(res.data.successMessage);
+                    updateParent();
+                }
+                else {
+                    ErrorAlert(res.data.errorMessage);
+                }
+            }).catch(err => {
+                setLoading(false);
+                console.log(err)
+            })
             setCurrentReview('');
             setCurrentRating(0);
         }
@@ -49,26 +60,26 @@ const ReviewsAndRatings = () => {
                         className={styles.input}
                     />
                     <div className='mt-4'>
-                        <ButtonComp text="Submit" onClick={handleSubmit} disabled={!currentReview || !currentRating} />
+                        <ButtonComp text="Submit" onClick={handleSubmit} disabled={!currentReview || !currentRating || loading} />
                     </div>
                 </div>
             </Card>
             {
                 reviews?.length > 0 &&
                 <div className="mt-5">
-                    <h2 className="mb-4">Reviews</h2>
+                    <h2 className="mb-4">Reviews ({reviews?.length})</h2>
                     <List
                         itemLayout="horizontal"
                         dataSource={reviews}
                         renderItem={(item) => (
                             <List.Item>
                                 <List.Item.Meta
-                                    avatar={item.userAvatar}
-                                    title={item.userName}
+                                    avatar={<UserOutlined />}
+                                    title={item?.user?.firstName + " " + item?.user?.lastName}
                                     description={
                                         <div>
-                                            <Rate disabled value={item.rating} />
-                                            <p>{item.review}</p>
+                                            <Rate disabled value={item?.rating} />
+                                            <p>{item?.review}</p>
                                         </div>
                                     }
                                 />

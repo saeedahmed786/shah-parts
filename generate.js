@@ -4,9 +4,9 @@
 // // Function to remove the dollar sign and convert to number
 // const removeDollarSignAndConvertToNumber = (products) => {
 //     return products.map(product => {
-//         // if (product.Price) {
+//         // if (product?.Price) {
 //         //     // Remove any non-digit characters (like $ or spaces) and convert to number
-//         //     product.Price = parseFloat(product.Price.replace(/[^0-9.]/g, ''));
+//         //     product?.Price = parseFloat(product?.Price.replace(/[^0-9.]/g, ''));
 //         // }
 
 //         if (product['Reg.Year'] && product['Reg.Year'].month) {

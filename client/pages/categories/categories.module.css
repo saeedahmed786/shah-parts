@@ -24,6 +24,15 @@
     background-color: var(--fs-color-primary);
 }
 
+.CategoriesPage button {
+    font-size: 17px !important;
+}
+
+.CategoriesPage img {
+    width: 100% !important;
+    height: 100% !important;
+}
+
 @media (max-width: 700px) {
     .CategoriesPage .top h1 {
         text-align: left;

@@ -16,30 +16,30 @@ const UpdateProduct = () => {
     let productId = router?.query?.id;
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
-        title: '',
-        price: '',
-        pictures: '',
-        description: '',
-        featured: '',
-        make: '',
-        model: '',
-        part: '',
-        partaccessorries: '',
-        location: '',
-        condition: '',
-        modelCode: '',
-        regyearmonth: '',
-        mileage: '',
-        missiontype: '',
-        enginemodel: '',
-        enginesize: '',
-        fuel: '',
-        drive: '',
-        autopartsmaker: '',
-        genuinepartsno: '',
-        chassisno: '',
-        refno: '',
-        geartype: ''
+        Title: '',
+        Price: '',
+        Pictures: '',
+        Description: '',
+        Featured: '',
+        Make: '',
+        Model: '',
+        Part: '',
+        PartAccessorries: '',
+        Location: '',
+        Condition: '',
+        ModelCode: '',
+        RegistrationYear: '',
+        Mileage: '',
+        MissionType: '',
+        EngineModel: '',
+        EngineSize: '',
+        Fuel: '',
+        Drive: '',
+        AutoPartsMaker: '',
+        GenuinePartsNo: '',
+        ChassisNo: '',
+        RefNo: '',
+        GearType: ''
     });
 
     /*********************************************** onChange *******************************************/
@@ -120,103 +120,103 @@ const UpdateProduct = () => {
                                 </div>
                             </div>
                             <div className="form-group mt-4">
-                                <label>Title</label> <br />
-                                <Input value={formData?.title} required type="text" className="form-control mb-2" placeholder="Enter Your Product Title" onChange={(e) => handleChange("title", e.target.value)} />
+                                <label>TexTitle</label> <br />
+                                <Input value={formData?.Title} required type="text" className="form-control mb-2" placeholder="Enter Your Product TexTitle" onChange={(e) => handleChange("Title", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
-                                <label>Price</label> <br />
-                                <Input value={formData?.price} required type="number" className="form-control mb-2" placeholder="Enter Product's Price" onChange={(e) => handleChange("price", e.target.value)} />
+                                <label>PrPrice</label> <br />
+                                <Input value={formData?.Price} required type="number" className="form-control mb-2" placeholder="Enter Product's PrPrice" onChange={(e) => handleChange("Price", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
-                                <label>Description</label> <br />
-                                <Input value={formData?.description} type="text" className="form-control mb-2" placeholder="Enter Product's Description" onChange={(e) => handleChange("description", e.target.value)} />
+                                <label>DOmDescription</label> <br />
+                                <Input value={formData?.Description} type="text" className="form-control mb-2" placeholder="Enter Product's DOmDescription" onChange={(e) => handleChange("Description", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
-                                <label>Featured</label> <br />
-                                <Select className='w-full' value={formData.featured} placeholder="Featured" onChange={(value) => handleChange("featured", value)} options={[
+                                <label>ForFeatured</label> <br />
+                                <Select className='w-full' value={formData.Featured} placeholder="ForFeatured" onChange={(value) => handleChange("Featured", value)} options={[
                                     { value: "yes", label: "Yes" },
                                     { value: "no", label: "No" }
                                 ]} />
                             </div>
                             <div className="form-group mt-4">
-                                <label>Make</label> <br />
-                                <Input value={formData?.make} type="text" className="form-control mb-2" placeholder="Enter Product's Make" onChange={(e) => handleChange("make", e.target.value)} />
+                                <label>MaMake</label> <br />
+                                <Input value={formData?.Make} type="text" className="form-control mb-2" placeholder="Enter Product's MaMake" onChange={(e) => handleChange("Make", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
-                                <label>Model</label> <br />
-                                <Input value={formData?.model} type="text" className="form-control mb-2" placeholder="Enter Product's Model" onChange={(e) => handleChange("model", e.target.value)} />
+                                <label>MapModel</label> <br />
+                                <Input value={formData?.Model} type="text" className="form-control mb-2" placeholder="Enter Product's MapModel" onChange={(e) => handleChange("Model", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
-                                <label>Part</label> <br />
-                                <Input value={formData?.part} type="text" className="form-control mb-2" placeholder="Enter Product's Part" onChange={(e) => handleChange("part", e.target.value)} />
+                                <label>ProxPart</label> <br />
+                                <Input value={formData?.Part} type="text" className="form-control mb-2" placeholder="Enter Product's ProxPart" onChange={(e) => handleChange("Part", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
-                                <label>Part Accessories</label> <br />
-                                <Input value={formData?.partaccessorries} type="text" className="form-control mb-2" placeholder="Enter Product's Part Accessories" onChange={(e) => handleChange("partaccessorries", e.target.value)} />
+                                <label>ProxPart Accessories</label> <br />
+                                <Input value={formData?.PartAccessorries} type="text" className="form-control mb-2" placeholder="Enter Product's ProxPart Accessories" onChange={(e) => handleChange("PartAccessorries", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
-                                <label>Location</label> <br />
-                                <Input value={formData?.location} type="text" className="form-control mb-2" placeholder="Enter Product's Location" onChange={(e) => handleChange("location", e.target.value)} />
+                                <label>LocLocation</label> <br />
+                                <Input value={formData?.Location} type="text" className="form-control mb-2" placeholder="Enter Product's LocLocation" onChange={(e) => handleChange("Location", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
-                                <label>Condition</label> <br />
-                                <Input value={formData?.condition} type="text" className="form-control mb-2" placeholder="Enter Product's Condition" onChange={(e) => handleChange("condition", e.target.value)} />
+                                <label>ConsCondition</label> <br />
+                                <Input value={formData?.Condition} type="text" className="form-control mb-2" placeholder="Enter Product's ConsCondition" onChange={(e) => handleChange("Condition", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
-                                <label>Model Code</label> <br />
-                                <Input value={formData?.modelCode} type="text" className="form-control mb-2" placeholder="Enter Product's Model Code" onChange={(e) => handleChange("modelCode", e.target.value)} />
+                                <label>MapModel Code</label> <br />
+                                <Input value={formData?.ModelCode} type="text" className="form-control mb-2" placeholder="Enter Product's MapModel Code" onChange={(e) => handleChange("ModelCode", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
                                 <label>Registration Year/Month</label> <br />
-                                <Input value={formData?.regyearmonth} type="text" className="form-control mb-2" placeholder="Enter Product's Registration Year/Month" onChange={(e) => handleChange("regyearmonth", e.target.value)} />
+                                <Input value={formData?.RegistrationYear} type="text" className="form-control mb-2" placeholder="Enter Product's Registration Year/Month" onChange={(e) => handleChange("RegistrationYear", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
-                                <label>Mileage</label> <br />
-                                <Input value={formData?.mileage} type="text" className="form-control mb-2" placeholder="Enter Product's Mileage" onChange={(e) => handleChange("mileage", e.target.value)} />
+                                <label>MosMileage</label> <br />
+                                <Input value={formData?.Mileage} type="text" className="form-control mb-2" placeholder="Enter Product's MosMileage" onChange={(e) => handleChange("Mileage", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
                                 <label>Mission Type</label> <br />
-                                <Input value={formData?.missiontype} type="text" className="form-control mb-2" placeholder="Enter Product's Mission Type" onChange={(e) => handleChange("missiontype", e.target.value)} />
+                                <Input value={formData?.MissionType} type="text" className="form-control mb-2" placeholder="Enter Product's Mission Type" onChange={(e) => handleChange("MissionType", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
-                                <label>Engine Model</label> < br />
-                                <Input value={formData?.enginemodel} type="text" className="form-control mb-2" placeholder="Enter Product's Engine Model" onChange={(e) => handleChange("enginemodel", e.target.value)} />
+                                <label>Engine MapModel</label> < br />
+                                <Input value={formData?.EngineModel} type="text" className="form-control mb-2" placeholder="Enter Product's Engine MapModel" onChange={(e) => handleChange("EngineModel", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
                                 <label>Engine Size</label> <br />
-                                <Input value={formData?.enginesize} type="text" className="form-control mb-2" placeholder="Enter Product's Engine Size" onChange={(e) => handleChange("enginesize", e.target.value)} />
+                                <Input value={formData?.EngineSize} type="text" className="form-control mb-2" placeholder="Enter Product's Engine Size" onChange={(e) => handleChange("EngineSize", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
                                 <label>Fuel</label> <br />
-                                <Input value={formData?.fuel} type="text" className="form-control mb-2" placeholder="Enter Product's Fuel" onChange={(e) => handleChange("fuel", e.target.value)} />
+                                <Input value={formData?.Fuel} type="text" className="form-control mb-2" placeholder="Enter Product's Fuel" onChange={(e) => handleChange("Fuel", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
-                                <label>Drive</label> <br />
-                                <Input value={formData?.drive} type="text" className="form-control mb-2" placeholder="Enter Product's Drive" onChange={(e) => handleChange("drive", e.target.value)} />
+                                <label>DoDrive</label> <br />
+                                <Input value={formData?.Drive} type="text" className="form-control mb-2" placeholder="Enter Product's DoDrive" onChange={(e) => handleChange("Drive", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
-                                <label>Auto Parts Maker</label> <br />
-                                <Input value={formData?.autopartsmaker} type="text" className="form-control mb-2" placeholder="Enter Product's Auto Parts Maker" onChange={(e) => handleChange("autopartsmaker", e.target.value)} />
+                                <label>Auto ProxParts MaMaker</label> <br />
+                                <Input value={formData?.AutoPartsMaker} type="text" className="form-control mb-2" placeholder="Enter Product's Auto ProxParts MaMaker" onChange={(e) => handleChange("AutoPartsMaker", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
-                                <label>Genuine Parts Number</label> <br />
-                                <Input value={formData?.genuinepartsno} type="text" className="form-control mb-2" placeholder="Enter Product's Genuine Parts Number" onChange={(e) => handleChange("genuinepartsno", e.target.value)} />
+                                <label>Genuine ProxParts Number</label> <br />
+                                <Input value={formData?.GenuinePartsNo} type="text" className="form-control mb-2" placeholder="Enter Product's Genuine ProxParts Number" onChange={(e) => handleChange("GenuinePartsNo", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
                                 <label>Chassis Number</label> <br />
-                                <Input value={formData?.chassisno} type="text" className="form-control mb-2" placeholder="Enter Product's Chassis Number" onChange={(e) => handleChange("chassisno", e.target.value)} />
+                                <Input value={formData?.ChassisNo} type="text" className="form-control mb-2" placeholder="Enter Product's Chassis Number" onChange={(e) => handleChange("ChassisNo", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
                                 <label>Reference Number</label> <br />
-                                <Input value={formData?.refno} type="text" className="form-control mb-2" placeholder="Enter Product's Reference Number" onChange={(e) => handleChange("refno", e.target.value)} />
+                                <Input value={formData?.RefNo} type="text" className="form-control mb-2" placeholder="Enter Product's Reference Number" onChange={(e) => handleChange("RefNo", e.target.value)} />
                             </div>
                             <div className="form-group mt-4">
                                 <label>Gear Type</label> < br />
-                                <Input value={formData?.geartype} type="text" className="form-control mb-2" placeholder="Enter Product's Gear Type" onChange={(e) => handleChange("geartype", e.target.value)} />
+                                <Input value={formData?.GearType} type="text" className="form-control mb-2" placeholder="Enter Product's Gear Type" onChange={(e) => handleChange("GearType", e.target.value)} />
                             </div>
                             <div className='my-3'>
                                 <label>Pictures</label> < br />
-                                <DragUpload value={formData?.pictures} updateFiles={(val) => handleChange("pictures", val)} />
+                                <DragUpload value={formData?.Pictures} updateFiles={(val) => handleChange("Pictures", val)} />
                             </div>
                             <div className='mt-5'>
                                 <ButtonComp type='primary' htmlType="submit" loading={loading} disabled={loading} text="Submit" />

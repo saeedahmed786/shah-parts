@@ -40,7 +40,7 @@ const Home = () => {
 
   const getAllBrands = async (e) => {
     setLoading(true);
-    await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/brands/get`).then((res) => {
+    await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/makes`).then((res) => {
       setLoading(false);
       if (res.status === 200) {
         setBrands(res.data);
@@ -51,7 +51,7 @@ const Home = () => {
     }).catch(err => {
       setLoading(false);
       console.log(err)
-    })
+    });
   }
 
   useEffect(() => {
@@ -169,7 +169,7 @@ const Home = () => {
             <Link href="/categories">View All &gt;</Link>
           </div>
           <div className=''>
-            <div className='flex gap-10 flex-wrap'>
+            <div className='flex gap-10 flex-wrap justify-between'>
               {
                 featuredData?.map((data, index) => {
                   return (
@@ -253,8 +253,8 @@ const Home = () => {
               brands?.map((brand, index) => {
                 return (
                   <div className="border-2 border-[rgba(244,244,244,1)]" key={index}>
-                    <Link key={index} href={`/shop?make=${brand?.name?.toUpperCase()}`}>
-                      <Image src={brand?.picture} alt={brand?.name} width={200} height={200} style={{ height: "180px", objectFit: "cover" }} />
+                    <Link key={index} href={`/shop?make=${brand?.make?.toUpperCase()}`}>
+                      <Image src={brand?.image} alt={brand?.make} width={200} height={200} style={{ height: "180px", objectFit: "contain" }} />
                     </Link>
                   </div>
                 )
@@ -263,28 +263,6 @@ const Home = () => {
           </div>
         </section>
         <section className="mt-[60px]">
-          <Row gutter={[23, 23]} className={styles.browseContainer}>
-            <Col xs={24} md={12} className={styles.left}>
-              <Image src="/assets/browseBg1.jpg" width={100} height={100} />
-            </Col>
-            <Col xs={24} md={12}>
-              <h1 className={styles.title}>Shah Motors Auto Parts Online</h1>
-              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-              <h2 className='mb-4 mt-10'>NOW OPEN</h2>
-              <ButtonComp text={"Browse"} onClick={() => router.push("/shop")} />
-            </Col>
-          </Row>
-          <Row gutter={[23, 23]} className={styles.browseContainer}>
-            <Col xs={24} md={12}>
-              <h1 className={styles.title}>All New Dismantling Factory</h1>
-              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-              <h2 className='mb-4 mt-10'>NOW OPEN</h2>
-              <ButtonComp text={"Browse"} onClick={() => router.push("/shop")} />
-            </Col>
-            <Col xs={24} md={12} className={styles.left}>
-              <Image src="/assets/browseBg2.png" width={100} height={100} />
-            </Col>
-          </Row>
           <div className={styles.textContainer}>
             <h1 className={styles.title}>Auto Parts you get</h1>
             <p>As Japan’s leading used automobile and auto parts exporter, SHAH PARTS provides an extensive selection of top-of-the-line used parts and accessories available for worldwide delivery. Our stock is sourced daily from a network of registered and professional representatives who review all auction markets throughout Japan, as well as private owners and car dealerships.</p>

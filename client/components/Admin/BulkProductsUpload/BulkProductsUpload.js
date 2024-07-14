@@ -14,19 +14,19 @@ export const BulkProductsUpload = ({ updateParentData }) => {
     };
 
     const transformImages = (product) => {
-        const imageKeys = Object.keys(product).filter(key => key.startsWith('image'));
-        const pictures = imageKeys.map(key => product[key]).filter(link => link);
+        const imageKeys = Object.keys(product).filter(key => key.startsWith('Image'));
+        const Pictures = imageKeys.map(key => product[key]).filter(link => link);
 
-        return { pictures };
+        return { Pictures };
     };
 
-    const transformKeysToLowerCase = (obj) => {
-        if (!obj) return {};
-        return Object.keys(obj).reduce((acc, key) => {
-            acc[key.toLowerCase()] = obj[key];
-            return acc;
-        }, {});
-    };
+    // const transformKeysToLowerCase = (obj) => {
+    //     if (!obj) return {};
+    //     return Object.keys(obj).reduce((acc, key) => {
+    //         acc[key.toLowerCase()] = obj[key];
+    //         return acc;
+    //     }, {});
+    // };
 
     const handleUpload = async () => {
         if (!file) return;
@@ -42,14 +42,13 @@ export const BulkProductsUpload = ({ updateParentData }) => {
                 ErrorAlert('Invalid JSON file');
                 return;
             }
-
             const products = data.map(product => {
-                let categories = product?.categories?.split(' > ');
+                let categories = product?.Categories?.split(' > ');
                 if (categories && categories.length > 0) {
                     return {
                         ...product,
-                        part: categories[2],
-                        partaccessorries: categories[3],
+                        Part: categories?.length === 6 ? categories[4] : categories[2],
+                        PartAccessorries: categories?.length === 6 ? categories[5] : categories[3],
                         ...transformImages(product)
                     };
                 }
@@ -57,10 +56,11 @@ export const BulkProductsUpload = ({ updateParentData }) => {
             });
 
             setLoading(true);
-            const finalProducts = products.map(product => transformKeysToLowerCase(product));
-            if (!finalProducts.includes(null)) {
+            // const finalProducts = products.map(product => product);
+            console.log(products);
+            if (!products?.includes(null)) {
                 try {
-                    const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/bulk-upload`, { products: finalProducts }, {
+                    const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/bulk-upload`, { products }, {
                         headers: {
                             authorization: 'Bearer ' + localStorage.getItem('token')
                         }

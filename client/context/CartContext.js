@@ -28,26 +28,34 @@ export function CartProvider({ children }) {
                 ErrorAlert(err?.message);
             })
         } else {
-            ErrorAlert("Please login to add to cart");
+            var allEntries = localStorage.getItem("products") && JSON.parse(localStorage.getItem("products")) || [];
+            allEntries.push(data);
+            localStorage.setItem('products', JSON.stringify(allEntries));
+            SuccessAlert("Product added to cart successfully")
+            getCartProductsFromLocalStorage();
         }
     };
 
     const removeFromCart = async (cartId) => {
-        await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/delete/${cartId}`, {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('token')
-            }
-        }).then(res => {
-            if (res.status === 200) {
-                SuccessAlert(res.data.successMessage);
-                getCartProducts();
-            } else {
-                ErrorAlert(res.data.errorMessage)
-            }
-        }).catch(err => {
-            console.log(err)
-            ErrorAlert(err?.message);
-        })
+        if (isAuthenticated()) {
+            await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/delete/${cartId}`, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then(res => {
+                if (res.status === 200) {
+                    SuccessAlert(res.data.successMessage);
+                    getCartProducts();
+                } else {
+                    ErrorAlert(res.data.errorMessage)
+                }
+            }).catch(err => {
+                console.log(err)
+                ErrorAlert(err?.message);
+            })
+        } else {
+            removeProductFromLSById(cartId)
+        }
     };
 
     const getCartProducts = async () => {
@@ -73,28 +81,31 @@ export function CartProvider({ children }) {
     }
 
     const clearCart = async () => {
-        await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/empty`, {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('token')
-            }
-        }).then(res => {
-            if (res.status === 200) {
-                SuccessAlert(res.data.successMessage)
-                getCartProducts();
-            } else {
-                ErrorAlert(res.data.errorMessage)
-            }
-        }).catch(err => {
-            console.log(err)
-            ErrorAlert(err?.message);
-        })
+        if (isAuthenticated()) {
+            await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/empty`, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then(res => {
+                if (res.status === 200) {
+                    SuccessAlert(res.data.successMessage)
+                    getCartProducts();
+                } else {
+                    ErrorAlert(res.data.errorMessage)
+                }
+            }).catch(err => {
+                console.log(err)
+                ErrorAlert(err?.message);
+            })
+        } else {
+            localStorage.removeItem("products");
+            getCartProductsFromLocalStorage();
+        }
     };
 
 
     const saveQtyToDb = async (qty, product) => {
-        if (qty > product?.qty - 1) {
-            ErrorAlert('Product out of stock!')
-        } else {
+        if (isAuthenticated()) {
             await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/update/qty/${product?._id}`, { qtyToShop: qty, userId: isAuthenticated()?._id, productId: product?._id }, {
                 headers: {
                     authorization: 'Bearer ' + localStorage.getItem('token')
@@ -107,12 +118,62 @@ export function CartProvider({ children }) {
                     ErrorAlert(res.data.errorMessage);
                 }
             })
+        } else {
+            console.log(qty);
+            saveQtyToLocalStorage(product, qty);
+            getCartProductsFromLocalStorage();
         }
     }
 
 
+
+
+    const getCartProductsFromLocalStorage = async () => {
+        const getDATA = localStorage.getItem("products") ? JSON.parse(localStorage.getItem('products')) : [];
+        const unique = Array.from(getDATA.reduce((map, obj) => map.set(obj._id, obj), new Map()).values());
+        setCart(unique);
+    }
+
     useEffect(() => {
-        getCartProducts();
+        if (isAuthenticated()) {
+            getCartProducts();
+        }
+        else {
+            getCartProductsFromLocalStorage();
+        }
+
+        return () => {
+
+        }
+    }, []);
+
+    const saveQtyToLocalStorage = async (product, qtyToShop) => {
+        if (product, qtyToShop) {
+            product.qtyToShop = qtyToShop;
+            const allProd = localStorage.getItem("products") && JSON.parse(localStorage.getItem('products'));
+            const newArray = allProd.filter(item => item?._id !== product?._id);
+            await newArray.push(product);
+            localStorage.setItem('products', JSON.stringify(newArray));
+            await getCartProductsFromLocalStorage();
+        }
+    }
+
+    const removeProductFromLSById = async (cartId) => {
+        const allProd = localStorage.getItem("products") && JSON.parse(localStorage.getItem('products'));
+        const newArray = allProd?.filter(item => item?._id !== cartId);
+        await localStorage.setItem('products', JSON.stringify(newArray));
+        ErrorAlert("product removed from cart");
+        await getCartProductsFromLocalStorage();
+
+    }
+
+
+    useEffect(() => {
+        if (isAuthenticated()) {
+            getCartProducts();
+        } else {
+            getCartProductsFromLocalStorage();
+        }
 
         return () => {
 
@@ -127,7 +188,9 @@ export function CartProvider({ children }) {
                 addToCart,
                 removeFromCart,
                 clearCart,
-                saveQtyToDb
+                saveQtyToDb,
+                saveQtyToLocalStorage,
+                removeProductFromLSById
             }}
         >
             {children}

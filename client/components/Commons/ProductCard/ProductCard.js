@@ -15,12 +15,12 @@ export const ProductCard = ({ product }) => {
   return (
     <div className={styles.ProductCard}>
       <Link href={`/product/${product?._id}`}>
-        <Image width={100} height={100} quality={100} src={product?.pictures[0]} />
+        <Image width={100} height={100} quality={100} src={product?.Pictures[0]} />
       </Link>
       <ButtonComp text="Add To Cart" onClick={handleAddToCart} />
       <div className='p-3'>
-        <h2>{product?.title}</h2>
-        <p>${product?.price}</p>
+        <h2>{product?.Title}</h2>
+        <p>${product?.Price}</p>
       </div>
     </div>
   )

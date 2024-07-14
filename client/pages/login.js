@@ -25,9 +25,14 @@ const Login = () => {
       setLoading(false);
       if (res.status === 200) {
         setAuthentication(res.data?.user, res.data?.token);
+        const redirectUrl = localStorage.getItem("redirectUrl");
         if (remember) {
           saveCredentials(form.getFieldValue("email"), form.getFieldValue("password"));
-          router.push('/');
+          if (redirectUrl) {
+            router.push(redirectUrl)
+          } else {
+            router.push('/');
+          }
           setTimeout(() => {
             document.location.reload();
           }, 1000);
@@ -35,7 +40,11 @@ const Login = () => {
         } else {
           localStorage.removeItem('email');
           localStorage.removeItem('password');
-          router.push('/');
+          if (redirectUrl) {
+            router.push(redirectUrl)
+          } else {
+            router.push('/');
+          }
           setTimeout(() => {
             document.location.reload();
           }, 1000);

@@ -1,5 +1,5 @@
 import { ErrorAlert } from '@/components/Commons/Messages/Messages';
-import { Col, InputNumber, Row, Tabs } from 'antd';
+import { Col, Rate, Row, Tabs } from 'antd';
 import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -8,9 +8,10 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import styles from './product.module.css';
 import { ButtonComp } from '@/components/Commons/ButtonComp/ButtonComp';
-import { ProductCard } from '@/components/Commons/ProductCard/ProductCard';
 import { useCartContext } from '@/context/CartContext';
 import ReviewsAndRatings from '@/components/ReviewsAndRatings/ReviewsAndRatings';
+import { MinusOutlined, PlusOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { RelatedProductCard } from '@/components/Commons/RelatedProductCard/RelatedProductCard';
 
 
 const ProductPage = () => {
@@ -19,7 +20,8 @@ const ProductPage = () => {
     const [product, setProduct] = useState({});
     const [relatedProducts, setRelatedProducts] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [qtyToShop, setQtyToShop] = useState('1');
+    const [qtyToShop, setQtyToShop] = useState(1);
+    const [averageRating, setAverageRating] = useState(0);
     const { addToCart } = useCartContext();
 
     const onChange = (key) => {
@@ -29,6 +31,7 @@ const ProductPage = () => {
 
     const handleAddToCart = async () => {
         product.qtyToShop = qtyToShop;
+
         addToCart(product);
     }
 
@@ -38,7 +41,8 @@ const ProductPage = () => {
             setLoading(false);
             if (res.status === 200) {
                 setProduct(res.data);
-                getRelatedProducts(res.data?.mainCategory);
+                getRelatedProducts(res.data?.Part);
+                setAverageRating(res.data?.Reviews?.reduce((acc, review) => acc + review?.rating, 0) / res.data?.Reviews?.length);
             }
             else {
                 ErrorAlert(res.data.errorMessage);
@@ -89,19 +93,23 @@ const ProductPage = () => {
         };
 
         // Keys to exclude
-        const keysToExclude = ["_id", "createdAt", "updatedAt", "pictures", "__v", "featured", "title", "description", "price"];
+        const keysToExclude = ["_id", "createdAt", "updatedAt", "Pictures", "__v", "Featured", "Title", "Description", "Price", "CategoryImage", "BrandImage", "Reviews"];
 
         // Use the function
         const filteredData = filterObject(product, keysToExclude);
 
+        const putSpaceInKeys = (k) => {
+            return k?.replace(/([A-Z])/g, ' $1').trim()
+        }
+
         return (
             <div className={styles.descriptionItemContainer}>
                 <div>
-                    <h1 className='mb-4 text-[36px] text-center font-bold'>Product Specifications</h1>
+                    {/* <h1 className='mb-4 text-[36px] font-bold'>Product Specifications</h1> */}
                     <ul className={styles.descriptionItems}>
                         {Object.entries(filteredData).map(([key, value]) => (
                             <li key={key}>
-                                <strong>{key}:</strong> <span>{value}</span>
+                                <strong>{putSpaceInKeys(key)}:</strong> <span>{value}</span>
                             </li>
                         ))}
                     </ul>
@@ -120,19 +128,24 @@ const ProductPage = () => {
         {
             key: '2',
             label: 'Reviews',
-            children: <ReviewsAndRatings />,
+            children: <ReviewsAndRatings product={product} updateParent={() => getProduct(productId)} reviews={product?.Reviews} />,
         }
     ];
+
+    function roundRating(value, precision) {
+        var multiplier = Math.pow(10, precision || 0);
+        return Math.round(value * multiplier) / multiplier;
+    }
 
     return (
         <>
             <div className={styles.product}>
                 <div>
-                    <Row gutter={[80, 23]} className="mb-[100px]">
+                    <Row gutter={[80, 23]} className="mb-[100px]" align="middle">
                         <Col xs={24} md={12} lg={12}>
                             <Carousel className={styles.Carousel} showArrows={true} autoPlay showIndicators={false} renderThumbs={() => {
                                 return (
-                                    product?.pictures?.map((picture, index) => {
+                                    product?.Pictures?.map((picture, index) => {
                                         return (
                                             <div key={index} className={styles.thumbContainer}>
                                                 <Image width={300} height={300} src={picture} />
@@ -143,7 +156,7 @@ const ProductPage = () => {
                                 )
                             }}>
                                 {
-                                    product?.pictures?.map((picture, index) => {
+                                    product?.Pictures?.map((picture, index) => {
                                         return (
                                             <div key={index}>
                                                 <Image width={300} height={300} src={picture} />
@@ -157,42 +170,53 @@ const ProductPage = () => {
                         <Col xs={24} md={12} lg={12} className={styles.right}>
                             <div className='p-[17px] md:p-0 md:ml-3'>
                                 <h3>
-                                    {product?.partaccessorries}
+                                    {product?.PartAccessorries}
                                 </h3>
                                 <h1>
-                                    {product?.title}
+                                    {product?.Title}
                                 </h1>
+                                <div className='flex items-center gap-2 my-4'>
+                                    <Rate disabled allowHalf value={averageRating} /><b>{roundRating(averageRating, 1)}</b> <b>({product?.Reviews?.length})</b>
+                                </div>
+                                <h4 className='mb-3'>
+                                    {product?.Description}
+                                </h4>
                                 <h5>
-                                    ${product?.price}
+                                    ${product?.Price}
                                 </h5>
-                                <div className='mt-4 flex gap-2 flex-wrap items-center'>
-                                    <div className='flex-2'>
-                                        <InputNumber className='py-[6px]' min={1} max={100000} defaultValue={1} onChange={(value) => setQtyToShop(value)} />
+                                <div className='mt-4 flex gap-4 flex-wrap items-center'>
+                                    <div className={styles.qtyContainer}>
+                                        <MinusOutlined onClick={() => qtyToShop > 1 && setQtyToShop(prev => prev - 1)} />
+                                        <div>{qtyToShop}</div>
+                                        <PlusOutlined onClick={() => setQtyToShop(prev => prev + 1)} />
+                                        {/* <InputNumber className='py-[12px]' min={1} max={100000} defaultValue={1} onChange={(value) => setQtyToShop(value)} /> */}
                                     </div>
                                     <div className='flex-1'>
-                                        <ButtonComp text="Add to cart" loading={loading} disabled={loading} onClick={handleAddToCart} />
+                                        <ButtonComp text={<div className='flex items-center justify-center gap-4'><ShoppingCartOutlined /> Add to cart</div>} loading={loading} disabled={loading} onClick={handleAddToCart} />
                                     </div>
                                 </div>
                             </div>
                         </Col>
-                        <Col xs={24}>
+                    </Row>
+                    <Row gutter={[80, 23]}>
+                        <Col xs={24} md={16} className={styles.specicificationsContainer}>
                             <Tabs rootClassName={styles.productTabs} centered defaultActiveKey="1" items={items} onChange={onChange} />
                         </Col>
+                        <Col xs={24} md={8}>
+                            <div className={styles.relatedProducts}>
+                                <h1>Similar Items</h1>
+                                <div className='flex flex-col gap-3'>
+                                    {
+                                        relatedProducts?.slice(0, 4)?.map((product, index) => {
+                                            return (
+                                                <RelatedProductCard key={index} product={product} />
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        </Col>
                     </Row>
-                    <div className={styles.relatedProducts}>
-                        <h1>You may also like</h1>
-                        <Row gutter={[23, 23]}>
-                            {
-                                relatedProducts?.map((product, index) => {
-                                    return (
-                                        <Col xs={12} md={8} lg={6} key={index}>
-                                            <ProductCard product={product} />
-                                        </Col>
-                                    )
-                                })
-                            }
-                        </Row>
-                    </div>
                 </div>
             </div>
         </>

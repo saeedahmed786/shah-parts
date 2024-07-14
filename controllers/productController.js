@@ -4,12 +4,12 @@ const createIndexes = async () => {
   try {
     await Product.collection.dropIndexes();
 
-    await Product.collection.createIndex({ title: 1 });
-    await Product.collection.createIndex({ make: 1 });
-    await Product.collection.createIndex({ model: 1 });
-    await Product.collection.createIndex({ part: 1 });
-    await Product.collection.createIndex({ partaccessorries: 1 });
-    await Product.collection.createIndex({ featured: 1 });
+    await Product.collection.createIndex({ Title: 1 });
+    await Product.collection.createIndex({ Make: 1 });
+    await Product.collection.createIndex({ Model: 1 });
+    await Product.collection.createIndex({ Part: 1 });
+    await Product.collection.createIndex({ PartAccessorries: 1 });
+    await Product.collection.createIndex({ Featured: 1 });
 
     console.log('Indexes created successfully.');
   } catch (error) {
@@ -47,20 +47,20 @@ exports.getLimitedProducts = async (req, res) => {
     let query = {};
 
 
-    if (req.body.make) {
-      query.make = req.body.make;
+    if (req.body.Make) {
+      query.Make = req.body.Make;
     }
 
-    if (req.body.model) {
-      query.model = req.body.model;
+    if (req.body.Model) {
+      query.Model = req.body.Model;
     }
 
-    if (req.body.part) {
-      query.part = req.body.part;
+    if (req.body.Part) {
+      query.Part = req.body.Part;
     }
 
-    if (req.body.partAccessory) {
-      query.partaccessories = req.body.partAccessory;
+    if (req.body.PartAccessory) {
+      query.PartAccessorries = req.body.PartAccessory;
     }
 
     if (minPrice && maxPrice) {
@@ -69,7 +69,7 @@ exports.getLimitedProducts = async (req, res) => {
 
     const PAGE_SIZE = 20;
     const page = parseInt(req.body.page || "0")
-    const products = await Product.find(query).limit(PAGE_SIZE).skip(PAGE_SIZE * page)
+    const products = await Product.find(query).limit(PAGE_SIZE).skip(PAGE_SIZE * page).populate("Reviews.user")
       .sort({ createdAt: -1 }).exec();
     const count = await Product.countDocuments(query);
     if (products) {
@@ -84,7 +84,8 @@ exports.getLimitedProducts = async (req, res) => {
 }
 
 exports.getFeaturedProducts = async (req, res) => {
-  const products = await Product.find({ featured: "yes" }).limit(20).sort({ "createdAt": '-1' })
+  createIndexes();
+  const products = await Product.find({ Featured: "yes" }).limit(20).sort({ "createdAt": '-1' }).populate("Reviews.user")
     .exec();
   try {
     if (products) {
@@ -103,18 +104,20 @@ exports.getAllProductsParts = async (req, res) => {
     const categories = await Product.aggregate([
       {
         $group: {
-          _id: '$part'
+          _id: '$Part',
+          CategoryImage: { $first: '$CategoryImage' }
         }
       },
       {
         $project: {
           _id: 0,
-          part: '$_id'
+          Part: '$_id',
+          CategoryImage: 1
         }
       }
     ]);
 
-    res.json(categories.map(c => c.part));
+    res.json(categories.map(c => ({ part: c.Part, image: c?.CategoryImage })));
   } catch (err) {
     console.log(err);
     res.status(500).send(err.message);
@@ -123,121 +126,124 @@ exports.getAllProductsParts = async (req, res) => {
 
 exports.getAllProductsMakes = async (req, res) => {
   try {
-    const makes = await Product.aggregate([
+    const Makes = await Product.aggregate([
       {
         $group: {
-          _id: '$make'
+          _id: '$Make',
+          BrandImage: { $first: '$BrandImage' } // Assuming BrandImage is the same for all products of the same make
         }
       },
       {
         $project: {
           _id: 0,
-          make: '$_id'
+          Make: '$_id',
+          BrandImage: 1
         }
       }
     ]);
 
-    res.json(makes.map(c => c.make));
+    res.json(Makes.map(c => ({ make: c.Make, image: c.BrandImage })));
   } catch (err) {
     console.log(err);
     res.status(500).send(err.message);
   }
 }
 
-exports.getAllProductsModelsByMake = async (req, res) => {
-  const { make } = req.body;
 
-  if (!make) {
+exports.getAllProductsModelsByMake = async (req, res) => {
+  const { Make } = req.body;
+
+  if (!Make) {
     return res.status(400).json({ error: 'Make is required' });
   }
 
   try {
-    const models = await Product.aggregate([
+    const Models = await Product.aggregate([
       {
         $match: {
-          make: make
+          Make: Make
         }
       },
       {
         $group: {
-          _id: '$model'
+          _id: '$Model'
         }
       },
       {
         $project: {
           _id: 0,
-          model: '$_id'
+          Model: '$_id'
         }
       }
     ]);
 
-    res.json(models.map(m => m.model));
+    res.json(Models.map(m => m.Model));
   } catch (err) {
     res.status(500).send(err.message);
   }
 }
 
 exports.getAllProductsPartsByModel = async (req, res) => {
-  const { model } = req.body;
+  const { Model } = req.body;
 
-  if (!model) {
+  if (!Model) {
     return res.status(400).json({ error: 'Model is required' });
   }
 
   try {
-    const parts = await Product.aggregate([
+    const Parts = await Product.aggregate([
       {
         $match: {
-          model: model
+          Model: Model
         }
       },
       {
         $group: {
-          _id: '$part'
+          _id: '$Part'
         }
       },
       {
         $project: {
           _id: 0,
-          part: '$_id'
+          Part: '$_id'
         }
       }
     ]);
 
-    res.json(parts.map(m => m.part));
+    res.json(Parts.map(m => m.Part));
   } catch (err) {
     res.status(500).send(err.message);
   }
 }
 
-exports.getAllProductsPartaccessoriesByPart = async (req, res) => {
-  const { part } = req.body;
+exports.getAllProductsPartAccessorriesByPart = async (req, res) => {
+  const { Part } = req.body;
 
-  if (!part) {
+  if (!Part) {
     return res.status(400).json({ error: 'Part is required' });
   }
 
   try {
-    const partaccessories = await Product.aggregate([
+    const PartAccessorries = await Product.aggregate([
       {
         $match: {
-          part: part
+          Part: Part
         }
       },
       {
         $group: {
-          _id: '$partaccessorries'
+          _id: '$PartAccessorries'
         }
       },
       {
         $project: {
           _id: 0,
-          partaccessorries: '$_id'
+          PartAccessorries: '$_id'
         }
       }
     ]);
 
-    res.json(partaccessories.map(m => m.partaccessorries));
+    res.json(PartAccessorries.map(m => m.PartAccessorries));
   } catch (err) {
     res.status(500).send(err.message);
   }
@@ -245,7 +251,7 @@ exports.getAllProductsPartaccessoriesByPart = async (req, res) => {
 
 exports.getAllAdminProducts = async (req, res) => {
   try {
-    const products = await Product.find()
+    const products = await Product.find().populate("Reviews.user")
       .exec();
     if (products) {
       res.status(200).send(products);
@@ -260,7 +266,7 @@ exports.getAllAdminProducts = async (req, res) => {
 
 exports.getProductById = async (req, res) => {
   try {
-    const findProduct = await Product.findOne({ _id: req.params.id }).exec();
+    const findProduct = await Product.findOne({ _id: req.params.id }).populate("Reviews.user").exec();
     if (findProduct) {
       res.status(200).send(findProduct);
     } else {
@@ -274,7 +280,7 @@ exports.getProductById = async (req, res) => {
 
 exports.searchProducts = async (req, res) => {
   try {
-    const findProducts = await Product.find({ $or: [{ title: { $regex: new RegExp(req.body.title, 'i') } }, { subTitle: { $regex: new RegExp(req.body.title, 'i') } }] })
+    const findProducts = await Product.find({ $or: [{ Title: { $regex: new RegExp(req.body.Title, 'i') } }, { subTTitle: { $regex: new RegExp(req.body.Title, 'i') } }] })
 
       .exec();
     if (findProducts) {
@@ -288,48 +294,9 @@ exports.searchProducts = async (req, res) => {
 };
 
 
-exports.filterProducts = async (req, res) => {
-  try {
-    let minPrice;
-    let maxPrice;
-    if (req.body.priceRange) {
-      minPrice = req.body.priceRange?.split("-")[0];
-      maxPrice = req.body.priceRange?.split("-")[1];
-    } else {
-      minPrice = 0
-      maxPrice = 30000
-    }
-
-    let query = {};
-
-    if (req.body.category) {
-      query.subCategory = req.body.category;
-    }
-
-    if (minPrice && maxPrice) {
-      query.price = { $gte: minPrice, $lte: maxPrice }; // Filter by price range
-    }
-
-    const PAGE_SIZE = 20;
-    const page = parseInt(req.params.page || "0")
-
-    const findProducts = await Product.find(query)
-      .limit(PAGE_SIZE).skip(PAGE_SIZE * page)
-      .exec();
-    if (findProducts) {
-      res.status(200).json(findProducts);
-    } else {
-      res.json({ errorMessage: 'No products found' })
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
-  }
-}
-
-
 exports.uploadBulkProducts = async (req, res) => {
   const { products } = req.body;
+  console.log(products[0]);
   try {
     const result = await Product.insertMany(products);
     if (result) {
@@ -344,30 +311,30 @@ exports.uploadBulkProducts = async (req, res) => {
 exports.uploadProduct = async (req, res) => {
   try {
     const product = new Product({
-      title: req.body.title,
-      price: req.body.price,
-      description: req.body.description,
-      pictures: req.body.pictures,
-      featured: req.body.featured,
-      make: req.body.make,
-      model: req.body.model,
-      part: req.body.part,
-      partaccessorries: req.body.partaccessorries,
-      location: req.body.location,
-      condition: req.body.condition,
-      modelCode: req.body.modelCode,
-      regyearmonth: req.body.regyearmonth,
-      mileage: req.body.mileage,
-      missiontype: req.body.missiontype,
-      enginemodel: req.body.enginemodel,
-      enginesize: req.body.enginesize,
-      fuel: req.body.fuel,
-      drive: req.body.drive,
-      autopartsmaker: req.body.autopartsmaker,
-      genuinepartsno: req.body.genuinepartsno,
-      chassisno: req.body.chassisno,
-      refno: req.body.refno,
-      geartype: req.body.geartype
+      Title: req.body.Title,
+      Price: req.body.Price,
+      Description: req.body.Description,
+      Pictures: req.body.Pictures,
+      Featured: req.body.Featured,
+      Make: req.body.Make,
+      Model: req.body.Model,
+      Part: req.body.Part,
+      PartAccessorries: req.body.PartAccessorries,
+      Location: req.body.Location,
+      Condition: req.body.Condition,
+      ModelCode: req.body.ModelCode,
+      RegistrationYear: req.body.RegistrationYear,
+      Mileage: req.body.Mileage,
+      MissionType: req.body.MissionType,
+      engineModel: req.body.engineModel,
+      EngineSize: req.body.EngineSize,
+      Fuel: req.body.Fuel,
+      Drive: req.body.Drive,
+      AutoPartsMaker: req.body.AutoPartsMaker,
+      GenuinePartsNo: req.body.GenuinePartsNo,
+      ChassisNo: req.body.ChassisNo,
+      RefNo: req.body.RefNo,
+      GearType: req.body.GearType
     });
 
     await product.save((error, result) => {
@@ -389,30 +356,30 @@ exports.updateProduct = async (req, res) => {
   try {
     const findProduct = await Product.findById({ _id: req.params.id });
     if (findProduct) {
-      findProduct.title = req.body.title;
-      findProduct.price = req.body.price;
-      findProduct.description = req.body.description;
-      findProduct.pictures = req.body.pictures;
-      findProduct.featured = req.body.featured;
-      findProduct.make = req.body.make;
-      findProduct.model = req.body.model;
-      findProduct.part = req.body.part;
-      findProduct.partaccessorries = req.body.partaccessorries;
-      findProduct.location = req.body.location;
-      findProduct.condition = req.body.condition;
-      findProduct.modelCode = req.body.modelCode;
-      findProduct.regyearmonth = req.body.regyearmonth;
-      findProduct.mileage = req.body.mileage;
-      findProduct.missiontype = req.body.missiontype;
-      findProduct.enginemodel = req.body.enginemodel;
-      findProduct.enginesize = req.body.enginesize;
-      findProduct.fuel = req.body.fuel;
-      findProduct.drive = req.body.drive;
-      findProduct.autopartsmaker = req.body.autopartsmaker;
-      findProduct.genuinepartsno = req.body.genuinepartsno;
-      findProduct.chassisno = req.body.chassisno;
-      findProduct.refno = req.body.refno;
-      findProduct.geartype = req.body.geartype;
+      findProduct.Title = req.body.Title;
+      findProduct.Price = req.body.Price;
+      findProduct.Description = req.body.Description;
+      findProduct.Pictures = req.body.Pictures;
+      findProduct.Featured = req.body.Featured;
+      findProduct.Make = req.body.Make;
+      findProduct.Model = req.body.Model;
+      findProduct.Part = req.body.Part;
+      findProduct.PartAccessorries = req.body.PartAccessorries;
+      findProduct.Location = req.body.Location;
+      findProduct.Condition = req.body.Condition;
+      findProduct.ModelCode = req.body.ModelCode;
+      findProduct.RegistrationYear = req.body.RegistrationYear;
+      findProduct.Mileage = req.body.Mileage;
+      findProduct.MissionType = req.body.MissionType;
+      findProduct.engineModel = req.body.EngineModel;
+      findProduct.EngineSize = req.body.EngineSize;
+      findProduct.Fuel = req.body.Fuel;
+      findProduct.Drive = req.body.Drive;
+      findProduct.AutoPartsMaker = req.body.AutoPartsMaker;
+      findProduct.GenuinePartsNo = req.body.GenuinePartsNo;
+      findProduct.ChassisNo = req.body.ChassisNo;
+      findProduct.RefNo = req.body.RefNo;
+      findProduct.GearType = req.body.GearType;
 
       await findProduct.save((error, result) => {
         if (error) {
@@ -424,6 +391,47 @@ exports.updateProduct = async (req, res) => {
     } else {
       res.status(404).json({ errorMessage: 'Product not found' });
     }
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+};
+
+exports.addProductReview = async (req, res) => {
+  const { rating, review } = req.body;
+  try {
+    Product.findOneAndUpdate(
+      { _id: req.params.id },
+      { $push: { Reviews: { user: req.user?._id, rating, review } } },
+      function (error, success) {
+        if (error) {
+          console.log(error);
+          res.status(400).json({ errorMessage: 'Failed to add review. Please try again', error });
+        }
+        if (success) {
+          res.status(200).send({ successMessage: 'Product review added successfully' });
+        }
+      });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+};
+
+exports.removeProductReview = async (req, res) => {
+  try {
+    Product.findOneAndUpdate(
+      { _id: req.params.id },
+      { $pull: { Reviews: { _id: req.body.reviewId } } },
+      function (error, success) {
+        if (error) {
+          console.log(error);
+          res.status(400).json({ errorMessage: 'Failed to add review. Please try again', error });
+        }
+        if (success) {
+          res.status(200).send({ successMessage: 'Product review added successfully' });
+        }
+      });
   } catch (error) {
     console.log(error);
     res.status(400).send(error);
@@ -448,7 +456,7 @@ exports.deleteProduct = async (req, res) => {
 exports.getRelatedProducts = async (req, res) => {
   try {
     if (req.params.id) {
-      const products = await Product.find({ $or: [{ partaccessories: req.params.id }, { part: req.params.id }] }).limit(8).exec();
+      const products = await Product.find({ $or: [{ PartAccessorries: req.params.id }, { Part: req.params.id }] }).limit(6).exec();
       if (products) {
         res.status(200).send(products);
       } else {

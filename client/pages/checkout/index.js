@@ -6,7 +6,6 @@ import { ButtonComp } from "@/components/Commons/ButtonComp/ButtonComp";
 import { useRouter } from "next/router";
 import moment from "moment";
 import axios from "axios";
-import Loading from "@/components/Commons/Loading/Loading";
 import { isAuthenticated } from "@/components/Commons/Auth/Auth";
 import { useCartContext } from "@/context/CartContext";
 import countryList from 'react-select-country-list'
@@ -14,9 +13,8 @@ import CheckoutSteps from "@/components/CheckoutSteps/CheckoutSteps";
 import { PaypalButtonWrapper } from "@/components/Payments/PaypalButtonWrapper";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
-const { TextArea } = Input;
-
 const CheckoutPage = () => {
+  const { TextArea } = Input;
   const [form] = Form.useForm();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -29,7 +27,7 @@ const CheckoutPage = () => {
   const { cart, clearCart } = useCartContext();
   const countryOptions = useMemo(() => countryList().getData(), [])
 
-  const totalAmount = cart?.reduce((a, b) => a + parseInt(b?.price) * parseInt(b?.qtyToShop), 0);
+  const totalAmount = cart?.reduce((a, b) => a + parseInt(b?.Price) * parseInt(b?.qtyToShop), 0);
   const shippingCost = 210;
 
   const transactionSuccess = async (data) => {
@@ -40,7 +38,7 @@ const CheckoutPage = () => {
       shipping: shippingCost,
       paymentMethod: "Paypal",
       totalAmount: totalAmount + shippingCost,
-      user: isAuthenticated(),
+      user: { email: savedBillingAddress?.email, fullName: savedBillingAddress?.fullName },
       cartProducts: cart,
       billingAddress: savedBillingAddress,
       shippingAddress: savedShippingAddress,
@@ -57,7 +55,11 @@ const CheckoutPage = () => {
           clearCart();
           SuccessAlert(res.data.successMessage);
           setTimeout(() => {
-            router.push('/user/orders');
+            if (isAuthenticated()) {
+              router.push('/user/orders');
+            } else {
+              router.push("/");
+            }
           }, 2000);
         } else {
           ErrorAlert(res.data.errorMessage)
@@ -76,19 +78,6 @@ const CheckoutPage = () => {
 
   }
 
-
-  useEffect(() => {
-    if (cart?.length > 0) {
-
-    } else {
-      router.push("/cart");
-    }
-
-    return () => {
-
-    }
-  }, []);
-
   const onFinish = (values) => {
     setAddress(values);
     setShowPayment(true);
@@ -102,12 +91,21 @@ const CheckoutPage = () => {
     setShowPayment(true);
   }
 
+  const handleLogin = () => {
+    localStorage.setItem("redirectUrl", "/checkout");
+    router.push("/login")
+  }
+
   return (
     <div className={styles.checkout}>
       <div className="p-[30px]">
         <CheckoutSteps step={1} loading={loading} />
       </div>
       <h1 className={styles.title}>Checkout</h1>
+      {
+        !isAuthenticated() &&
+        <div className="p-[17px] md:p-[40px]">Please <button onClick={handleLogin} className="btn underline">Login</button> before placing order if you want to track your orders</div>
+      }
       <Row gutter={[23, 23]}>
         <Col xs={24} md={17}>
           <div className="p-[17px] md:p-[40px]" style={{ maxWidth: 800 }}>
@@ -432,7 +430,7 @@ const CheckoutPage = () => {
                       {prod?.title} x {prod?.qtyToShop}
                     </h4>
                     <div className="w-fit">
-                      <h4 className="font-bold text-[16px]">${parseInt(prod?.price) * parseInt(prod?.qtyToShop)}</h4>
+                      <h4 className="font-bold text-[16px]">${parseInt(prod?.Price) * parseInt(prod?.qtyToShop)}</h4>
                     </div>
                   </div>
                 )
@@ -453,7 +451,6 @@ const CheckoutPage = () => {
             </div>
             <div>
               <ButtonComp text="MAKE PAYMENT" loading={loading} disabled={loading} onClick={handlePaymentClick} />
-              {/* <ButtonComp text="BACK" onClick={() => router.push("/cart")} /> */}
             </div>
           </div>
         </Col>

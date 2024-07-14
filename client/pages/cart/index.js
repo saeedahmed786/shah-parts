@@ -12,7 +12,6 @@ const CartPage = () => {
   const router = useRouter();
   const { cart, removeFromCart, saveQtyToDb } = useCartContext();
 
-
   return (
     <div className={styles.cart}>
       <div className="p-[30px]">
@@ -28,21 +27,21 @@ const CartPage = () => {
                   return (
                     <div className={styles.item} key={index}>
                       <div className={styles.crtimg}>
-                        <Image src={prod?.pictures[0]} width={100} height={100} alt={prod?.title} />
+                        <Image src={prod?.Pictures[0]} width={100} height={100} alt={prod?.title} />
                       </div>
                       <div className="md:px-4 flex-1">
                         <h2>
-                          {prod?.title}
+                          {prod?.Title}
                         </h2>
                         <div className="flex justify-between">
                           <div className={styles.qtyContainer}>
                             <h4 className="w-fit">Qty</h4>
                             <div className="max-w-[130px]">
-                              <InputNumber min={1} max={100000} value={prod?.qtyToShop} onChange={(value) => saveQtyToDb(value, prod)} />
+                              <InputNumber min={1} max={100000} defaultValue={prod?.qtyToShop} onChange={(value) => saveQtyToDb(value, prod)} />
                             </div>
                           </div>
                           <div>
-                            <h6 className="w-fit">${parseInt(prod?.price) * parseInt(prod?.qtyToShop)}</h6>
+                            <h6 className="w-fit">${parseInt(prod?.Price) * parseInt(prod?.qtyToShop)}</h6>
                           </div>
                           <DeleteFilled className="text-[19px]" onClick={() => removeFromCart(prod?._id)} />
                         </div>
@@ -67,11 +66,11 @@ const CartPage = () => {
             <h3>Order Details:</h3>
             <div className={styles.orderDetailItem}>
               <h5>Product Total</h5>
-              <h5>£{cart?.reduce((a, b) => a + parseInt(b?.price) * parseInt(b?.qtyToShop), 0)}</h5>
+              <h5>£{cart?.reduce((a, b) => a + parseInt(b?.Price) * parseInt(b?.qtyToShop), 0)}</h5>
             </div>
             <div className={styles.orderDetailItem}>
               <h5>Order Total</h5>
-              <h5>£{cart?.reduce((a, b) => a + parseInt(b?.price) * parseInt(b?.qtyToShop), 0)}</h5>
+              <h5>£{cart?.reduce((a, b) => a + parseInt(b?.Price) * parseInt(b?.qtyToShop), 0)}</h5>
             </div>
             <div>
               <ButtonComp disabled={cart?.length === 0} text="SECURE CHECKOUT" onClick={() => router.push("/checkout")} />

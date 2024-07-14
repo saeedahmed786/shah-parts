@@ -100,10 +100,10 @@ const Orders = () => {
                                         {record?.products?.map((product, index) => (
                                             <div key={index} className="my-0">
                                                 <b>#{index + 1}</b>
-                                                <Image src={product?.pictures[0]} height={64} width={64} alt='images' />
-                                                <span>{product?.title}</span>
+                                                <Image src={product?.Pictures[0]} height={64} width={64} alt='images' />
+                                                <span>{product?.Title}</span>
                                                 <span>Qty: {product?.qtyToShop}</span>
-                                                <span>${parseInt(product?.price * product?.qtyToShop)}</span>
+                                                <span>${parseInt(product?.Price * product?.qtyToShop)}</span>
                                             </div>
                                         ))}
                                     </div>

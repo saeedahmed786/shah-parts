@@ -84,155 +84,155 @@ const Products = () => {
         },
         {
             title: "Title",
-            dataIndex: 'title',
-            key: 'title',
-            sorter: (a, b) => a?.title?.localeCompare(b?.title),
-            render: (_, { title }) => (
+            dataIndex: 'Title',
+            key: 'Title',
+            sorter: (a, b) => a?.Title?.localeCompare(b?.Title),
+            render: (_, { Title }) => (
                 <p className='textElipsisTwoLines'>
-                    {title}
+                    {Title}
                 </p>
             ),
         },
         {
             title: "Price",
-            dataIndex: 'price',
-            key: 'price',
-            sorter: (a, b) => a?.price - b?.price,
+            dataIndex: 'Price',
+            key: 'Price',
+            sorter: (a, b) => a?.Price - b?.Price,
         },
         {
             title: "Description",
-            dataIndex: 'description',
-            key: 'description',
-            sorter: (a, b) => a?.description?.localeCompare(b?.description),
-            render: (_, { description }) => (
+            dataIndex: 'Description',
+            key: 'Description',
+            sorter: (a, b) => a?.Description?.localeCompare(b?.Description),
+            render: (_, { Description }) => (
                 <p className='textElipsisTwoLines'>
-                    {description}
+                    {Description}
                 </p>
             ),
         },
         {
             title: "Make",
-            dataIndex: 'make',
-            key: 'make',
-            sorter: (a, b) => a?.make?.localeCompare(b?.make),
+            dataIndex: 'Make',
+            key: 'Make',
+            sorter: (a, b) => a?.Make?.localeCompare(b?.Make),
         },
         {
             title: "Model",
-            dataIndex: 'model',
-            key: 'model',
-            sorter: (a, b) => a?.model?.localeCompare(b?.model),
+            dataIndex: 'Model',
+            key: 'Model',
+            sorter: (a, b) => a?.Model?.localeCompare(b?.Model),
         },
         {
             title: "Part",
-            dataIndex: 'part',
-            key: 'part',
-            sorter: (a, b) => a?.part?.localeCompare(b?.part),
+            dataIndex: 'Part',
+            key: 'Part',
+            sorter: (a, b) => a?.Part?.localeCompare(b?.Part),
         },
         {
             title: "Part Accessorries",
-            dataIndex: 'partaccessorries',
-            key: 'partaccessorries',
-            sorter: (a, b) => a?.partaccessorries?.localeCompare(b?.partaccessorries),
+            dataIndex: 'PartAccessorries',
+            key: 'PartAccessorries',
+            sorter: (a, b) => a?.PartAccessorries?.localeCompare(b?.PartAccessorries),
         },
         {
             title: "Location",
-            dataIndex: 'location',
-            key: 'location',
-            sorter: (a, b) => a?.location?.localeCompare(b?.location),
+            dataIndex: 'Location',
+            key: 'Location',
+            sorter: (a, b) => a?.Location?.localeCompare(b?.Location),
         },
         {
             title: "Condition",
-            dataIndex: 'condition',
-            key: 'condition',
-            sorter: (a, b) => a?.condition?.localeCompare(b?.condition),
+            dataIndex: 'Condition',
+            key: 'Condition',
+            sorter: (a, b) => a?.Condition?.localeCompare(b?.Condition),
         },
         {
             title: "Model Code",
-            dataIndex: 'modelCode',
-            key: 'modelCode',
-            sorter: (a, b) => a?.modelCode?.localeCompare(b?.modelCode),
+            dataIndex: 'ModelCode',
+            key: 'ModelCode',
+            sorter: (a, b) => a?.ModelCode?.localeCompare(b?.ModelCode),
         },
         {
             title: "Reg Year/Month",
-            dataIndex: 'regyearmonth',
-            key: 'regyearmonth',
-            sorter: (a, b) => a?.regyearmonth?.localeCompare(b?.regyearmonth),
+            dataIndex: 'RegistrationYear',
+            key: 'RegistrationYear',
+            sorter: (a, b) => a?.RegistrationYear?.localeCompare(b?.RegistrationYear),
         },
         {
             title: "Mileage",
-            dataIndex: 'mileage',
-            key: 'mileage',
-            sorter: (a, b) => a?.mileage?.localeCompare(b?.mileage),
+            dataIndex: 'Mileage',
+            key: 'Mileage',
+            sorter: (a, b) => a?.Mileage?.localeCompare(b?.Mileage),
         },
         {
             title: "Mission Type",
-            dataIndex: 'missiontype',
-            key: 'missiontype',
-            sorter: (a, b) => a?.missiontype?.localeCompare(b?.missiontype),
+            dataIndex: 'MissionType',
+            key: 'MissionType',
+            sorter: (a, b) => a?.MissionType?.localeCompare(b?.MissionType),
         },
         {
             title: "Engine Model",
-            dataIndex: 'enginemodel',
-            key: 'enginemodel',
-            sorter: (a, b) => a?.enginemodel?.localeCompare(b?.enginemodel),
+            dataIndex: 'EngineModel',
+            key: 'EngineModel',
+            sorter: (a, b) => a?.EngineModel?.localeCompare(b?.EngineModel),
         },
         {
             title: "Engine Size",
-            dataIndex: 'enginesize',
-            key: 'enginesize',
-            sorter: (a, b) => a?.enginesize?.localeCompare(b?.enginesize),
+            dataIndex: 'EngineSize',
+            key: 'EngineSize',
+            sorter: (a, b) => a?.EngineSize?.localeCompare(b?.EngineSize),
         },
         {
             title: "Fuel",
-            dataIndex: 'fuel',
-            key: 'fuel',
-            sorter: (a, b) => a?.fuel?.localeCompare(b?.fuel),
+            dataIndex: 'Fuel',
+            key: 'Fuel',
+            sorter: (a, b) => a?.Fuel?.localeCompare(b?.Fuel),
         },
         {
             title: "Drive",
-            dataIndex: 'drive',
-            key: 'drive',
-            sorter: (a, b) => a?.drive?.localeCompare(b?.drive),
+            dataIndex: 'Drive',
+            key: 'Drive',
+            sorter: (a, b) => a?.Drive?.localeCompare(b?.Drive),
         },
         {
             title: "Auto Parts Maker",
-            dataIndex: 'autopartsmaker',
-            key: 'autopartsmaker',
-            sorter: (a, b) => a?.autopartsmaker?.localeCompare(b?.autopartsmaker),
+            dataIndex: 'PutoPartsMaker',
+            key: 'PutoPartsMaker',
+            sorter: (a, b) => a?.PutoPartsMaker?.localeCompare(b?.PutoPartsMaker),
         },
         {
             title: "Genuine Parts No.",
-            dataIndex: 'genuinepartsno',
-            key: 'genuinepartsno',
-            sorter: (a, b) => a?.genuinepartsno?.localeCompare(b?.genuinepartsno),
+            dataIndex: 'GenuinePartsNo',
+            key: 'GenuinePartsNo',
+            sorter: (a, b) => a?.GenuinePartsNo?.localeCompare(b?.GenuinePartsNo),
         },
         {
             title: "Chassis No.",
-            dataIndex: 'chassisno',
-            key: 'chassisno',
-            sorter: (a, b) => a?.chassisno?.localeCompare(b?.chassisno),
+            dataIndex: 'ChassisNo',
+            key: 'ChassisNo',
+            sorter: (a, b) => a?.ChassisNo?.localeCompare(b?.ChassisNo),
         },
         {
             title: "Ref No.",
-            dataIndex: 'refno',
-            key: 'refno',
-            sorter: (a, b) => a?.refno?.localeCompare(b?.refno),
+            dataIndex: 'RefNo',
+            key: 'RefNo',
+            sorter: (a, b) => a?.RefNo?.localeCompare(b?.RefNo),
         },
         {
             title: "Gear Type",
-            dataIndex: 'geartype',
-            key: 'geartype',
-            sorter: (a, b) => a?.geartype?.localeCompare(b?.geartype),
+            dataIndex: 'GearType',
+            key: 'GearType',
+            sorter: (a, b) => a?.GearType?.localeCompare(b?.GearType),
         },
         {
             title: "Pictures",
-            dataIndex: 'pictures',
-            key: 'pictures',
-            render: (_, { pictures }) => (
+            dataIndex: 'Pictures',
+            key: 'Pictures',
+            render: (_, { Pictures }) => (
                 <div className='flex gap-2 flex-wrap items-center w-[130px]'>
                     {
-                        pictures?.length > 0 &&
-                        pictures?.map(pic => {
+                        Pictures?.length > 0 &&
+                        Pictures?.map(pic => {
                             return (
                                 <Image src={pic} width={32} height={32} style={{ width: "32px", height: "32px" }} />
                             )
@@ -254,7 +254,8 @@ const Products = () => {
             ),
         },
     ];
-
+    let categoriesList = "TOYOTA > Soarer > 2001 > UA-UZZ40 > Body Parts > Fenders";
+    console.log(categoriesList.split(" > ")[5]);
 
 
     return (

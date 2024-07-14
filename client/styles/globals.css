@@ -172,3 +172,7 @@ button {
   border-radius: 2px !important;
   background: var(--fs-color-alert) !important;
 }
+
+.ant-tabs-tab {
+  padding-top: 0px !important;
+}

@@ -7,7 +7,6 @@ const orderSchema = new mongoose.Schema({
     },
     userId: {
         type: String,
-        required: true
     },
     billingAddress: {
         type: Object,
