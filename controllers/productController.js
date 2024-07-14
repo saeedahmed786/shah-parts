@@ -84,7 +84,7 @@ exports.getLimitedProducts = async (req, res) => {
 }
 
 exports.getFeaturedProducts = async (req, res) => {
-  createIndexes();
+  // createIndexes();
   const products = await Product.find({ Featured: "yes" }).limit(20).sort({ "createdAt": '-1' }).populate("Reviews.user")
     .exec();
   try {
