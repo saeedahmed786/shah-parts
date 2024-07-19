@@ -7,7 +7,7 @@ export const SuccessAlert = (messages) => {
     message.success({
         className: "ant-message",
         content: messages,
-        duration: 1,
+        duration: 4,
         style: { marginTop: '100px' }
     });
 }
@@ -15,7 +15,7 @@ export const ErrorAlert = (messages) => {
     message.error({
         className: "ant-message",
         content: messages,
-        duration: 1,
+        duration: 4,
         style: { marginTop: '100px' }
     });
 

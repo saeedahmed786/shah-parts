@@ -44,11 +44,12 @@ export const BulkProductsUpload = ({ updateParentData }) => {
             }
             const products = data.map(product => {
                 let categories = product?.Categories?.split(' > ');
+                let lastTwoCategories = categories?.slice(-2);
                 if (categories && categories.length > 0) {
                     return {
                         ...product,
-                        Part: categories?.length === 6 ? categories[4] : categories[2],
-                        PartAccessorries: categories?.length === 6 ? categories[5] : categories[3],
+                        Part: lastTwoCategories[1],
+                        PartAccessorries: lastTwoCategories[2],
                         ...transformImages(product)
                     };
                 }

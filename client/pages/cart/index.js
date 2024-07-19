@@ -66,11 +66,11 @@ const CartPage = () => {
             <h3>Order Details:</h3>
             <div className={styles.orderDetailItem}>
               <h5>Product Total</h5>
-              <h5>£{cart?.reduce((a, b) => a + parseInt(b?.Price) * parseInt(b?.qtyToShop), 0)}</h5>
+              <h5 className="text-end">${cart?.reduce((a, b) => a + parseInt(b?.Price) * parseInt(b?.qtyToShop), 0)}</h5>
             </div>
             <div className={styles.orderDetailItem}>
               <h5>Order Total</h5>
-              <h5>£{cart?.reduce((a, b) => a + parseInt(b?.Price) * parseInt(b?.qtyToShop), 0)}</h5>
+              <h5 className="text-end">${cart?.reduce((a, b) => a + parseInt(b?.Price) * parseInt(b?.qtyToShop), 0)}</h5>
             </div>
             <div>
               <ButtonComp disabled={cart?.length === 0} text="SECURE CHECKOUT" onClick={() => router.push("/checkout")} />

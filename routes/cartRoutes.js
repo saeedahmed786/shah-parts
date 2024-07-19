@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/get', AuthenticatorJWT, getProducts);
 router.get('/get-product', getProduct);
 router.post('/add', AuthenticatorJWT, addToCart);
-router.post('/ls-add-to-cart', AuthenticatorJWT, upload.any(''), addToCartFromLS);
+router.post('/ls-add-to-cart', addToCartFromLS);
 router.put('/update/qty/:id', AuthenticatorJWT, updateQuantity);
 router.delete('/delete/:id', AuthenticatorJWT, removeProduct);
 router.delete('/empty', AuthenticatorJWT, emptyCart);

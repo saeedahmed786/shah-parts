@@ -9,7 +9,7 @@ const csvFilePath = path.join(__dirname, 'FinalProducts.csv');
 const jsonFilePath = path.join(__dirname, 'outputFinalProducts.json');
 
 csv()
-    .fromFile(csvFilePath)
+    .fromFile(csvFilePath) 
     .then((jsonObj) => {
         // Write JSON object to file
         fs.writeFileSync(jsonFilePath, JSON.stringify(jsonObj, null, 2));

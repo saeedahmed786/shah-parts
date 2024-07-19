@@ -1,5 +1,4 @@
 // components/Footer.js
-import { Divider } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -103,12 +102,15 @@ const Footer = () => {
                         <div>
                             <Image
                                 src={dhl}
+                                alt="DHL"
                             />
                             <Image
                                 src={jp}
+                                alt="JP"
                             />
                             <Image
                                 src={ups}
+                                alt="UPS"
                             />
                         </div>
                         <h4 className={styles.title}>Payment Partners</h4>
@@ -116,17 +118,19 @@ const Footer = () => {
                             <div>
                                 <Image
                                     src={paypal}
-                                    alt=""
+                                    alt="Paypal"
                                 />
                             </div>
                             <div>
                                 <Image
                                     src={wu}
+                                    alt="WU"
                                 />
                             </div>
                             <div>
                                 <Image
                                     src={bank}
+                                    alt="Bank"
                                 />
                             </div>
                         </div>

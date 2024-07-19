@@ -153,7 +153,7 @@ const Home = () => {
   const handleReferCategoryToShop = (part) => {
     if (part) {
       const query = new URLSearchParams();
-      if (part) query.append('part', part);
+      if (part) query.append('Part', part);
 
       router.push(`/shop?${query.toString()}`);
     }
@@ -253,7 +253,7 @@ const Home = () => {
               brands?.map((brand, index) => {
                 return (
                   <div className="border-2 border-[rgba(244,244,244,1)]" key={index}>
-                    <Link key={index} href={`/shop?make=${brand?.make?.toUpperCase()}`}>
+                    <Link key={index} href={`/shop?Make=${brand?.make?.toUpperCase()}`}>
                       <Image src={brand?.image} alt={brand?.make} width={200} height={200} style={{ height: "180px", objectFit: "contain" }} />
                     </Link>
                   </div>

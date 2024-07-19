@@ -55,7 +55,6 @@ exports.addToCart = async (req, res) => {
                 }
             })
         }
-
     }
     else {
         Cart.create({
@@ -69,13 +68,13 @@ exports.addToCart = async (req, res) => {
 
 
 exports.addToCartFromLS = async (req, res) => {
-    console.log(req.body);
-    const userId = req.user._id;
+    const userId = req.body.userId;
+    const products = req.body.products;
     const result = await Cart.findOne({ userId: userId });
     if (result) {
         Cart.findOneAndUpdate({ userId: userId }, {
             "$push": {
-                "products": req.body
+                "products": products
             }
         }).exec((error, data) => {
             if (error) {
@@ -89,12 +88,12 @@ exports.addToCartFromLS = async (req, res) => {
     else {
         Cart.create({
             userId: userId,
-            products: req.body
+            products,
         });
         res.status(200).json({ successMessage: 'Added to bag successfully!' });
-
     }
 }
+
 exports.removeProduct = async (req, res) => {
     const productId = req.params.id;
     const getCart = await Cart.find().where('userId').in(req.user._id).exec();

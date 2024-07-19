@@ -3,8 +3,8 @@ import { useGlobalContext } from '@/context/GlobalContext';
 import { LogoutOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Badge } from 'antd';
 import Link from 'next/link';
-import React from 'react'
-import { isAuthenticated, logout } from '../Auth/Auth';
+import React from 'react';
+import { logout } from '../Auth/Auth';
 import Logo from '../Logo/Logo';
 import styles from './Navbar.module.css';
 import SearchForm from './SearchForm/SearchForm';
@@ -35,7 +35,7 @@ const Navbar = () => {
             <div className={styles.right}>
                 <SearchForm />
                 {
-                    userAuth?.role === 1 && 
+                    userAuth?.role === 1 &&
                     <Link href="/admin/products">
                         Dashboard
                     </Link>

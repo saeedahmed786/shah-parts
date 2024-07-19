@@ -106,13 +106,13 @@ const ShopPage = () => {
   const sortProducts = (products, sortBy) => {
     switch (sortBy) {
       case "lth":
-        return products.sort((a, b) => a.price - b.price);
+        return products.sort((a, b) => a.Price - b.Price);
       case "htl":
-        return products.sort((a, b) => b.price - a.price);
+        return products.sort((a, b) => b.Price - a.Price);
       case "a-z":
-        return products.sort((a, b) => a.title.localeCompare(b.title));
+        return products.sort((a, b) => a.Title.localeCompare(b.Title));
       case "z-a":
-        return products.sort((a, b) => b.title.localeCompare(a.title));
+        return products.sort((a, b) => b.Title.localeCompare(a.Title));
       case "createdAt":
         return products.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
       default:
@@ -138,7 +138,7 @@ const ShopPage = () => {
   return (
     <div className={styles.ShopPage}>
       <div className={styles.filters}>
-        <div className={styles.filterSection}>
+        {/* <div className={styles.filterSection}>
           <Row gutter={[23, 23]} justify="end">
             <Col xs={12} md={8} lg={6}>
               <div className='mb-0'>Make</div>
@@ -165,7 +165,7 @@ const ShopPage = () => {
               </div>
             </Col>
           </Row>
-        </div>
+        </div> */}
       </div>
       <div className={styles.sortSection}>
         <div className='flex items-center gap-6'>

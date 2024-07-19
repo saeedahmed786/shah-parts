@@ -41,7 +41,7 @@ const ProductPage = () => {
             setLoading(false);
             if (res.status === 200) {
                 setProduct(res.data);
-                getRelatedProducts(res.data?.Part);
+                getRelatedProducts(res.data);
                 setAverageRating(res.data?.Reviews?.reduce((acc, review) => acc + review?.rating, 0) / res.data?.Reviews?.length);
             }
             else {
@@ -53,9 +53,13 @@ const ProductPage = () => {
         })
     }
 
-    const getRelatedProducts = async (id) => {
+    const getRelatedProducts = async (prd) => {
         setLoading(true);
-        await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/get/related/${id}`).then(async (res) => {
+        await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/get/related`, {
+            Make: prd?.Make,
+            Model: prd?.Model,
+            Part: prd?.Part
+        }).then(async (res) => {
             setLoading(false);
             if (res.status === 200) {
                 setRelatedProducts(res.data?.filter(f => f?._id !== productId));
@@ -159,7 +163,7 @@ const ProductPage = () => {
                                     product?.Pictures?.map((picture, index) => {
                                         return (
                                             <div key={index}>
-                                                <Image width={300} height={300} src={picture} />
+                                                <Image width={300} height={300} alt="Carouse Picture" src={picture} />
                                                 <p className='text-white'>wejdfjqhd</p>
                                             </div>
                                         )
@@ -176,7 +180,7 @@ const ProductPage = () => {
                                     {product?.Title}
                                 </h1>
                                 <div className='flex items-center gap-2 my-4'>
-                                    <Rate disabled allowHalf value={averageRating} /><b>{roundRating(averageRating, 1)}</b> <b>({product?.Reviews?.length})</b>
+                                    <Rate disabled allowHalf value={averageRating} /><b>{averageRating ? roundRating(averageRating, 1) : null}</b> <b>({product?.Reviews?.length})</b>
                                 </div>
                                 <h4 className='mb-3'>
                                     {product?.Description}

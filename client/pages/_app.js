@@ -12,6 +12,7 @@ import '../styles/globals.css'
 import FixedButtons from '@/components/Commons/FixedButtons/FixedButtons';
 import { useRouter } from 'next/router';
 import { CartProvider } from '@/context/CartContext';
+import UpdatedHeader from '@/components/Home/UpdatedHeader/UpdatedHeader';
 
 function MyApp({ Component, pageProps }) {
     const router = useRouter();
@@ -23,13 +24,14 @@ function MyApp({ Component, pageProps }) {
             </Head>
             <GlobalContextProvider>
                 <CartProvider>
+                    <UpdatedHeader />
                     <FixedButtons />
-                    <TopMenu />
+                    {/* <TopMenu />
                     <Navbar />
                     {
                         router.pathname !== "/shop" &&
                         <SearchBar />
-                    }
+                    } */}
                     <div className='min-h-[60vh]'>
                         <Component {...pageProps} />
                     </div>

@@ -234,7 +234,7 @@ const Products = () => {
                         Pictures?.length > 0 &&
                         Pictures?.map(pic => {
                             return (
-                                <Image src={pic} width={32} height={32} style={{ width: "32px", height: "32px" }} />
+                                <Image src={pic} width={32} height={32} style={{ width: "32px", height: "32px" }} alt="Product" />
                             )
                         })
                     }

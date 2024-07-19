@@ -176,3 +176,7 @@ button {
 .ant-tabs-tab {
   padding-top: 0px !important;
 }
+
+.mainNavHeader .ant-select-focused .ant-select-selector {
+  box-shadow: none !important;
+}

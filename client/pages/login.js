@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Row, Col, Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Checkbox } from "antd";
 import styles from '../styles/auth.module.css';
 import Link from 'next/link';
 import axios from 'axios';
@@ -18,6 +18,25 @@ const Login = () => {
     localStorage.setItem('email', email);
     localStorage.setItem('password', password);
   }
+
+  const addToCartFromLS = async (userId) => {
+    var allEntries = localStorage.getItem("products") && JSON.parse(localStorage.getItem("products")) || [];
+    if (allEntries?.length > 0) {
+      await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/ls-add-to-cart`, { products: allEntries, userId }).then(res => {
+        if (res.status === 200) {
+          SuccessAlert(res.data.successMessage);
+          getCartProducts();
+        }
+        else {
+          ErrorAlert(res.data.errorMessage)
+        }
+      }).catch(err => {
+        console.log(err)
+        ErrorAlert(err?.message);
+      })
+    }
+  };
+
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -49,6 +68,7 @@ const Login = () => {
             document.location.reload();
           }, 1000);
         }
+        addToCartFromLS(res.data?.user?._id);
         SuccessAlert(res.data.successMessage);
       } else {
         ErrorAlert(res.data.errorMessage);

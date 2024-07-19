@@ -454,9 +454,17 @@ exports.deleteProduct = async (req, res) => {
 }
 
 exports.getRelatedProducts = async (req, res) => {
+  const { Make, Model, Part } = req.body;
   try {
-    if (req.params.id) {
-      const products = await Product.find({ $or: [{ PartAccessorries: req.params.id }, { Part: req.params.id }] }).limit(6).exec();
+    if (Make, Model, Part) {
+      const products = await Product.find({ Make, Part, Model }).limit(6).exec();
+      if (products) {
+        res.status(200).send(products);
+      } else {
+        res.status(201).json({ errorMessage: 'No Related Products' });
+      }
+    } else {
+      const products = await Product.find({ Make, Model, Part }).limit(6).exec();
       if (products) {
         res.status(200).send(products);
       } else {

@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Rate, Input, List, Card } from 'antd';
 import styles from "./ReviewsAndRatings.module.css"
 import { ButtonComp } from '../Commons/ButtonComp/ButtonComp';
-import { ErrorAlert, SuccessAlert } from '../Commons/Messages/Messages';
+import { ErrorAlert, SuccessAlert, WarningAlert } from '../Commons/Messages/Messages';
 import axios from 'axios';
 import { UserOutlined } from '@ant-design/icons';
+import { isAuthenticated } from '../Commons/Auth/Auth';
 
 const { TextArea } = Input;
 
@@ -22,27 +23,31 @@ const ReviewsAndRatings = ({ reviews, product, updateParent }) => {
     };
 
     const handleSubmit = async () => {
-        if (currentReview && currentRating) {
-            setLoading(true);
-            await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/add-review/${product?._id}`, { review: currentReview, rating: currentRating }, {
-                headers: {
-                    Authorization: 'Bearer ' + localStorage.getItem('token')
-                }
-            }).then(async (res) => {
-                setLoading(false);
-                if (res.status === 200) {
-                    SuccessAlert(res.data.successMessage);
-                    updateParent();
-                }
-                else {
-                    ErrorAlert(res.data.errorMessage);
-                }
-            }).catch(err => {
-                setLoading(false);
-                console.log(err)
-            })
-            setCurrentReview('');
-            setCurrentRating(0);
+        if (isAuthenticated()) {
+            if (currentReview && currentRating) {
+                setLoading(true);
+                await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/add-review/${product?._id}`, { review: currentReview, rating: currentRating }, {
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem('token')
+                    }
+                }).then(async (res) => {
+                    setLoading(false);
+                    if (res.status === 200) {
+                        SuccessAlert(res.data.successMessage);
+                        updateParent();
+                    }
+                    else {
+                        ErrorAlert(res.data.errorMessage);
+                    }
+                }).catch(err => {
+                    setLoading(false);
+                    console.log(err)
+                })
+                setCurrentReview('');
+                setCurrentRating(0);
+            }
+        } else {
+            WarningAlert("Please login to leave a review");
         }
     };
 

@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import styles from "./checkout.module.css";
-import { Checkbox, Col, Divider, Form, Input, Row, Select } from "antd";
+import { Alert, Checkbox, Col, Divider, Form, Input, Row, Select } from "antd";
 import { ErrorAlert, SuccessAlert } from "@/components/Commons/Messages/Messages";
 import { ButtonComp } from "@/components/Commons/ButtonComp/ButtonComp";
 import { useRouter } from "next/router";
@@ -104,7 +104,7 @@ const CheckoutPage = () => {
       <h1 className={styles.title}>Checkout</h1>
       {
         !isAuthenticated() &&
-        <div className="p-[17px] md:p-[40px]">Please <button onClick={handleLogin} className="btn underline">Login</button> before placing order if you want to track your orders</div>
+        <Alert className="max-w-[600px] m-[20px] ml-[30px]" type="warning" message={<div>Please <button onClick={handleLogin} className="btn underline">Login</button> before placing order if you want to track your orders</div>} />
       }
       <Row gutter={[23, 23]}>
         <Col xs={24} md={17}>

@@ -3,7 +3,7 @@
     width: 100%;
     border-radius: 4px;
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     gap: 15px;
 }
 
@@ -12,12 +12,20 @@
     background-color: #000 !important;
 }
 
+.RelatedProductCard a {
+    max-width: 240px !important;
+    height: max-content !important;
+}
+
 .RelatedProductCard img {
-    width: 121px !important;
-    height: 121px;
-    object-fit: cover;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
+    width: 100% !important;
+    max-width: 240px;
+    height: max-content !important;
+    /* object-fit: cover; */
+}
+
+.RelatedProductCard .rightPart {
+    max-width: 170px !important;
 }
 
 .RelatedProductCard h2 {
