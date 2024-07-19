@@ -145,7 +145,7 @@ const CheckoutPage = () => {
                 >
                   <div>
                     <h2 className="mb-8">Billing Details: </h2>
-                    <Form.Item
+                    {/* <Form.Item
                       name={['billingAddress', 'email']}
                       label="Email"
                       rules={[
@@ -160,7 +160,7 @@ const CheckoutPage = () => {
                       ]}
                     >
                       <Input placeholder='Enter email' />
-                    </Form.Item>
+                    </Form.Item> */}
                     <Form.Item
                       name={['billingAddress', 'fullName']}
                       label="Full Name"
@@ -173,7 +173,7 @@ const CheckoutPage = () => {
                     >
                       <Input placeholder='Enter Full Name' />
                     </Form.Item>
-                    <Form.Item
+                    {/* <Form.Item
                       name={['billingAddress', 'phone']}
                       label="Phone"
                       rules={[
@@ -184,9 +184,9 @@ const CheckoutPage = () => {
                       ]}
                     >
                       <Input placeholder='Enter Phone' />
-                    </Form.Item>
+                    </Form.Item> */}
                     <Row gutter={[23, 23]}>
-                      <Col xs={24} md={12}>
+                      {/* <Col xs={24} md={12}>
                         <Form.Item
                           name={['billingAddress', 'country']}
                           label="Country"
@@ -241,7 +241,7 @@ const CheckoutPage = () => {
                         >
                           <Input placeholder='Enter Postal Code' />
                         </Form.Item>
-                      </Col>
+                      </Col> */}
                       <Col xs={24}>
                         <Form.Item
                           name={['billingAddress', 'address']}
@@ -262,11 +262,11 @@ const CheckoutPage = () => {
                         </Form.Item>
                       </Col>
                     </Row>
-                    <Form.Item
+                    {/* <Form.Item
                       label="Order Notes(optional)"
                     >
                       <TextArea onChange={(e) => setNotes(e.target.value)} className={styles.TextArea} placeholder='Enter Order Notes' />
-                    </Form.Item>
+                    </Form.Item> */}
                   </div>
                   <Checkbox onChange={(e) => e.target.checked ? setShipToDifferentAddress(true) : setShipToDifferentAddress(false)}>Ship to different address?</Checkbox>
                   {
@@ -274,7 +274,7 @@ const CheckoutPage = () => {
                     <div>
                       <h2 className="mb-8 mt-10">Shipping Address: </h2>
                       <div>
-                        <Form.Item
+                        {/* <Form.Item
                           name={['shippingAddress', 'email']}
                           label="Email"
                           rules={[
@@ -289,7 +289,7 @@ const CheckoutPage = () => {
                           ]}
                         >
                           <Input placeholder='Enter email' />
-                        </Form.Item>
+                        </Form.Item> */}
                         <Form.Item
                           name={['shippingAddress', 'fullName']}
                           label="Full Name"

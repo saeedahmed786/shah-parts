@@ -12,6 +12,7 @@ import { useCartContext } from '@/context/CartContext';
 import ReviewsAndRatings from '@/components/ReviewsAndRatings/ReviewsAndRatings';
 import { MinusOutlined, PlusOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { RelatedProductCard } from '@/components/Commons/RelatedProductCard/RelatedProductCard';
+import Loading from '@/components/Commons/Loading/Loading';
 
 
 const ProductPage = () => {
@@ -54,13 +55,11 @@ const ProductPage = () => {
     }
 
     const getRelatedProducts = async (prd) => {
-        setLoading(true);
         await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/get/related`, {
             Make: prd?.Make,
             Model: prd?.Model,
             Part: prd?.Part
         }).then(async (res) => {
-            setLoading(false);
             if (res.status === 200) {
                 setRelatedProducts(res.data?.filter(f => f?._id !== productId));
             }
@@ -68,7 +67,6 @@ const ProductPage = () => {
                 ErrorAlert(res.data.errorMessage);
             }
         }).catch(err => {
-            setLoading(false);
             console.log(err)
         })
     }
@@ -142,88 +140,91 @@ const ProductPage = () => {
     }
 
     return (
-        <>
-            <div className={styles.product}>
-                <div>
-                    <Row gutter={[80, 23]} className="mb-[100px]" align="middle">
-                        <Col xs={24} md={12} lg={12}>
-                            <Carousel className={styles.Carousel} showArrows={true} autoPlay showIndicators={false} renderThumbs={() => {
-                                return (
-                                    product?.Pictures?.map((picture, index) => {
-                                        return (
-                                            <div key={index} className={styles.thumbContainer}>
-                                                <Image width={300} height={300} src={picture} />
-                                                <p className='text-white'>wejdfjqhd</p>
-                                            </div>
-                                        )
-                                    })
-                                )
-                            }}>
-                                {
-                                    product?.Pictures?.map((picture, index) => {
-                                        return (
-                                            <div key={index}>
-                                                <Image width={300} height={300} alt="Carouse Picture" src={picture} />
-                                                <p className='text-white'>wejdfjqhd</p>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </Carousel>
-                        </Col>
-                        <Col xs={24} md={12} lg={12} className={styles.right}>
-                            <div className='p-[17px] md:p-0 md:ml-3'>
-                                <h3>
-                                    {product?.PartAccessorries}
-                                </h3>
-                                <h1>
-                                    {product?.Title}
-                                </h1>
-                                <div className='flex items-center gap-2 my-4'>
-                                    <Rate disabled allowHalf value={averageRating} /><b>{averageRating ? roundRating(averageRating, 1) : null}</b> <b>({product?.Reviews?.length})</b>
-                                </div>
-                                <h4 className='mb-3'>
-                                    {product?.Description}
-                                </h4>
-                                <h5>
-                                    ${product?.Price}
-                                </h5>
-                                <div className='mt-4 flex gap-4 flex-wrap items-center'>
-                                    <div className={styles.qtyContainer}>
-                                        <MinusOutlined onClick={() => qtyToShop > 1 && setQtyToShop(prev => prev - 1)} />
-                                        <div>{qtyToShop}</div>
-                                        <PlusOutlined onClick={() => setQtyToShop(prev => prev + 1)} />
-                                        {/* <InputNumber className='py-[12px]' min={1} max={100000} defaultValue={1} onChange={(value) => setQtyToShop(value)} /> */}
-                                    </div>
-                                    <div className='flex-1'>
-                                        <ButtonComp text={<div className='flex items-center justify-center gap-4'><ShoppingCartOutlined /> Add to cart</div>} loading={loading} disabled={loading} onClick={handleAddToCart} />
-                                    </div>
-                                </div>
-                            </div>
-                        </Col>
-                    </Row>
-                    <Row gutter={[80, 23]}>
-                        <Col xs={24} md={16} className={styles.specicificationsContainer}>
-                            <Tabs rootClassName={styles.productTabs} centered defaultActiveKey="1" items={items} onChange={onChange} />
-                        </Col>
-                        <Col xs={24} md={8}>
-                            <div className={styles.relatedProducts}>
-                                <h1>Similar Items</h1>
-                                <div className='flex flex-col gap-3'>
-                                    {
-                                        relatedProducts?.slice(0, 4)?.map((product, index) => {
+        loading ?
+            <Loading />
+            :
+            <>
+                <div className={styles.product}>
+                    <div>
+                        <Row gutter={[80, 23]} className="mb-[100px]" align="middle">
+                            <Col xs={24} md={12} lg={12}>
+                                <Carousel className={styles.Carousel} showArrows={true} autoPlay showIndicators={false} renderThumbs={() => {
+                                    return (
+                                        product?.Pictures?.map((picture, index) => {
                                             return (
-                                                <RelatedProductCard key={index} product={product} />
+                                                <div key={index} className={styles.thumbContainer}>
+                                                    <Image width={300} height={300} src={picture} />
+                                                    <p className='text-white'>wejdfjqhd</p>
+                                                </div>
+                                            )
+                                        })
+                                    )
+                                }}>
+                                    {
+                                        product?.Pictures?.map((picture, index) => {
+                                            return (
+                                                <div key={index}>
+                                                    <Image width={300} height={300} alt="Carouse Picture" src={picture} />
+                                                    <p className='text-white'>wejdfjqhd</p>
+                                                </div>
                                             )
                                         })
                                     }
+                                </Carousel>
+                            </Col>
+                            <Col xs={24} md={12} lg={12} className={styles.right}>
+                                <div className='p-[17px] md:p-0 md:ml-3'>
+                                    <h3>
+                                        {product?.PartAccessorries}
+                                    </h3>
+                                    <h1>
+                                        {product?.Title}
+                                    </h1>
+                                    <div className='flex items-center gap-2 my-4'>
+                                        <Rate disabled allowHalf value={averageRating} /><b>{averageRating ? roundRating(averageRating, 1) : null}</b> <b>({product?.Reviews?.length})</b>
+                                    </div>
+                                    <h4 className='mb-3'>
+                                        {product?.Description}
+                                    </h4>
+                                    <h5>
+                                        ${product?.Price}
+                                    </h5>
+                                    <div className='mt-4 flex gap-4 flex-wrap items-center'>
+                                        <div className={styles.qtyContainer}>
+                                            <MinusOutlined onClick={() => qtyToShop > 1 && setQtyToShop(prev => prev - 1)} />
+                                            <div>{qtyToShop}</div>
+                                            <PlusOutlined onClick={() => setQtyToShop(prev => prev + 1)} />
+                                            {/* <InputNumber className='py-[12px]' min={1} max={100000} defaultValue={1} onChange={(value) => setQtyToShop(value)} /> */}
+                                        </div>
+                                        <div className='flex-1'>
+                                            <ButtonComp text={<div className='flex items-center justify-center gap-4'><ShoppingCartOutlined /> Add to cart</div>} loading={loading} disabled={loading} onClick={handleAddToCart} />
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </Col>
-                    </Row>
+                            </Col>
+                        </Row>
+                        <Row gutter={[80, 23]}>
+                            <Col xs={24} md={16} className={styles.specicificationsContainer}>
+                                <Tabs rootClassName={styles.productTabs} centered defaultActiveKey="1" items={items} onChange={onChange} />
+                            </Col>
+                            <Col xs={24} md={8}>
+                                <div className={styles.relatedProducts}>
+                                    <h1>Similar Items</h1>
+                                    <div className='flex flex-col gap-3'>
+                                        {
+                                            relatedProducts?.slice(0, 4)?.map((product, index) => {
+                                                return (
+                                                    <RelatedProductCard key={index} product={product} />
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            </Col>
+                        </Row>
+                    </div>
                 </div>
-            </div>
-        </>
+            </>
     )
 }
 

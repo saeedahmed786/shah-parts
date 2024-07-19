@@ -18,6 +18,11 @@ const Products = () => {
     const [current, setCurrent] = useState(1);
     const [totalCount, setTotalCount] = useState();
 
+    let data = "TOYOTA > Mark X > Transmission & Drivetrain > Propeller Shafts";
+    let categories = data.split(' > ');
+    let lastTwoCategories = categories?.slice(-2);
+    console.log(lastTwoCategories)
+
     const getAllData = async () => {
         setLoading(true);
         await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/get`, { page: current - 1, pageSize: "20" }).then(res => {

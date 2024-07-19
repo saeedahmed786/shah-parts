@@ -28,6 +28,25 @@ export const BulkProductsUpload = ({ updateParentData }) => {
     //     }, {});
     // };
 
+    // let numberInLastTwoCat = data?.filter(product => {
+    //     // Split the categories string into an array
+    //     let categories = product?.Categories?.split(' > ');
+
+    //     // Check if categories exist and there are at least two of them
+    //     if (categories && categories.length >= 2) {
+    //         // Get the last two categories
+    //         let lastTwoCategories = categories.slice(-2);
+
+    //         // Check if any of the last two categories is a number
+    //         return lastTwoCategories.some(cat => !isNaN(cat) && !isNaN(parseFloat(cat)));
+    //     }
+
+    //     // If there are not enough categories or categories is undefined, return false
+    //     return false;
+    // });
+
+    // console.log(JSON.stringify(numberInLastTwoCat));
+
     const handleUpload = async () => {
         if (!file) return;
 
@@ -42,14 +61,18 @@ export const BulkProductsUpload = ({ updateParentData }) => {
                 ErrorAlert('Invalid JSON file');
                 return;
             }
+
             const products = data.map(product => {
                 let categories = product?.Categories?.split(' > ');
                 let lastTwoCategories = categories?.slice(-2);
+                let transformedLastTwo = lastTwoCategories.map(cat => {
+                    return (!isNaN(cat) && !isNaN(parseFloat(cat))) ? "All Other Parts" : cat;
+                });
                 if (categories && categories.length > 0) {
                     return {
                         ...product,
-                        Part: lastTwoCategories[1],
-                        PartAccessorries: lastTwoCategories[2],
+                        Part: transformedLastTwo[0],
+                        PartAccessorries: transformedLastTwo[1],
                         ...transformImages(product)
                     };
                 }
@@ -57,8 +80,6 @@ export const BulkProductsUpload = ({ updateParentData }) => {
             });
 
             setLoading(true);
-            // const finalProducts = products.map(product => product);
-            console.log(products);
             if (!products?.includes(null)) {
                 try {
                     const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/bulk-upload`, { products }, {
