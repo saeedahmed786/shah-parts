@@ -1,3 +1,5 @@
+"use client";
+
 import { ErrorAlert } from '@/components/Commons/Messages/Messages';
 import { Col, Rate, Row, Tabs } from 'antd';
 import axios from 'axios';
