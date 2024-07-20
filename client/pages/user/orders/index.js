@@ -94,7 +94,6 @@ const Orders = () => {
                     loading ?
                         <Loading />
                         :
-                        orders?.length > 0 &&
                         <div className='table-container border orders p-2 mb-10'>
                             <Table
                                 columns={columns}
