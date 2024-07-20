@@ -14,7 +14,7 @@ const ContactUsPage = () => {
                         className={styles.form}
                     >
                         <h1>Contact Us</h1>
-                        <p>If you have any questions or need further information, please feel free to reach out to us. Our team is here to assist you.</p>
+                        <p className='mb-4'>If you have any questions or need further information, please feel free to reach out to us. Our team is here to assist you.</p>
                         <Form.Item
                             label="Name"
                             name="name"
