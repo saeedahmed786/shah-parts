@@ -15,10 +15,10 @@
 .orders .orderDetails .orderProducts div {
     padding: 10px 0px;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
     flex-wrap: wrap;
-    gap: 19px;
+    gap: 30px;
 }
 
 .orders .orderProducts {
