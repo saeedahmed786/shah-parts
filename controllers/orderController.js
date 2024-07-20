@@ -62,7 +62,7 @@ exports.getAllOrderById = async (req, res) => {
 
 exports.placeOrder = async (req, res) => {
     try {
-        const { cartProducts, user, paymentData, placed, billingAddress, shippingAddress, totalAmount, subTotal, shipping, notes, paymentMethod, userId } = req.body;
+        const { cartProducts, user, paymentData, placed, billingAddress, shippingAddress, totalAmount, subTotal, shipping, notes, paymentMethod, userId, email } = req.body;
         const order = new Order({
             user,
             products: cartProducts,
@@ -84,7 +84,7 @@ exports.placeOrder = async (req, res) => {
         await order.save(async (err, result) => {
             if (err) { console.log('Payment Failed', err) }
             if (result) {
-                sendEmail(user?.email, "Your order is placed!", Template({ orderId: result._id, name: user?.fullName ? user?.fullName : user?.email }))
+                // sendEmail(user?.email, "Your order is placed!", Template({ orderId: result._id, name: user?.fullName ? user?.fullName : user?.email }))
                 sendEmail(config?.EMAIL, "Your order is placed!", Template({ orderId: result._id, name: user?.fullName ? user?.fullName : user?.email }))
                 res.status(200).json({ successMessage: 'Successfully Purchased Items!' });
             } else {
@@ -123,7 +123,7 @@ exports.setOrderStatus = async (req, res) => {
                     res.status(400).json({ errorMessage: 'Status update failed!' });
                 }
                 if (result) {
-                    await sendEmail(result.user.email, "You've got order updates!", Template({ orderId: result._id, name: order?.user?.fullName ? order?.user?.fullName : order?.user?.email, orderStatus: getStatus }))
+                    // await sendEmail(result.user.email, "You've got order updates!", Template({ orderId: result._id, name: order?.user?.fullName ? order?.user?.fullName : order?.user?.email, orderStatus: getStatus }))
                     res.status(200).json({ successMessage: 'Order status updated successfully!' });
                 }
             })
