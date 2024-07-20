@@ -68,7 +68,7 @@ exports.placeOrder = async (req, res) => {
             products: cartProducts,
             user: {
                 name: user?.fullName,
-                email: user?.email
+                email: email
             },
             paymentData,
             userId,
@@ -84,7 +84,9 @@ exports.placeOrder = async (req, res) => {
         await order.save(async (err, result) => {
             if (err) { console.log('Payment Failed', err) }
             if (result) {
-                // sendEmail(user?.email, "Your order is placed!", Template({ orderId: result._id, name: user?.fullName ? user?.fullName : user?.email }))
+                if (email) {
+                    sendEmail(email, "Your order is placed!", Template({ orderId: result._id, name: user?.fullName ? user?.fullName : user?.email }))
+                }
                 sendEmail(config?.EMAIL, "Your order is placed!", Template({ orderId: result._id, name: user?.fullName ? user?.fullName : user?.email }))
                 res.status(200).json({ successMessage: 'Successfully Purchased Items!' });
             } else {
