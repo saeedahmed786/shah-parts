@@ -16,8 +16,9 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.sticky .searchBar {
+.sticky {
     margin-top: -110px;
+    width: 100%;
 }
 
 .sticky .searchBar .nav {
@@ -43,6 +44,11 @@
     transition: 0.5s all ease-in-out;
 }
 
+.UpdatedHeader .searchBar>div {
+    width: 60% !important;
+    justify-content: space-between;
+}
+
 .UpdatedHeader nav {
     transition: 0.5s all ease-in-out;
 }
@@ -66,6 +72,7 @@
 
 .UpdatedHeader .select {
     height: 30px !important;
+    width: 100% !important;
 }
 
 .UpdatedHeader .select>div {

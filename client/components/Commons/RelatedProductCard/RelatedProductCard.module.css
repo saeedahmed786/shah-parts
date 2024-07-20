@@ -5,6 +5,7 @@
     display: flex;
     /* align-items: center; */
     gap: 15px;
+    cursor: pointer !important;
 }
 
 
@@ -13,13 +14,13 @@
 }
 
 .RelatedProductCard a {
-    max-width: 240px !important;
+    max-width: 140px !important;
     height: max-content !important;
 }
 
 .RelatedProductCard img {
     width: 100% !important;
-    max-width: 240px;
+    max-width: 140px;
     height: max-content !important;
     /* object-fit: cover; */
 }

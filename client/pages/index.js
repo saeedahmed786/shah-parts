@@ -14,9 +14,11 @@ import { useRouter } from 'next/router';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 import { CarOutlined, DeliveredProcedureOutlined, DollarCircleOutlined, GlobalOutlined, PhoneFilled, SearchOutlined } from '@ant-design/icons';
+import { useGlobalContext } from '@/context/GlobalContext';
 
 const Home = () => {
   const router = useRouter();
+  const { setFilterValuesFun } = useGlobalContext();
   const [featuredProductsArray, setFeaturedProductsArray] = useState([]);
   const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -68,90 +70,28 @@ const Home = () => {
     {
       title: "Engine Parts",
       link: "Engine & Components",
-      image: "https://shahparts.com/wp-content/uploads/engines-components.png",
-      items: [
-        {
-          link: "https://shahparts.com/product-category/parts/engine-parts/engine-components/",
-          text: "Engine & Components"
-        },
-        {
-          link: "https://shahparts.com/product-category/parts/engine-components/fuel-tanks/",
-          text: "Fuel Tanks"
-        },
-        {
-          link: "https://shahparts.com/product-category/parts/engine-components/air-compressors/",
-          text: "Air Compressors"
-        }
-      ]
+      image: "https://storage.googleapis.com/shah-parts/categories/engine.jpg"
     },
     {
       title: "Transmissions & Suspension",
       link: "Suspension & Components",
-      image: "https://shahparts.com/wp-content/uploads/transmissions-suspension.png",
-      items: [
-        {
-          link: "https://shahparts.com/product-category/parts/transmission-drivetrain/transmissions-automatic/",
-          text: "Transmissions Assy."
-        },
-        {
-          link: "https://shahparts.com/product-category/parts/transmission-drivetrain/power-steering-pump/",
-          text: "Power Steering Pump"
-        },
-        {
-          link: "https://shahparts.com/product-category/parts/transmission-drivetrain/propeller-shaft-rear/",
-          text: "Propeller Shafts"
-        }
-      ]
+      image: "https://storage.googleapis.com/shah-parts/categories/Suspension.jpg"
     },
     {
       title: "LIGHT SECTION",
       link: "Lightings",
-      image: "https://shahparts.com/wp-content/uploads/lighting-electronics.png",
-      items: [
-        {
-          link: "https://shahparts.com/product-category/parts/lightings/fog-lights-left/",
-          text: "Fog Lamps"
-        },
-        {
-          link: "https://shahparts.com/product-category/parts/lightings/headlights-right/",
-          text: "Headlights"
-        },
-        {
-          link: "https://shahparts.com/product-category/parts/lightings/tail-lights-right/",
-          text: "Tail Lights"
-        }
-      ]
+      image: "https://storage.googleapis.com/shah-parts/categories/lighting.jpg"
     },
     {
       title: "Body Parts",
-      link: "Exterior Parts",
-      image: "https://shahparts.com/wp-content/uploads/body-parts.png",
-      items: [
-        {
-          link: "https://shahparts.com/product-category/parts/body-parts/bonnet-hoods/",
-          text: "Bonnet Hoods"
-        },
-        {
-          link: "https://shahparts.com/product-category/parts/body-parts/fender-flares/",
-          text: "Fenders"
-        },
-        {
-          link: "https://shahparts.com/product-category/parts/body-parts/doors/",
-          text: "Doors"
-        },
-        {
-          link: "https://shahparts.com/product-category/parts/body-parts/spoilers/",
-          text: "Spoilers"
-        }
-      ]
+      link: "Body Parts",
+      image: "https://storage.googleapis.com/shah-parts/categories/body%20parts.jpg"
     }
   ];
 
-
-
-
   const handleReferCategoryToShop = (part) => {
     if (part) {
+      setFilterValuesFun("", "", part, "");
       const query = new URLSearchParams();
       if (part) query.append('Part', part);
 
@@ -169,7 +109,7 @@ const Home = () => {
             <Link href="/categories">View All &gt;</Link>
           </div>
           <div className=''>
-            <div className='flex gap-10 flex-wrap justify-between'>
+            <div className='flex gap-10 flex-wrap justify-center'>
               {
                 featuredData?.map((data, index) => {
                   return (
@@ -186,13 +126,6 @@ const Home = () => {
                               alt=""
                             />
                           </div>
-                          {/* <div className='flex flex-col gap-y-2 justify-center'>
-                            {data?.items?.map((item, index) => {
-                              return (
-                                <Link key={index} href={item?.link} className="text-black text-[17px]">{item?.text}</Link>
-                              )
-                            })}
-                          </div> */}
                         </div>
                       </div>
                     </button>

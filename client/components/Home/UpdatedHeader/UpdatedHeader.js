@@ -43,17 +43,23 @@ const sharedClasses = {
 
 const UpdatedHeader = () => {
     const { cart } = useCartContext();
-    const { userAuth } = useGlobalContext();
+    const {
+        userAuth,
+        make,
+        model,
+        part,
+        partAccessorries
+    } = useGlobalContext();
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [makesArray, setMakesArray] = useState([]);
     const [modelsArray, setModelsArray] = useState([]);
     const [partsArray, setPartsArray] = useState([]);
     const [partAccessoriesArray, setPartAccessoriesArray] = useState([]);
-    const [selectedMake, setSelectedMake] = useState(null);
-    const [selectedModel, setSelectedModel] = useState(null);
-    const [selectedPart, setSelectedPart] = useState(null);
-    const [selectedAccessory, setSelectedAccessory] = useState(null);
+    const [selectedMake, setSelectedMake] = useState("");
+    const [selectedModel, setSelectedModel] = useState("");
+    const [selectedPart, setSelectedPart] = useState("");
+    const [selectedAccessory, setSelectedAccessory] = useState("");
     const [isSticky, setIsSticky] = useState(false);
 
     const handleScroll = () => {
@@ -136,8 +142,12 @@ const UpdatedHeader = () => {
     };
 
     useEffect(() => {
+        setSelectedMake(make);
+        setSelectedModel(model);
+        setSelectedPart(part);
+        setSelectedAccessory(partAccessorries);
         getAllMakes();
-    }, []);
+    }, [make]);
 
     const handleSearch = () => {
         if (selectedMake) {
@@ -162,10 +172,10 @@ const UpdatedHeader = () => {
                     </div>
                     <nav className="ml-8 space-x-4">
                         <div className="flex items-center gap-10">
-                            <Link href="/about">
+                            <Link href="/about-us">
                                 About
                             </Link>
-                            <Link href="/contact">
+                            <Link href="/contact-us">
                                 Contact
                             </Link>
                         </div>
@@ -204,6 +214,7 @@ const UpdatedHeader = () => {
                                 showSearch
                                 className={styles.select}
                                 placeholder="Make"
+                                value={selectedMake || null}
                                 style={{ minWidth: 120 }}
                                 onChange={(val) => {
                                     setSelectedMake(val);
@@ -221,6 +232,7 @@ const UpdatedHeader = () => {
                                 className={styles.select}
                                 placeholder="Model"
                                 style={{ minWidth: 120 }}
+                                value={selectedModel || null}
                                 onChange={(val) => {
                                     setSelectedModel(val);
                                     getAllPartByModel(val);
@@ -235,6 +247,7 @@ const UpdatedHeader = () => {
                                 allowClear
                                 showSearch
                                 className={styles.select}
+                                value={selectedPart || null}
                                 placeholder="Part"
                                 style={{ minWidth: 120 }}
                                 onChange={(val) => {
@@ -250,6 +263,7 @@ const UpdatedHeader = () => {
                             <Select
                                 allowClear
                                 showSearch
+                                value={selectedAccessory || null}
                                 className={styles.select}
                                 placeholder="Accessories"
                                 style={{ minWidth: 120 }}

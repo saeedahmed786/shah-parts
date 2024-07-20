@@ -143,6 +143,7 @@ const ProductPage = () => {
         loading ?
             <Loading />
             :
+            product &&
             <>
                 <div className={styles.product}>
                     <div>

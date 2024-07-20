@@ -5,12 +5,13 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import styles from './shop.module.css';
 import Loading from '@/components/Commons/Loading/Loading';
-import { ButtonComp } from '@/components/Commons/ButtonComp/ButtonComp';
 import { ProductCard } from '@/components/Commons/ProductCard/ProductCard';
+import { useGlobalContext } from '@/context/GlobalContext';
 
 
 const ShopPage = () => {
   const router = useRouter();
+  const { setFilterValuesFun } = useGlobalContext();
   const [productsArray, setProductsArray] = useState([]);
   const [sortValue, setSortValue] = useState("");
   const [parts, setParts] = useState([]);
@@ -30,7 +31,23 @@ const ShopPage = () => {
       setLoading(false);
       if (res.status === 200) {
         setProductsArray(res.data?.products);
-        setTotalCount(res.data.count)
+        setTotalCount(res.data.count);
+        if (router?.query?.Make) {
+          let firstProduct = res.data?.products[0];
+          setFilterValuesFun(firstProduct?.Make);
+        }
+        else if (router?.query?.Model) {
+          let firstProduct = res.data?.products[0];
+          setFilterValuesFun(firstProduct?.Make, firstProduct?.Model)
+        }
+        else if (router?.query?.Part) {
+          let firstProduct = res.data?.products[0];
+          setFilterValuesFun(firstProduct?.Make, firstProduct?.Model, firstProduct?.Part)
+        }
+        else if (router?.query?.PartAccessorries) {
+          let firstProduct = res.data?.products[0];
+          setFilterValuesFun(firstProduct?.Make, firstProduct?.Model, firstProduct?.Part, firstProduct?.PartAccessorries)
+        }
       }
       else {
         ErrorAlert(res.data.errorMessage);
@@ -88,6 +105,7 @@ const ShopPage = () => {
     if (router.query?.PartAccessory) {
       setPartAccessory(router.query?.PartAccessory)
     }
+
     return () => {
 
     }
@@ -95,6 +113,7 @@ const ShopPage = () => {
 
   useEffect(() => {
     getAllData();
+    // console.log("Shop page", make, model, part, partAccessory)
 
     return () => {
 

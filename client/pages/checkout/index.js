@@ -85,10 +85,13 @@ const CheckoutPage = () => {
 
   const handlePaymentClick = () => {
     form.submit();
-    const { billingAddress, shippingAddress } = form.getFieldsValue();
-    setSavedBillingAddress(billingAddress)
-    setSavedShippingAddress(shippingAddress)
-    setShowPayment(true);
+    const { billingAddress } = form.getFieldsValue();
+    if (billingAddress?.fullName && billingAddress?.address) {
+      setSavedBillingAddress(billingAddress)
+      setShowPayment(true);
+    } else {
+      // ErrorAlert("Please fill both Name and Address")
+    }
   }
 
   const handleLogin = () => {
@@ -116,132 +119,30 @@ const CheckoutPage = () => {
                   form={form}
                   name="nest-messages"
                   className={styles.form}
-                  onFinish={onFinish}
+                  // onFinish={onFinish}
                   initialValues={{
                     billingAddress: {
-                      email: "",
                       fullName: "",
-                      phone: "",
-                      country: "",
-                      state: "",
-                      city: "",
-                      postalCode: "",
                       address: "",
-                      apartment: "",
-                      orderNotes: "",
-                    },
-                    shippingAddress: {
-                      email: "",
-                      fullName: "",
-                      phone: "",
-                      country: "",
-                      state: "",
-                      city: "",
-                      postalCode: "",
-                      address: "",
-                      apartment: "",
-                    },
+                      address2: "",
+                    }
                   }}
                 >
                   <div>
                     <h2 className="mb-8">Billing Details: </h2>
-                    {/* <Form.Item
-                      name={['billingAddress', 'email']}
-                      label="Email"
-                      rules={[
-                        {
-                          type: 'email',
-                          message: 'The input is not valid E-mail!',
-                        },
-                        {
-                          required: true,
-                          message: 'Please input your E-mail!',
-                        },
-                      ]}
-                    >
-                      <Input placeholder='Enter email' />
-                    </Form.Item> */}
                     <Form.Item
                       name={['billingAddress', 'fullName']}
                       label="Full Name"
                       rules={[
                         {
                           required: true,
-                          message: 'Please input your Full Name!',
+                          message: 'Please enter your Full Name!',
                         },
                       ]}
                     >
                       <Input placeholder='Enter Full Name' />
                     </Form.Item>
-                    {/* <Form.Item
-                      name={['billingAddress', 'phone']}
-                      label="Phone"
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Please input your Phone!',
-                        },
-                      ]}
-                    >
-                      <Input placeholder='Enter Phone' />
-                    </Form.Item> */}
                     <Row gutter={[23, 23]}>
-                      {/* <Col xs={24} md={12}>
-                        <Form.Item
-                          name={['billingAddress', 'country']}
-                          label="Country"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please input your Country!',
-                            },
-                          ]}
-                        >
-                          <Select allowClear showSearch options={countryOptions} />
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} md={12}>
-                        <Form.Item
-                          name={['billingAddress', 'state']}
-                          label="State"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please input your State!',
-                            },
-                          ]}
-                        >
-                          <Input placeholder='Enter State' />
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} md={12}>
-                        <Form.Item
-                          name={['billingAddress', 'city']}
-                          label="City"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please input your City!',
-                            },
-                          ]}
-                        >
-                          <Input placeholder='Enter City' />
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} md={12}>
-                        <Form.Item
-                          name={['billingAddress', 'postalCode']}
-                          label="Postal Code"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please input your Postal Code!',
-                            },
-                          ]}
-                        >
-                          <Input placeholder='Enter Postal Code' />
-                        </Form.Item>
-                      </Col> */}
                       <Col xs={24}>
                         <Form.Item
                           name={['billingAddress', 'address']}
@@ -249,14 +150,14 @@ const CheckoutPage = () => {
                           rules={[
                             {
                               required: true,
-                              message: 'Please input your Address!',
+                              message: 'Please enter your Address!',
                             },
                           ]}
                         >
-                          <Input placeholder='Enter Address' />
+                          <Input placeholder='Enter Address 2' />
                         </Form.Item>
                         <Form.Item
-                          name={['billingAddress', 'apartment']}
+                          name={['billingAddress', 'address2']}
                         >
                           <Input placeholder='Enter Apartment, suit, unit etc(optional)' />
                         </Form.Item>
@@ -268,132 +169,6 @@ const CheckoutPage = () => {
                       <TextArea onChange={(e) => setNotes(e.target.value)} className={styles.TextArea} placeholder='Enter Order Notes' />
                     </Form.Item> */}
                   </div>
-                  <Checkbox onChange={(e) => e.target.checked ? setShipToDifferentAddress(true) : setShipToDifferentAddress(false)}>Ship to different address?</Checkbox>
-                  {
-                    shipToDifferentAddress &&
-                    <div>
-                      <h2 className="mb-8 mt-10">Shipping Address: </h2>
-                      <div>
-                        {/* <Form.Item
-                          name={['shippingAddress', 'email']}
-                          label="Email"
-                          rules={[
-                            {
-                              type: 'email',
-                              message: 'The input is not valid E-mail!',
-                            },
-                            {
-                              required: true,
-                              message: 'Please input your E-mail!',
-                            },
-                          ]}
-                        >
-                          <Input placeholder='Enter email' />
-                        </Form.Item> */}
-                        <Form.Item
-                          name={['shippingAddress', 'fullName']}
-                          label="Full Name"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please input your Full Name!',
-                            },
-                          ]}
-                        >
-                          <Input placeholder='Enter Full Name' />
-                        </Form.Item>
-                        <Form.Item
-                          name={['shippingAddress', 'phone']}
-                          label="Phone"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please input your Phone!',
-                            },
-                          ]}
-                        >
-                          <Input placeholder='Enter Phone' />
-                        </Form.Item>
-                        <Row gutter={[23, 23]}>
-                          <Col xs={24} md={12}>
-                            <Form.Item
-                              name={['shippingAddress', 'country']}
-                              label="Country"
-                              rules={[
-                                {
-                                  required: true,
-                                  message: 'Please input your Country!',
-                                },
-                              ]}
-                            >
-                              <Select allowClear showSearch options={countryOptions} />
-                            </Form.Item>
-                          </Col>
-                          <Col xs={24} md={12}>
-                            <Form.Item
-                              name={['shippingAddress', 'state']}
-                              label="State"
-                              rules={[
-                                {
-                                  required: true,
-                                  message: 'Please input your State!',
-                                },
-                              ]}
-                            >
-                              <Input placeholder='Enter State' />
-                            </Form.Item>
-                          </Col>
-                          <Col xs={24} md={12}>
-                            <Form.Item
-                              name={['shippingAddress', 'city']}
-                              label="City"
-                              rules={[
-                                {
-                                  required: true,
-                                  message: 'Please input your City!',
-                                },
-                              ]}
-                            >
-                              <Input placeholder='Enter City' />
-                            </Form.Item>
-                          </Col>
-                          <Col xs={24} md={12}>
-                            <Form.Item
-                              name={['shippingAddress', 'postalCode']}
-                              label="Postal Code"
-                              rules={[
-                                {
-                                  required: true,
-                                  message: 'Please input your Postal Code!',
-                                },
-                              ]}
-                            >
-                              <Input placeholder='Enter Postal Code' />
-                            </Form.Item>
-                          </Col>
-                          <Col xs={24}>
-                            <Form.Item
-                              name={['shippingAddress', 'address']}
-                              label="Address"
-                              rules={[
-                                {
-                                  required: true,
-                                  message: 'Please input your Address!',
-                                },
-                              ]}
-                            >
-                              <Input placeholder='Enter Address' />
-                            </Form.Item>
-                            <Form.Item
-                              name={['shippingAddress', 'apartment']}
-                            >
-                              <Input placeholder='Enter Apartment, suit, unit etc(optional)' />
-                            </Form.Item>
-                          </Col>
-                        </Row>
-                      </div>
-                    </div>
-                  }
                 </Form>
                 :
                 // showPayment &&

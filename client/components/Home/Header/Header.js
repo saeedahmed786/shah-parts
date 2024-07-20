@@ -37,16 +37,16 @@ const Header = () => {
                         <Image src={sliderImg1} alt="Engine Banner" />
                     </Link>
                 </SwiperSlide>
-                <SwiperSlide>
+                {/* <SwiperSlide>
                     <Link href="/">
                         <Image src={sliderImg2} alt="Engine Banner" />
                     </Link>
-                </SwiperSlide>
-                <SwiperSlide>
+                </SwiperSlide> */}
+                {/* <SwiperSlide>
                     <Link href="/">
                         <Image src={sliderImg1} alt="Engine Banner" />
                     </Link>
-                </SwiperSlide>
+                </SwiperSlide> */}
             </Swiper>
             {/* <Col xs={24} md={8}>
                     <Link href="https://shahparts.com/product-category/brand/toyota">

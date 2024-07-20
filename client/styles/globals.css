@@ -180,3 +180,10 @@ button {
 .mainNavHeader .ant-select-focused .ant-select-selector {
   box-shadow: none !important;
 }
+
+@media (min-width: 2200px) {
+  body {
+    width: 2200px;
+    margin: 0px auto !important;
+  }
+}

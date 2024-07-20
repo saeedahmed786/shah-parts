@@ -1,6 +1,7 @@
 .product>div {
-    max-width: 1200px;
-    margin: 20px auto;
+    /* max-width: 1200px; */
+    /* margin: 20px auto; */
+    padding: 23px !important;
     margin-top: 60px;
 }
 
@@ -15,7 +16,7 @@
 
 .product .Carousel img {
     width: 100% !important;
-    height: 73vh;
+    max-height: 80vh;
 }
 
 .product img {
@@ -125,9 +126,9 @@
 }
 
 .specicificationsContainer {
+    padding-top: 20px;
     background-color: white !important;
     border: 1px solid rgb(214, 217, 218) !important;
-    padding: 23px !important;
 }
 
 .product .productTabs div[role="tab"] {
@@ -140,15 +141,15 @@
 }
 
 .product .descriptionItemContainer {
-    display: flex;
+    /* display: flex;
     align-items: center;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: center; */
 }
 
 .product .descriptionItemContainer>div {
     width: 100%;
-    max-width: 1100px;
+    /* max-width: 1100px; */
 }
 
 .product .descriptionItems {
