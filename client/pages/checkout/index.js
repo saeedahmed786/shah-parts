@@ -42,7 +42,8 @@ const CheckoutPage = () => {
       cartProducts: cart,
       billingAddress: savedBillingAddress,
       shippingAddress: savedShippingAddress,
-      paymentData: data
+      paymentData: data,
+      userId: isAuthenticated()?._id
     }, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
