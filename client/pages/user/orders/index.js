@@ -131,34 +131,11 @@ const Orders = () => {
                                             <div className='border p-3'>
                                                 <Title level={6}>Billing Address:</Title>
                                                 <Text>
-                                                    {record?.billingAddress?.address}, {record?.billingAddress?.city},<br />
-                                                    {record?.billingAddress?.state}, {record?.billingAddress?.country}, {record?.billingAddress?.postalCode}<br /><br />
-                                                    {record?.billingAddress?.fullName}<br />
-                                                    <a href={`mailto: ${record?.billingAddress?.email}`}>{record?.billingAddress?.email}</a> <br />
-                                                    <a href={`tel: ${record?.billingAddress?.phone}`}>{record?.billingAddress?.phone}</a>
+                                                    <b>Name:</b> {record?.billingAddress?.fullName} <br />
+                                                    <b>Address1:</b> {record?.billingAddress?.address}, <br />
+                                                    <b>Address2:</b> {record?.billingAddress?.address2},<br />
                                                 </Text>
                                             </div>
-                                            {record?.shippingAddress && (
-                                                <div className='border p-3'>
-                                                    <Title level={6}>Shipping Address:</Title>
-                                                    <Text>
-                                                        {record?.shippingAddress?.address}, {record?.shippingAddress?.city},<br />
-                                                        {record?.shippingAddress?.state}, {record?.shippingAddress?.country}, {record?.shippingAddress?.postalCode}<br /><br />
-                                                        {record?.shippingAddress?.fullName}<br />
-                                                        <a href={`mailto: ${record?.shippingAddress?.email}`}>{record?.shippingAddress?.email}</a> <br />
-                                                        <a href={`tel: ${record?.shippingAddress?.phone}`}>{record?.shippingAddress?.phone}</a>
-                                                    </Text>
-                                                </div>
-                                            )}
-                                            {
-                                                record?.notes &&
-                                                <div className='border p-3'>
-                                                    <Title level={6}>Order Notes:</Title>
-                                                    <Text>
-                                                        {record?.notes}
-                                                    </Text>
-                                                </div>
-                                            }
                                         </div>
                                     )
                                 }}
