@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from 'react';
 import { isAuthenticated } from '@/components/Commons/Auth/Auth';
 import Loading from '@/components/Commons/Loading/Loading';
@@ -88,77 +90,83 @@ const Orders = () => {
     return (
         <AccountLayout sidebar>
             <div className={styles.orders}>
-                <div className='table-container border orders p-2 mb-10'>
-                    <Table
-                        columns={columns}
-                        loading={loading}
-                        dataSource={orders}
-                        expandable={{
-                            expandedRowRender: record => (
-                                <div className={styles.orderDetails}>
-                                    <div className={styles.orderProducts}>
-                                        {record?.products?.map((product, index) => (
-                                            <div key={index} className="my-0">
-                                                <b>#{index + 1}</b>
-                                                <Image src={product?.Pictures[0]} height={64} width={64} alt='images' />
-                                                <span>{product?.Title}</span>
-                                                <span>Qty: {product?.qtyToShop}</span>
-                                                <span>${parseInt(product?.Price * product?.qtyToShop)}</span>
+                {
+                    loading ?
+                        <Loading />
+                        :
+                        orders?.length > 0 &&
+                        <div className='table-container border orders p-2 mb-10'>
+                            <Table
+                                columns={columns}
+                                loading={loading}
+                                dataSource={orders}
+                                expandable={{
+                                    expandedRowRender: record => (
+                                        <div className={styles.orderDetails}>
+                                            <div className={styles.orderProducts}>
+                                                {record?.products?.map((product, index) => (
+                                                    <div key={index} className="my-0">
+                                                        <b>#{index + 1}</b>
+                                                        <Image src={product?.Pictures[0]} height={64} width={64} alt='images' />
+                                                        <span>{product?.Title}</span>
+                                                        <span>Qty: {product?.qtyToShop}</span>
+                                                        <span>${parseInt(product?.Price * product?.qtyToShop)}</span>
+                                                    </div>
+                                                ))}
                                             </div>
-                                        ))}
-                                    </div>
-                                    <div className='border p-3 max-w-[300px]'>
-                                        <Title level={6}>Order Details:</Title>
-                                        <div className='flex justify-between gap-8'>
-                                            <b>Sub Total:</b>
-                                            <b>${record?.subTotal}</b>
+                                            <div className='border p-3 max-w-[300px]'>
+                                                <Title level={6}>Order Details:</Title>
+                                                <div className='flex justify-between gap-8'>
+                                                    <b>Sub Total:</b>
+                                                    <b>${record?.subTotal}</b>
+                                                </div>
+                                                <div className='flex justify-between gap-8 my-2'>
+                                                    <b>Shipping Charges:</b>
+                                                    <b>${record?.shipping}</b>
+                                                </div>
+                                                <div className='flex justify-between gap-8'>
+                                                    <b>Order Total:</b>
+                                                    <b>${record?.totalPrice}</b>
+                                                </div>
+                                            </div>
+                                            <div className='border p-3'>
+                                                <Title level={6}>Billing Address:</Title>
+                                                <Text>
+                                                    {record?.billingAddress?.address}, {record?.billingAddress?.city},<br />
+                                                    {record?.billingAddress?.state}, {record?.billingAddress?.country}, {record?.billingAddress?.postalCode}<br /><br />
+                                                    {record?.billingAddress?.fullName}<br />
+                                                    <a href={`mailto: ${record?.billingAddress?.email}`}>{record?.billingAddress?.email}</a> <br />
+                                                    <a href={`tel: ${record?.billingAddress?.phone}`}>{record?.billingAddress?.phone}</a>
+                                                </Text>
+                                            </div>
+                                            {record?.shippingAddress && (
+                                                <div className='border p-3'>
+                                                    <Title level={6}>Shipping Address:</Title>
+                                                    <Text>
+                                                        {record?.shippingAddress?.address}, {record?.shippingAddress?.city},<br />
+                                                        {record?.shippingAddress?.state}, {record?.shippingAddress?.country}, {record?.shippingAddress?.postalCode}<br /><br />
+                                                        {record?.shippingAddress?.fullName}<br />
+                                                        <a href={`mailto: ${record?.shippingAddress?.email}`}>{record?.shippingAddress?.email}</a> <br />
+                                                        <a href={`tel: ${record?.shippingAddress?.phone}`}>{record?.shippingAddress?.phone}</a>
+                                                    </Text>
+                                                </div>
+                                            )}
+                                            {
+                                                record?.notes &&
+                                                <div className='border p-3'>
+                                                    <Title level={6}>Order Notes:</Title>
+                                                    <Text>
+                                                        {record?.notes}
+                                                    </Text>
+                                                </div>
+                                            }
                                         </div>
-                                        <div className='flex justify-between gap-8 my-2'>
-                                            <b>Shipping Charges:</b>
-                                            <b>${record?.shipping}</b>
-                                        </div>
-                                        <div className='flex justify-between gap-8'>
-                                            <b>Order Total:</b>
-                                            <b>${record?.totalPrice}</b>
-                                        </div>
-                                    </div>
-                                    <div className='border p-3'>
-                                        <Title level={6}>Billing Address:</Title>
-                                        <Text>
-                                            {record?.billingAddress?.address}, {record?.billingAddress?.city},<br />
-                                            {record?.billingAddress?.state}, {record?.billingAddress?.country}, {record?.billingAddress?.postalCode}<br /><br />
-                                            {record?.billingAddress?.fullName}<br />
-                                            <a href={`mailto: ${record?.billingAddress?.email}`}>{record?.billingAddress?.email}</a> <br />
-                                            <a href={`tel: ${record?.billingAddress?.phone}`}>{record?.billingAddress?.phone}</a>
-                                        </Text>
-                                    </div>
-                                    {record?.shippingAddress && (
-                                        <div className='border p-3'>
-                                            <Title level={6}>Shipping Address:</Title>
-                                            <Text>
-                                                {record?.shippingAddress?.address}, {record?.shippingAddress?.city},<br />
-                                                {record?.shippingAddress?.state}, {record?.shippingAddress?.country}, {record?.shippingAddress?.postalCode}<br /><br />
-                                                {record?.shippingAddress?.fullName}<br />
-                                                <a href={`mailto: ${record?.shippingAddress?.email}`}>{record?.shippingAddress?.email}</a> <br />
-                                                <a href={`tel: ${record?.shippingAddress?.phone}`}>{record?.shippingAddress?.phone}</a>
-                                            </Text>
-                                        </div>
-                                    )}
-                                    {
-                                        record?.notes &&
-                                        <div className='border p-3'>
-                                            <Title level={6}>Order Notes:</Title>
-                                            <Text>
-                                                {record?.notes}
-                                            </Text>
-                                        </div>
-                                    }
-                                </div>
-                            )
-                        }}
-                        rowKey={record => record._id}
-                    />
-                </div>
+                                    )
+                                }}
+                                rowKey={record => record._id}
+                            />
+                        </div>
+                }
             </div>
         </AccountLayout >
     );
