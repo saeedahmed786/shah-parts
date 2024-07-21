@@ -38,10 +38,10 @@ const BrandsPage = () => {
 
 
   const handleRoute = (id) => {
+    console.log("id", id);
     if (id) {
       const query = new URLSearchParams();
-
-      if (id) query.append('make', id);
+      query.append('Make', id);
       router.push(`/shop?${query.toString()}`);
     }
   };
@@ -58,11 +58,11 @@ const BrandsPage = () => {
               makes?.length > 0 ?
                 makes?.map((make, index) => {
                   return (
-                    <Col xs={12} md={6} lg={4} xl={4} xxl={4} key={index}>
-                      <button className="border-2 h-[200px] p-0 text-center border-[rgba(244,244,244,1)]" onClick={() => handleRoute(make?.part)} key={index}>
-                        <Image src={make?.image} width={200} height={200} />
+                    <Col xs={12} md={6} lg={4} xl={4} xxl={4} key={index} className="text-center">
+                      <button className="border-2 h-[150px] w-auto p-4 border-[rgba(244,244,244,1)]" onClick={() => handleRoute(make?.make)} key={index}>
+                        <Image src={make?.image} width={200} height={200} alt={make?.make} />
                       </button>
-                      <div className='mt-1 text-[18px] font-[600] text-center'>{make?.make}</div>
+                      <div className='mt-1 text-[18px] font-[600]'>{make?.make}</div>
                     </Col>
                   )
                 })

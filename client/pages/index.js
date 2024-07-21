@@ -108,35 +108,27 @@ const Home = () => {
             <h1 className={styles.title}>Featured auto parts categories</h1>
             <Link href="/categories">View All &gt;</Link>
           </div>
-          <div className=''>
-            <div className='flex gap-10 flex-wrap justify-center'>
-              {
-                featuredData?.map((data, index) => {
-                  return (
-                    <button onClick={() => handleReferCategoryToShop(data?.link)} key={index}>
-                      <div className='text-left'>
-                        <h3 className={styles.subTitle}>{data?.title}</h3>
-                        <div className="flex flex-wrap flex-col items-center gap-6">
-                          <div>
-                            <Image
-                              style={{ height: "200px", width: "auto" }}
-                              width={200}
-                              height={200}
-                              src={data?.image}
-                              alt=""
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                  )
-                })
-              }
-            </div>
-          </div>
+          <Row gutter={[40, 40]}>
+            {
+              featuredData?.map((data, index) => {
+                return (
+                  <Col xs={24} md={12} lg={8} xl={6} className='text-left cursor-pointer' onClick={() => handleReferCategoryToShop(data?.link)} key={index}>
+                    <h3 className={styles.subTitle}>{data?.title}</h3>
+                    <Image
+                      style={{ height: "100%", width: "100%" }}
+                      width={200}
+                      height={200}
+                      src={data?.image}
+                      alt=""
+                    />
+                  </Col>
+                )
+              })
+            }
+          </Row>
         </section>
         <section className={styles.featuredProducts}>
-          <div className='flex justify-between items-center'>
+          <div className='flex justify-between items-center mt-5'>
             <h1 className={`${styles.title}`}>Featured Products</h1>
             <Image width={130} src={featuredBadge} alt="Featured Banner" />
           </div>

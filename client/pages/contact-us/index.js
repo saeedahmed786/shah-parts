@@ -48,12 +48,12 @@ const ContactUsPage = () => {
                 <Row gutter={16}>
                     <Col xs={24} md={8}>
                         <Card title="Email" bordered={false} className={styles.contactCard}>
-                            <p>support@shahparts.jp</p>
+                            <p>Info@shahparts.com</p>
                         </Card>
                     </Col>
                     <Col xs={24} md={8}>
                         <Card title="Phone" bordered={false} className={styles.contactCard}>
-                            <p>+81 3-1234-5678</p>
+                            <p>+81-80-5082-1650</p>
                         </Card>
                     </Col>
                     <Col xs={24} md={8}>

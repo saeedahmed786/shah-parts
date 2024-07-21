@@ -296,12 +296,21 @@ exports.searchProducts = async (req, res) => {
 
 exports.uploadBulkProducts = async (req, res) => {
   const { products } = req.body;
-  console.log(products[0]);
+
+  if (!products || !Array.isArray(products)) {
+    return res.status(400).json({ errorMessage: 'Invalid products array' });
+  }
+
   try {
-    const result = await Product.insertMany(products);
-    if (result) {
-      res.status(200).send({ successMessage: 'Products uploaded successfully' });
+    const batchSize = 20000; // Define the size of each batch
+    const totalProducts = products.length;
+
+    for (let i = 0; i < totalProducts; i += batchSize) {
+      const batch = products.slice(i, i + batchSize);
+      await Product.insertMany(batch);
     }
+
+    res.status(200).send({ successMessage: 'Products uploaded successfully' });
   } catch (error) {
     console.error(error);
     res.status(400).json({ errorMessage: 'Failed to create products. Please try again', error });

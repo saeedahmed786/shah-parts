@@ -107,10 +107,10 @@ const CheckoutPage = () => {
         <CheckoutSteps step={1} loading={loading} />
       </div>
       <h1 className={styles.title}>Checkout</h1>
-      {
+      {/* {
         !isAuthenticated() &&
         <Alert className="max-w-[600px] m-[20px] ml-[30px]" type="warning" message={<div>Please <button onClick={handleLogin} className="btn underline">Login</button> before placing order if you want to track your orders</div>} />
-      }
+      } */}
       <Row gutter={[23, 23]}>
         <Col xs={24} md={17}>
           <div className="p-[17px] md:p-[40px]" style={{ maxWidth: 800 }}>

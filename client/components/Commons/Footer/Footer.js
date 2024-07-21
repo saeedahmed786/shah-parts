@@ -65,26 +65,9 @@ const Footer = () => {
                                     <Link href="/about-us">About Us</Link>
                                 </li>
                                 <li>
-                                    <Link href="/how-to-buy">How To Buy</Link>
-                                </li>
-                                <li>
                                     <Link href="/terms-and-conditions">
                                         Terms and Conditions
                                     </Link>
-                                </li>
-                                <li>
-                                    <Link href="/payment-policy">Payment Policy</Link>
-                                </li>
-                                <li>
-                                    <Link href="/privacy-policies">
-                                        Privacy Policies
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/shipping-policy">Shipping Policy</Link>
-                                </li>
-                                <li>
-                                    <Link href="/blog">Blog</Link>
                                 </li>
                                 <li>
                                     <Link href="/contact-us">Contact Us</Link>
@@ -183,17 +166,6 @@ const Footer = () => {
                             </div>
                         </div>{" "}
                     </div>
-                    <ul>
-                        <li>
-                            <Link href="/help">Help</Link>
-                        </li>
-                        <li>
-                            <Link href="/company">Company</Link>
-                        </li>
-                        <li>
-                            <Link href="/contact-us">Contact Us</Link>
-                        </li>
-                    </ul>
                     <div className={styles.copyright}>
                         Copyright 2024 © <strong>Shah Parts Japan</strong>{" "}
                     </div>

@@ -1,6 +1,6 @@
 .FixedButtons {
     position: fixed;
-    bottom: 100px;
+    bottom: 180px;
     right: 30px;
     z-index: 10000 !important;
     width: 64px;
@@ -16,4 +16,14 @@
     border-radius: 10px !important;
     width: 64px;
     height: 64px;
+}
+
+.FixedButtons .whatsappBanner {
+    position: fixed;
+    left: 20px !important;
+    bottom: 20px !important;
+}
+
+.FixedButtons .whatsappBanner img {
+    width: max-content !important;
 }

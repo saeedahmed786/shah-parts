@@ -4,7 +4,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import sliderImg1 from "../../../public/assets/imgpsh_fullsize-2.png"
 import sliderImg2 from "../../../public/assets/car.jpg"
-import whatsApp from "../../../public/assets/whatsapp123.jpg"
+// import whatsApp from "../../../public/assets/whatsapp123.jpg"
 import stripesBanner from "../../../public/assets/Stripes-Banner.jpg"
 import Image from 'next/image';
 import { Col, Row } from 'antd';

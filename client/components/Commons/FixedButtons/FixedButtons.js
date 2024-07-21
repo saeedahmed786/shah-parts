@@ -6,11 +6,17 @@ import Image from 'next/image';
 const FixedButtons = () => {
     return (
         <div className={styles.FixedButtons}>
-            <Link className="whatsapp-banner" target="_blank" href="https://wa.me/81782006655">
+            <Link className={styles.whatsappBanner} target="_blank" href="https://wa.me/818050821650">
+                <Image className='h-[110px] object-contain' src="/assets/whatsapp-banner.jpg" alt="WhatsApp Banner" width={64} height={64} />
+            </Link>
+            <Link className="whatsapp" target="_blank" href="https://wa.me/818050821650">
                 <Image className='h-[110px] object-contain' src="/assets/whatsapp.jpg" alt="WhatsApp Banner" width={64} height={64} />
             </Link>
             <Link className="whatsapp-banner" target="_blank" href="https://shahparts.com/product-category/brand/toyota">
                 <Image className='h-[110px] object-contain' src="/assets/facebook.png" alt="Facebook Banner" width={64} height={64} />
+            </Link>
+            <Link className="whatsapp-banner" target="_blank" href="https://shahparts.com/product-category/brand/toyota">
+                <Image className='h-[110px] object-contain' src="/assets/twitter.webp" alt="Facebook Banner" width={64} height={64} />
             </Link>
         </div>
     )
