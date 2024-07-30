@@ -58,7 +58,7 @@ const CategoriesPage = () => {
               categories?.length > 0 ?
                 categories?.map((category, index) => {
                   return (
-                    <Col xs={12} md={6} lg={4} xl={4} xxl={4} key={index} className={styles.category}>
+                    <Col xs={11} md={6} lg={4} xl={4} xxl={4} key={index} className={styles.category}>
                       <button className="border-2 h-[200px] p-0 text-center border-[rgba(244,244,244,1)]" onClick={() => handleRoute(category?.part)} key={index}>
                         <Image src={category?.image} width={200} height={200} alt={category?.part} />
                         <span className='mt-1 text-[18px] font-[600] text-center'>{category?.part}</span>

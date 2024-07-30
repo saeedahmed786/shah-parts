@@ -33,8 +33,13 @@
 /* Cart */
 
 
-@media (max-width: 600px) {
+@media (max-width: 767px) {
     .ProductCard img {
         height: 220px !important;
+    }
+
+    .ProductCard h2 {
+        font-size: 15px !important;
+        margin-top: 0px !important;
     }
 }

@@ -21,7 +21,7 @@ export const ProductCard = ({ product }) => {
         <Image width={100} height={100} quality={100} src={product?.Pictures[0]} alt={product?.Title} />
       </Link>
       <ButtonComp text="Add To Cart" onClick={handleAddToCart} />
-      <div className='p-3'>
+      <div className='pt-2 md:p-3'>
         <h2>{product?.Title}</h2>
         <p>${product?.Price}</p>
       </div>

@@ -106,6 +106,10 @@
         width: 100px !important;
     }
 
+    .UpdatedHeader .right {
+        gap: 15px !important;
+    }
+
     .searchBar>div {
         border-radius: 0px !important;
         row-gap: 23px;

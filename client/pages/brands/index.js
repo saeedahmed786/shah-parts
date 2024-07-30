@@ -58,7 +58,7 @@ const BrandsPage = () => {
               makes?.length > 0 ?
                 makes?.map((make, index) => {
                   return (
-                    <Col xs={12} md={6} lg={4} xl={4} xxl={4} key={index} className="text-center">
+                    <Col xs={11} md={6} lg={4} xl={4} xxl={4} key={index} className="text-center">
                       <button className="border-2 h-[150px] w-auto p-4 border-[rgba(244,244,244,1)]" onClick={() => handleRoute(make?.make)} key={index}>
                         <Image src={make?.image} width={200} height={200} alt={make?.make} />
                       </button>
