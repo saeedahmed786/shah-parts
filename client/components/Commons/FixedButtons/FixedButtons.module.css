@@ -34,6 +34,14 @@
         right: 0px !important;
     }
 
+    .FixedButtons .whatsappBanner {
+        left: 10px !important;
+    }
+
+    .FixedButtons .whatsappBanner img {
+        width: 180px !important;
+    }
+
     .FixedButtons a img {
         width: 43px !important;
         height: 43px !important;
