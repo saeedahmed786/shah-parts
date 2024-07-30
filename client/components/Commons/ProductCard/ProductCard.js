@@ -1,15 +1,18 @@
 import { useCartContext } from '@/context/CartContext'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { ButtonComp } from '../ButtonComp/ButtonComp'
 import styles from './ProductCard.module.css'
 
 export const ProductCard = ({ product }) => {
   const { addToCart } = useCartContext();
+  const router = useRouter();
 
   const handleAddToCart = async () => {
     product.qtyToShop = 1;
-    addToCart(product);
+    await addToCart(product);
+    router.push("/checkout")
   }
 
   return (

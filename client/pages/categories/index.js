@@ -48,7 +48,7 @@ const CategoriesPage = () => {
 
   return (
     <div className={styles.CategoriesPage}>
-      <h1 className={styles.title}>All Categories</h1>
+      <h1 className={`${styles.title} mainTitle`}>All Categories</h1>
       {
         loading ?
           <Loading />

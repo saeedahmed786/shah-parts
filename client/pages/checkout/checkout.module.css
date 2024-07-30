@@ -88,6 +88,14 @@
     max-width: 130px;
 }
 
+.checkout .right .orderDetailItem .whatsApp {
+    font-size: 15px;
+    color: var(--text-secondary-color);
+    text-decoration: underline;
+    font-weight: 600;
+    max-width: 180px;
+}
+
 .checkout .right .orderDetailItem h5:nth-child(2) {
     width: fit-content;
 }

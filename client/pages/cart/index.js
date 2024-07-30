@@ -17,7 +17,7 @@ const CartPage = () => {
       <div className="p-[30px]">
         <CheckoutSteps step={0} loading={false} />
       </div>
-      <h1 className={styles.title}>My Cart</h1>
+      <h1 className={`${styles.title} mainTitle`}>My Cart</h1>
       <Row gutter={[23, 23]}>
         <Col xs={24} md={17}>
           <div className="p-[0px] pt-[17px] md:p-[40px]">
@@ -73,7 +73,7 @@ const CartPage = () => {
               <h5 className="text-end">${cart?.reduce((a, b) => a + parseInt(b?.Price) * parseInt(b?.qtyToShop), 0)}</h5>
             </div>
             <div>
-              <ButtonComp disabled={cart?.length === 0} text="SECURE CHECKOUT" onClick={() => router.push("/checkout")} />
+              <ButtonComp disabled={cart?.length === 0} text="SECURE PURCHASE" onClick={() => router.push("/checkout")} />
             </div>
           </div>
         </Col>

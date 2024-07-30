@@ -187,3 +187,18 @@ button {
     margin: 0px auto !important;
   }
 }
+
+@media (max-width: 767px) {
+  .mainTitle {
+    font-size: 23px !important;
+  }
+
+  .home .mainTitle {
+    font-size: 15px !important;
+    padding-bottom: 10px !important;
+  }
+
+  .home a {
+    font-size: 17px !important;
+  }
+}

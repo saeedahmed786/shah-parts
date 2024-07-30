@@ -82,3 +82,13 @@
     border-radius: 0 0 10px 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
 }
+
+@media (max-width:767px) {
+    .aboutPage h1 {
+        font-size: 36px !important;
+    }
+
+    .section>div {
+        flex-direction: column !important;
+    }
+}

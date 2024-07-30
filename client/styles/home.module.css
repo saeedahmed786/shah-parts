@@ -48,6 +48,10 @@
     margin-top: 60px;
 }
 
+.featuredParts .ftImage {
+    height: 100% !important;
+}
+
 .Home .imagesContainer {
     display: flex;
     flex-direction: row;
@@ -191,4 +195,26 @@
 .Home .emailListContainer form button {
     margin-top: 15px;
     max-width: 130px;
+}
+
+@media (max-width: 767px) {
+    .featuredParts {
+        margin-top: 15px !important;
+    }
+
+    .viewAllContainer {
+        align-items: flex-start !important;
+    }
+
+    .featuredParts .ftImage {
+        height: max-content !important;
+    }
+
+    .brands {
+        justify-content: center;
+    }
+
+    .brands img {
+        width: 160px !important;
+    }
 }

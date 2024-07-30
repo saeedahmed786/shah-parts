@@ -63,7 +63,7 @@ const UpdatedHeader = () => {
     const [isSticky, setIsSticky] = useState(false);
 
     const handleScroll = () => {
-        if (window.scrollY > 20) { // Adjust the scrollY value as needed
+        if (window.innerWidth > 800 && window.scrollY > 20) { // Adjust the scrollY value as needed
             setIsSticky(true);
         } else {
             setIsSticky(false);
@@ -170,7 +170,7 @@ const UpdatedHeader = () => {
                     <div className={`${styles.logo} ${sharedClasses.flex} ${sharedClasses.itemsCenter}`}>
                         <Logo />
                     </div>
-                    <nav className="ml-8 space-x-4">
+                    <nav className="hidden md:block ml-8 space-x-4">
                         <div className="flex items-center gap-10">
                             <Link href="/about-us">
                                 About
@@ -206,7 +206,7 @@ const UpdatedHeader = () => {
 
                 {/* Search Bar */}
                 <div className={`flex pb-[30px] justify-center p-4 border-b border-zinc-200 ${styles.searchBar}`}>
-                    <div className={`${sharedClasses.flex} ${sharedClasses.itemsCenter} ${sharedClasses.spaceX4} bg-white p-2 rounded-full shadow-md`}>
+                    <div className={`${sharedClasses.flex} ${sharedClasses.itemsCenter} ${sharedClasses.spaceX4} flex-col md:flex-row bg-white p-2 rounded-full shadow-md`}>
                         <div>
                             <label>Make</label>
                             <Select
@@ -215,7 +215,6 @@ const UpdatedHeader = () => {
                                 className={styles.select}
                                 placeholder="Make"
                                 value={selectedMake || null}
-                                style={{ minWidth: 120 }}
                                 onChange={(val) => {
                                     setSelectedMake(val);
                                     getAllModelsByMake(val);
@@ -231,7 +230,6 @@ const UpdatedHeader = () => {
                                 showSearch
                                 className={styles.select}
                                 placeholder="Model"
-                                style={{ minWidth: 120 }}
                                 value={selectedModel || null}
                                 onChange={(val) => {
                                     setSelectedModel(val);
@@ -249,7 +247,6 @@ const UpdatedHeader = () => {
                                 className={styles.select}
                                 value={selectedPart || null}
                                 placeholder="Part"
-                                style={{ minWidth: 120 }}
                                 onChange={(val) => {
                                     setSelectedPart(val);
                                     getAllPartAccessoriesByPart(val);
@@ -266,7 +263,6 @@ const UpdatedHeader = () => {
                                 value={selectedAccessory || null}
                                 className={styles.select}
                                 placeholder="Accessories"
-                                style={{ minWidth: 120 }}
                                 onChange={(val) => setSelectedAccessory(val)}
                                 options={partAccessoriesArray}
                             />

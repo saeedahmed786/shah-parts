@@ -48,7 +48,7 @@ const BrandsPage = () => {
 
   return (
     <div className={styles.BrandsPage}>
-      <h1 className={styles.title}>All Brands</h1>
+      <h1 className={`${styles.title} mainTitle`}>All Brands</h1>
       {
         loading ?
           <Loading />

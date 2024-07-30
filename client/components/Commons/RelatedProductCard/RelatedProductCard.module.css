@@ -42,12 +42,3 @@
     color: var(--fs-color-primary);
     font-weight: bolder;
 }
-
-/* Cart */
-
-
-@media (max-width: 600px) {
-    .RelatedProductCard img {
-        height: 220px !important;
-    }
-}

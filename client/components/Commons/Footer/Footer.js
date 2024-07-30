@@ -17,7 +17,9 @@ const Footer = () => {
             <div className={styles.top}>
                 <div>
                     <div>
-                        <Logo />
+                        <div className={styles.logo}>
+                            <Logo />
+                        </div>
                         <p>
                             We are Auto Parts Dealer Based in Hyogo Japan, with a network of
                             professional representatives throughout Japan.

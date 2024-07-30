@@ -126,3 +126,14 @@
 .Footer .copyright strong {
     font-weight: 600;
 }
+
+@media (max-width: 767px) {
+    .Footer {
+        padding: 15px !important;
+    }
+
+    .Footer .logo img {
+        width: 100px !important;
+        margin-bottom: 19px !important;
+    }
+}

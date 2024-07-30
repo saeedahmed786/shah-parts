@@ -100,12 +100,12 @@ const Home = () => {
   };
 
   return (
-    <div className={styles.Home}>
+    <div className={`${styles.Home} home`}>
       <main className="pb-8">
         <Header />
         <section className={styles.featuredParts}>
           <div className={styles.viewAllContainer}>
-            <h1 className={styles.title}>Featured auto parts categories</h1>
+            <h1 className={`${styles.title} mainTitle`}>Featured auto parts categories</h1>
             <Link href="/categories">View All &gt;</Link>
           </div>
           <Row gutter={[40, 40]}>
@@ -115,10 +115,11 @@ const Home = () => {
                   <Col xs={24} md={12} lg={8} xl={6} className='text-left cursor-pointer' onClick={() => handleReferCategoryToShop(data?.link)} key={index}>
                     <h3 className={styles.subTitle}>{data?.title}</h3>
                     <Image
-                      style={{ height: "100%", width: "100%" }}
+                      style={{ width: "100%" }}
                       width={200}
                       height={200}
                       src={data?.image}
+                      className={styles?.ftImage}
                       alt=""
                     />
                   </Col>
@@ -129,8 +130,8 @@ const Home = () => {
         </section>
         <section className={styles.featuredProducts}>
           <div className='flex justify-between items-center mt-5'>
-            <h1 className={`${styles.title}`}>Featured Products</h1>
-            <Image width={130} src={featuredBadge} alt="Featured Banner" />
+            <h1 className={`${`${styles.title} mainTitle`}`}>Featured Products</h1>
+            <Image width={130} className="w-[60px] md:w-[130px]" src={featuredBadge} alt="Featured Banner" />
           </div>
           <Swiper
             spaceBetween={50}
@@ -170,10 +171,10 @@ const Home = () => {
         </section>
         <section className="mt-[60px]">
           <div className={styles.viewAllContainer}>
-            <h1 className={styles.title}>car auto parts by brands</h1>
+            <h1 className={`${styles.title} mainTitle`}>car auto parts by brands</h1>
             <Link href="/brands">View All &gt;</Link>
           </div>
-          <div className='flex gap-10 flex-wrap'>
+          <div className={`${styles.brands} flex gap-10 flex-wrap`}>
             {
               brands?.map((brand, index) => {
                 return (
@@ -187,9 +188,9 @@ const Home = () => {
             }
           </div>
         </section>
-        <section className="mt-[60px]">
+        <section className="mt-4 md:mt-[60px]">
           <div className={styles.textContainer}>
-            <h1 className={styles.title}>Auto Parts you get</h1>
+            <h1 className={`${styles.title} mainTitle`}>Auto Parts you get</h1>
             <p>As Japan’s leading used automobile and auto parts exporter, SHAH PARTS provides an extensive selection of top-of-the-line used parts and accessories available for worldwide delivery. Our stock is sourced daily from a network of registered and professional representatives who review all auction markets throughout Japan, as well as private owners and car dealerships.</p>
             <p>We pride ourselves not only in providing quality Japanese automobiles and auto parts at prices you can afford, but also maintaining the highest level of Japanese customer service throughout the shopping process. Buy from us once and you will see why our number of loyal customers continues to grow.</p>
             <div className='my-0'>
@@ -266,7 +267,7 @@ const Home = () => {
         </Col>
         <Col xs={24} md={12} className={styles.inner}>
           <div>
-            <h1 className={styles.title}>Expert advice to your inbox</h1>
+            <h1 className={`${styles.title} mainTitle`}>Expert advice to your inbox</h1>
             <h3>Subscribe to our Emailing List for Updated Prices and Sales Alert on Auto Parts and Electronics</h3>
           </div>
           <form>

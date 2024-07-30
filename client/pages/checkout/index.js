@@ -12,6 +12,7 @@ import countryList from 'react-select-country-list'
 import CheckoutSteps from "@/components/CheckoutSteps/CheckoutSteps";
 import { PaypalButtonWrapper } from "@/components/Payments/PaypalButtonWrapper";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import Link from "next/link";
 
 const CheckoutPage = () => {
   const { TextArea } = Input;
@@ -28,7 +29,7 @@ const CheckoutPage = () => {
   const countryOptions = useMemo(() => countryList().getData(), [])
 
   const totalAmount = cart?.reduce((a, b) => a + parseInt(b?.Price) * parseInt(b?.qtyToShop), 0);
-  const shippingCost = 210;
+  const shippingCost = 0;
 
   const transactionSuccess = async (data) => {
     await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/orders/place-order`, {
@@ -106,14 +107,17 @@ const CheckoutPage = () => {
       <div className="p-[30px]">
         <CheckoutSteps step={1} loading={loading} />
       </div>
-      <h1 className={styles.title}>Checkout</h1>
+      <h1 className={`${styles.title} mainTitle`}>Checkout</h1>
       {/* {
         !isAuthenticated() &&
         <Alert className="max-w-[600px] m-[20px] ml-[30px]" type="warning" message={<div>Please <button onClick={handleLogin} className="btn underline">Login</button> before placing order if you want to track your orders</div>} />
       } */}
       <Row gutter={[23, 23]}>
         <Col xs={24} md={17}>
-          <div className="p-[17px] md:p-[40px]" style={{ maxWidth: 800 }}>
+          <div className="p-[17px] md:p-[20px]" style={{ maxWidth: 800 }}>
+            <div className="pb-[23px]">
+              <Link className="text-[23px] text-red-500" href="/shop">Continue Shopping ?</Link>
+            </div>
             {
               !showPayment ?
                 <Form
@@ -220,11 +224,11 @@ const CheckoutPage = () => {
             </div>
             <div className={styles.orderDetailItem}>
               <h5>Shipping</h5>
-              <h5>${shippingCost}</h5>
+              <a href="https://wa.me/818050821650" target="_blank" className={styles.whatsApp}>Contact on Whatsapp</a>
             </div>
             <div className={styles.orderDetailItem}>
               <h5>Order Total <br /></h5>
-              <h5>${totalAmount + shippingCost}</h5>
+              <h5>${totalAmount}</h5>
             </div>
             <div>
               <ButtonComp text="MAKE PAYMENT" loading={loading} disabled={loading} onClick={handlePaymentClick} />

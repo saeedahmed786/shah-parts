@@ -50,7 +50,7 @@
 }
 
 .UpdatedHeader .searchBar>div {
-    width: 60% !important;
+    width: 100% !important;
     justify-content: space-between;
 }
 
@@ -77,6 +77,7 @@
 
 .UpdatedHeader .select {
     height: 30px !important;
+    min-width: 120px !important;
     width: 100% !important;
 }
 
@@ -91,4 +92,46 @@
     font-size: 0.875rem !important;
     color: #222222 !important;
     font-weight: 200;
+}
+
+@media (min-width: 1400px) {
+    .UpdatedHeader .searchBar>div {
+        width: 60% !important;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 767px) {
+    .UpdatedHeader .logo img {
+        width: 100px !important;
+    }
+
+    .searchBar>div {
+        border-radius: 0px !important;
+        row-gap: 23px;
+        align-items: flex-start;
+    }
+
+    .searchBar>div>div {
+        margin-left: 0px !important;
+        width: 100% !important;
+    }
+
+    .searchBar>div button {
+        width: 100% !important;
+        margin-left: 0px !important;
+    }
+
+    .searchBar>div>div .select {
+        width: 100% !important;
+        border: 1px solid rgb(210, 208, 208);
+        padding: 8px;
+        height: auto !important;
+        border-radius: 6px !important;
+        margin-top: 6px !important;
+    }
+
+    .searchBar .Divider {
+        display: none !important;
+    }
 }

@@ -27,3 +27,15 @@
 .FixedButtons .whatsappBanner img {
     width: max-content !important;
 }
+
+@media (max-width: 767px) {
+    .FixedButtons {
+        bottom: 121px !important;
+        right: 0px !important;
+    }
+
+    .FixedButtons a img {
+        width: 43px !important;
+        height: 43px !important;
+    }
+}

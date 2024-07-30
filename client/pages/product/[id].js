@@ -176,7 +176,7 @@ const ProductPage = () => {
                                 </Carousel>
                             </Col>
                             <Col xs={24} md={12} lg={12} className={styles.right}>
-                                <div className='p-[17px] md:p-0 md:ml-3'>
+                                <div className='p-[0px] md:p-0 md:ml-3'>
                                     <h3>
                                         {product?.PartAccessorries}
                                     </h3>
@@ -186,9 +186,6 @@ const ProductPage = () => {
                                     <div className='flex items-center gap-2 my-4'>
                                         <Rate disabled allowHalf value={averageRating} /><b>{averageRating ? roundRating(averageRating, 1) : null}</b> <b>({product?.Reviews?.length})</b>
                                     </div>
-                                    <h4 className='mb-3'>
-                                        {product?.Description}
-                                    </h4>
                                     <h5>
                                         ${product?.Price}
                                     </h5>
