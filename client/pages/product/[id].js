@@ -35,7 +35,8 @@ const ProductPage = () => {
     const handleAddToCart = async () => {
         product.qtyToShop = qtyToShop;
 
-        addToCart(product);
+        await addToCart(product);
+        router.push("/checkout")
     }
 
     const getProduct = async (id) => {
