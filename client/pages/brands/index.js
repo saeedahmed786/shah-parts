@@ -6,10 +6,12 @@ import React, { useEffect, useState } from 'react'
 import styles from './brands.module.css';
 import Loading from '@/components/Commons/Loading/Loading';
 import Image from 'next/image';
+import { useGlobalContext } from '@/context/GlobalContext';
 
 
 const BrandsPage = () => {
   const router = useRouter();
+  const { setFilterValuesFun } = useGlobalContext();
   const [makes, setMakes] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -40,6 +42,7 @@ const BrandsPage = () => {
   const handleRoute = (id) => {
     console.log("id", id);
     if (id) {
+      setFilterValuesFun(id, "", "", "");
       const query = new URLSearchParams();
       query.append('Make', id);
       router.push(`/shop?${query.toString()}`);

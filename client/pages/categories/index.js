@@ -6,10 +6,12 @@ import React, { useEffect, useState } from 'react'
 import styles from './categories.module.css';
 import Loading from '@/components/Commons/Loading/Loading';
 import Image from 'next/image';
+import { useGlobalContext } from '@/context/GlobalContext';
 
 
 const CategoriesPage = () => {
   const router = useRouter();
+  const { setFilterValuesFun } = useGlobalContext();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -37,11 +39,12 @@ const CategoriesPage = () => {
   }, []);
 
 
-  const handleRoute = (id) => {
-    if (id) {
+  const handleRoute = (part) => {
+    if (part) {
+      setFilterValuesFun("", "", part, "");
       const query = new URLSearchParams();
+      if (part) query.append('Part', part);
 
-      if (id) query.append('part', id);
       router.push(`/shop?${query.toString()}`);
     }
   };
