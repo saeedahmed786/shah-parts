@@ -14,7 +14,7 @@ const app = express();
 /******************************************  MiddleWares  ********************************************/
 app.use(express.json({ limit: "500mb" }));
 app.use(express.static('client/out'));
-app.use(cors({ origin: ["http://localhost:3000", "https://shah-parts.vercel.app"] }));
+app.use(cors({ origin: ["http://localhost:3000", "https://shah-parts.vercel.app", "http://143.198.176.153"] }));
 app.use(morgan("tiny"));
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(__dirname + '/uploads'));
