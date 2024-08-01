@@ -300,14 +300,15 @@ exports.uploadBulkProducts = async (req, res) => {
   if (!products || !Array.isArray(products)) {
     return res.status(400).json({ errorMessage: 'Invalid products array' });
   }
-
+  console.log("upload started");
   try {
-    const batchSize = 20000; // Define the size of each batch
+    const batchSize = 10000; // Define the size of each batch
     const totalProducts = products.length;
 
     for (let i = 0; i < totalProducts; i += batchSize) {
       const batch = products.slice(i, i + batchSize);
       await Product.insertMany(batch);
+      console.log("Batch inserted", batch);
     }
 
     res.status(200).send({ successMessage: 'Products uploaded successfully' });
