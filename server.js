@@ -13,6 +13,7 @@ const app = express();
 
 /******************************************  MiddleWares  ********************************************/
 app.use(express.json({ limit: "500mb" }));
+app.use(express.static('client/out'));
 app.use(cors({ origin: ["http://localhost:3000", "https://shah-parts.vercel.app"] }));
 app.use(morgan("tiny"));
 app.use(express.urlencoded({ extended: true }));
@@ -33,6 +34,10 @@ mongoose.connect(config.MONGO_URI, {
 
 app.get("/server", (req, res) => {
     res.send("Server is running...")
-})
+});
+
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'out', 'index.html'));
+});
 
 app.listen(process.env.PORT || 8000, () => console.log('Listening to port 8000'));
