@@ -12,7 +12,7 @@ const morgan = require('morgan');
 const app = express();
 
 /******************************************  MiddleWares  ********************************************/
-app.use(express.json({ limit: "500mb" }));
+app.use(express.json({ limit: "4000mb" }));
 app.use(express.static('client/out'));
 app.use(cors({ origin: ["http://localhost:3000", "https://shah-parts.vercel.app", "http://143.198.176.153"] }));
 app.use(morgan("tiny"));
