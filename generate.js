@@ -1,5 +1,5 @@
-// const fs = require('fs');
-// const path = require('path');
+const fs = require('fs');
+const path = require('path');
 
 // // Function to remove the dollar sign and convert to number
 // const removeDollarSignAndConvertToNumber = (products) => {
@@ -19,36 +19,36 @@
 // };
 
 // // Function to read JSON file, process it, and write back the processed data
-// const processJsonFile = (inputFilePath, outputFilePath) => {
-//     fs.readFile(inputFilePath, 'utf8', (err, data) => {
-//         if (err) {
-//             console.error('Error reading the file:', err);
-//             return;
-//         }
+const processJsonFile = (inputFilePath, outputFilePath) => {
+    fs.readFile(inputFilePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading the file:', err);
+            return;
+        }
 
-//         let products;
-//         try {
-//             products = JSON.parse(data);
-//         } catch (parseError) {
-//             console.error('Error parsing JSON:', parseError);
-//             return;
-//         }
+        let products;
+        try {
+            products = JSON.parse(data);
+        } catch (parseError) {
+            console.error('Error parsing JSON:', parseError);
+            return;
+        }
 
-//         const updatedProducts = removeDollarSignAndConvertToNumber(products);
+        const updatedProducts = products?.slice(0, 50000);
 
-//         fs.writeFile(outputFilePath, JSON.stringify(updatedProducts, null, 2), 'utf8', (writeErr) => {
-//             if (writeErr) {
-//                 console.error('Error writing the file:', writeErr);
-//             } else {
-//                 console.log('File has been processed and saved successfully.');
-//             }
-//         });
-//     });
-// };
+        fs.writeFile(outputFilePath, JSON.stringify(updatedProducts, null, 2), 'utf8', (writeErr) => {
+            if (writeErr) {
+                console.error('Error writing the file:', writeErr);
+            } else {
+                console.log('File has been processed and saved successfully.');
+            }
+        });
+    });
+};
 
 // // Define the input and output file paths
-// const inputFilePath = path.join(__dirname, 'updatedProducts.json');
-// const outputFilePath = path.join(__dirname, 'updatedProducts.json');
+const inputFilePath = path.join(__dirname, 'outputFinalProducts.json');
+const outputFilePath = path.join(__dirname, 'updated50000Products.json');
 
 // // Process the JSON file
-// processJsonFile(inputFilePath, outputFilePath);
+processJsonFile(inputFilePath, outputFilePath);

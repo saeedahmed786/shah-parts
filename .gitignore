@@ -1,2 +1,4 @@
 node_modules
 config/dev.js
+outputFinalProducts.json
+updated50000Products.json
