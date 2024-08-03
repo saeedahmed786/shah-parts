@@ -59,25 +59,23 @@ export function CartProvider({ children }) {
     };
 
     const getCartProducts = async () => {
-        if (isAuthenticated()) {
-            await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/get`, {
-                headers: {
-                    Authorization: 'Bearer ' + localStorage.getItem('token')
-                }
-            }).then(res => {
-                if (res.status === 200) {
-                    setCart(res.data?.products);
-                }
-                else if (res.status === 201) {
-                    setCart([]);
-                } else {
-                    ErrorAlert(res.data.errorMessage);
-                }
-            }).catch(err => {
-                console.log(err)
-                ErrorAlert(err?.message);
-            })
-        }
+        await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/get`, {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(res => {
+            if (res.status === 200) {
+                setCart(res.data?.products);
+            }
+            else if (res.status === 201) {
+                setCart([]);
+            } else {
+                ErrorAlert(res.data.errorMessage);
+            }
+        }).catch(err => {
+            console.log(err)
+            ErrorAlert(err?.message);
+        })
     }
 
     const clearCart = async () => {
@@ -134,19 +132,6 @@ export function CartProvider({ children }) {
         setCart(unique);
     }
 
-    useEffect(() => {
-        if (isAuthenticated()) {
-            getCartProducts();
-        }
-        else {
-            getCartProductsFromLocalStorage();
-        }
-
-        return () => {
-
-        }
-    }, []);
-
     const saveQtyToLocalStorage = async (product, qtyToShop) => {
         if (product, qtyToShop) {
             product.qtyToShop = qtyToShop;
@@ -169,7 +154,7 @@ export function CartProvider({ children }) {
 
 
     useEffect(() => {
-        if (isAuthenticated()) {
+        if (isAuthenticated() && isAuthenticated()?.email) {
             getCartProducts();
         } else {
             getCartProductsFromLocalStorage();

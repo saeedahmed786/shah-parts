@@ -69,6 +69,7 @@ exports.getLimitedProducts = async (req, res) => {
 
     const PAGE_SIZE = 20;
     const page = parseInt(req.body.page || "0")
+
     const products = await Product.find(query).limit(PAGE_SIZE).skip(PAGE_SIZE * page).populate("Reviews.user")
       .sort({ createdAt: -1 }).exec();
     const count = await Product.countDocuments(query);
