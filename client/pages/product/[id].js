@@ -15,6 +15,8 @@ import ReviewsAndRatings from '@/components/ReviewsAndRatings/ReviewsAndRatings'
 import { MinusOutlined, PlusOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { RelatedProductCard } from '@/components/Commons/RelatedProductCard/RelatedProductCard';
 import Loading from '@/components/Commons/Loading/Loading';
+import Head from 'next/head';
+import { generateSeoData } from '@/components/Seo/SeoData';
 
 
 const ProductPage = () => {
@@ -141,6 +143,9 @@ const ProductPage = () => {
         var multiplier = Math.pow(10, precision || 0);
         return Math.round(value * multiplier) / multiplier;
     }
+    console.log(generateSeoData(product));
+
+    const seoGenerated = generateSeoData(product);
 
     return (
         loading ?
@@ -148,6 +153,15 @@ const ProductPage = () => {
             :
             product &&
             <>
+                {
+                    seoGenerated &&
+                    <Head>
+                        <title>{generateSeoData(product)?.title}</title>
+                        {generateSeoData(product)?.metaTags?.map((tag, index) => (
+                            <meta key={index} {...tag} />
+                        ))}
+                    </Head>
+                }
                 <div className={styles.product}>
                     <div>
                         <Row gutter={[80, 23]} className="mb-[100px]" align="middle">

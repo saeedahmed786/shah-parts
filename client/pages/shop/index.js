@@ -8,7 +8,6 @@ import Loading from '@/components/Commons/Loading/Loading';
 import { ProductCard } from '@/components/Commons/ProductCard/ProductCard';
 import { useGlobalContext } from '@/context/GlobalContext';
 
-
 const ShopPage = () => {
   const router = useRouter();
   const { setFilterValuesFun } = useGlobalContext();
@@ -32,21 +31,12 @@ const ShopPage = () => {
       if (res.status === 200) {
         setProductsArray(res.data?.products);
         setTotalCount(res.data.count);
+        let firstProduct = res.data.products[0];
         if (router?.query?.Make) {
-          let firstProduct = res.data?.products[0];
-          setFilterValuesFun(firstProduct?.Make);
+          setFilterValuesFun(router?.query?.Make);
         }
-        else if (router?.query?.Model) {
-          let firstProduct = res.data?.products[0];
-          setFilterValuesFun(firstProduct?.Make, firstProduct?.Model)
-        }
-        else if (router?.query?.Part) {
-          let firstProduct = res.data?.products[0];
-          setFilterValuesFun(firstProduct?.Make, firstProduct?.Model, firstProduct?.Part)
-        }
-        else if (router?.query?.PartAccessorries) {
-          let firstProduct = res.data?.products[0];
-          setFilterValuesFun(firstProduct?.Make, firstProduct?.Model, firstProduct?.Part, firstProduct?.PartAccessorries)
+        if (router?.query?.Part) {
+          setFilterValuesFun(firstProduct?.Make, firstProduct?.Model, router?.query?.Part)
         }
       }
       else {
@@ -148,44 +138,8 @@ const ShopPage = () => {
     }
   };
 
-  const handleResetFilters = () => {
-    setPart("");
-    setPriceRange("");
-    router.push("/shop");
-  };
-
   return (
     <div className={styles.ShopPage}>
-      <div className={styles.filters}>
-        {/* <div className={styles.filterSection}>
-          <Row gutter={[23, 23]} justify="end">
-            <Col xs={12} md={8} lg={6}>
-              <div className='mb-0'>Make</div>
-              <Select allowClear className={styles.select} value={make} onChange={(val) => setMake(val)} placeholder="Makes" options={makes} />
-            </Col>
-            <Col xs={12} md={8} lg={6}>
-              <div className='mb-0'>Part</div>
-              <Select allowClear className={styles.select} value={part} onChange={(val) => setPart(val)} placeholder="Parts" options={parts} />
-            </Col>
-            <Col xs={12} md={8} lg={6}>
-              <div className='mb-0'>Price Range</div>
-              <Select allowClear className={styles.select} value={priceRange} onChange={(val) => setPriceRange(val)} placeholder="Price" options={[
-                { value: "50-100", label: "$50 - $100" },
-                { value: "100-200", label: "$100 - $200" },
-                { value: "200-300", label: "$200 - $300" },
-                { value: "300-400", label: "$300 - $400" },
-                { value: "400-500", label: "$400 - $500" },
-                { value: "500-20000000", label: "$500>" }
-              ]} />
-            </Col>
-            <Col xs={24} md={8} lg={6} style={{ alignSelf: "flex-end" }}>
-              <div className='md:max-w-[200px]'>
-                <ButtonComp text="Reset All Filters" onClick={handleResetFilters} />
-              </div>
-            </Col>
-          </Row>
-        </div> */}
-      </div>
       <div className={styles.sortSection}>
         <div className='flex items-center gap-6'>
           <h4 className='mb-0'>Products</h4>

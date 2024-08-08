@@ -6,6 +6,7 @@ import Link from 'next/link';
 import React from 'react';
 import { logout } from '../Auth/Auth';
 import Logo from '../Logo/Logo';
+import SearchContainer from '../SearchContainer/SearchContainer';
 import styles from './Navbar.module.css';
 import SearchForm from './SearchForm/SearchForm';
 
@@ -40,6 +41,7 @@ const Navbar = () => {
                         Dashboard
                     </Link>
                 }
+                <SearchContainer />
                 <Link href="/cart" className="flex gap-2 items-center">
                     <Badge count={cart?.length}>
                         <ShoppingCartOutlined className='text-[23px]' />

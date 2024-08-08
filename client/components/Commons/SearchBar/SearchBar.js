@@ -40,6 +40,9 @@ const SearchBar = () => {
             setLoading(false);
             if (res.status === 200) {
                 setModelsArray(res.data?.map(f => ({ value: f, label: f })));
+                setSelectedModel("");
+                setSelectedPart("");
+                setSelectedAccessory("");
             }
             else {
                 console.error(res.data.errorMessage);
@@ -56,6 +59,8 @@ const SearchBar = () => {
             setLoading(false);
             if (res.status === 200) {
                 setPartsArray(res.data?.map(f => ({ value: f, label: f })));
+                setSelectedPart("");
+                setSelectedAccessory("");
             }
             else {
                 console.error(res.data.errorMessage);
@@ -123,6 +128,7 @@ const SearchBar = () => {
                         allowClear
                         showSearch
                         className={styles.select}
+                        value={selectedModel}
                         placeholder="Model"
                         style={{ minWidth: 120 }}
                         onChange={(val) => {
@@ -139,6 +145,7 @@ const SearchBar = () => {
                         showSearch
                         className={styles.select}
                         placeholder="Part"
+                        value={selectedPart}
                         style={{ minWidth: 120 }}
                         onChange={(val) => {
                             setSelectedPart(val);
@@ -153,6 +160,7 @@ const SearchBar = () => {
                         allowClear
                         showSearch
                         className={styles.select}
+                        value={selectedAccessory}
                         placeholder="Accessories"
                         style={{ minWidth: 120 }}
                         onChange={(val) => setSelectedAccessory(val)}

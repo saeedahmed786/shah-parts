@@ -59,6 +59,10 @@ exports.getLimitedProducts = async (req, res) => {
       query.Part = req.body.Part;
     }
 
+    if (req.body.title) {
+      query.Title = { $regex: req.body.title, $options: 'i' }; // Case-insensitive regex search
+    }
+
     if (req.body.PartAccessory) {
       query.PartAccessorries = req.body.PartAccessory;
     }
@@ -69,6 +73,8 @@ exports.getLimitedProducts = async (req, res) => {
 
     const PAGE_SIZE = 20;
     const page = parseInt(req.body.page || "0")
+    // const deleteALl = await Product.deleteMany();
+    // console.log(deleteALl);
 
     const products = await Product.find(query).limit(PAGE_SIZE).skip(PAGE_SIZE * page).populate("Reviews.user")
       .sort({ createdAt: -1 }).exec();

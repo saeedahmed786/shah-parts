@@ -1,8 +1,9 @@
 import { logout } from '@/components/Commons/Auth/Auth';
 import Logo from '@/components/Commons/Logo/Logo';
+import SearchContainer from '@/components/Commons/SearchContainer/SearchContainer';
 import { useCartContext } from '@/context/CartContext';
 import { useGlobalContext } from '@/context/GlobalContext';
-import { FileSearchOutlined, LogoutOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
+import { LogoutOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Badge, Divider, Select } from 'antd';
 import axios from 'axios';
 import Link from 'next/link';
@@ -61,6 +62,17 @@ const UpdatedHeader = () => {
     const [selectedPart, setSelectedPart] = useState("");
     const [selectedAccessory, setSelectedAccessory] = useState("");
     const [isSticky, setIsSticky] = useState(false);
+    const [showSearch, setShowSearch] = useState(false);
+
+    const openSearch = (e) => {
+        // e.preventDefault();
+        setShowSearch(true);
+    };
+
+    const closeSearch = (e) => {
+        // e.preventDefault();
+        setShowSearch(false);
+    };
 
     const handleScroll = () => {
         if (window.innerWidth > 800 && window.scrollY > 20) { // Adjust the scrollY value as needed
@@ -147,7 +159,16 @@ const UpdatedHeader = () => {
         setSelectedPart(part);
         setSelectedAccessory(partAccessorries);
         getAllMakes();
-    }, [make]);
+        if (make) {
+            getAllModelsByMake(make);
+        }
+        if (model) {
+            getAllPartByModel(model);
+        }
+        if (part) {
+            getAllPartAccessoriesByPart(part);
+        }
+    }, [make, model, part, partAccessorries]);
 
     const handleSearch = () => {
         if (selectedMake) {
@@ -181,6 +202,10 @@ const UpdatedHeader = () => {
                         </div>
                     </nav>
                     <div className={`${styles.right}`}>
+                        <Link href="#" onClick={openSearch}>
+                            <SearchOutlined className='text-[23px]' />
+                        </Link>
+                        <SearchContainer show={showSearch} onClose={closeSearch} />
                         {
                             userAuth?.role === 1 &&
                             <Link href="/admin/products">
@@ -218,6 +243,9 @@ const UpdatedHeader = () => {
                                 onChange={(val) => {
                                     setSelectedMake(val);
                                     getAllModelsByMake(val);
+                                    setSelectedModel("");
+                                    setSelectedPart("");
+                                    setSelectedAccessory("");
                                 }}
                                 options={makesArray}
                             />
@@ -234,6 +262,8 @@ const UpdatedHeader = () => {
                                 onChange={(val) => {
                                     setSelectedModel(val);
                                     getAllPartByModel(val);
+                                    setSelectedPart("");
+                                    setSelectedAccessory("");
                                 }}
                                 options={modelsArray}
                             />
@@ -250,6 +280,7 @@ const UpdatedHeader = () => {
                                 onChange={(val) => {
                                     setSelectedPart(val);
                                     getAllPartAccessoriesByPart(val);
+                                    setSelectedAccessory("");
                                 }}
                                 options={partsArray}
                             />
