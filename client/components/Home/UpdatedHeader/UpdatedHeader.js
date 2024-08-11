@@ -94,7 +94,8 @@ const UpdatedHeader = () => {
         await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/makes`).then((res) => {
             setLoading(false);
             if (res.status === 200) {
-                setMakesArray(res.data?.map(f => ({ value: f?.make, label: f?.make })));
+                const sortedMakes = res.data?.sort((a, b) => a?.make?.localeCompare(b?.make));
+                setMakesArray(sortedMakes?.map(f => ({ value: f?.make, label: f?.make })));
             }
             else {
                 console.error(res.data.errorMessage);
@@ -110,7 +111,8 @@ const UpdatedHeader = () => {
         await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/models/make`, { Make }).then((res) => {
             setLoading(false);
             if (res.status === 200) {
-                setModelsArray(res.data?.map(f => ({ value: f, label: f })));
+                const sortedModels = res.data?.sort((a, b) => a.localeCompare(b));
+                setModelsArray(sortedModels.map(f => ({ value: f, label: f })));
             }
             else {
                 console.error(res.data.errorMessage);
@@ -126,7 +128,8 @@ const UpdatedHeader = () => {
         await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/parts/model`, { Model }).then((res) => {
             setLoading(false);
             if (res.status === 200) {
-                setPartsArray(res.data?.map(f => ({ value: f, label: f })));
+                const sortedParts = res.data?.sort((a, b) => a.localeCompare(b));
+                setPartsArray(sortedParts?.map(f => ({ value: f, label: f })));
             }
             else {
                 console.error(res.data.errorMessage);
@@ -142,7 +145,8 @@ const UpdatedHeader = () => {
         await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/partaccessories/part`, { Part }).then((res) => {
             setLoading(false);
             if (res.status === 200) {
-                setPartAccessoriesArray(res.data?.map(f => ({ value: f, label: f })));
+                const sortedAccessories = res.data?.sort((a, b) => a.localeCompare(b));
+                setPartAccessoriesArray(sortedAccessories?.map(f => ({ value: f, label: f })));
             }
             else {
                 console.error(res.data.errorMessage);

@@ -40,12 +40,11 @@ exports.getLimitedProducts = async (req, res) => {
       minPrice = req.body.priceRange?.split("-")[0];
       maxPrice = req.body.priceRange?.split("-")[1];
     } else {
-      minPrice = 0
-      maxPrice = 30000
+      minPrice = 0;
+      maxPrice = 30000;
     }
 
     let query = {};
-
 
     if (req.body.Make) {
       query.Make = req.body.Make;
@@ -60,7 +59,9 @@ exports.getLimitedProducts = async (req, res) => {
     }
 
     if (req.body.title) {
-      query.Title = { $regex: req.body.title, $options: 'i' }; // Case-insensitive regex search
+      const searchWords = req.body.title.split(" ").map(word => `(?=.*${word})`).join("");
+      const regex = new RegExp(`^${searchWords}.*$`, "i");
+      query.Title = { $regex: regex };
     }
 
     if (req.body.PartAccessory) {
@@ -72,23 +73,48 @@ exports.getLimitedProducts = async (req, res) => {
     }
 
     const PAGE_SIZE = 20;
-    const page = parseInt(req.body.page || "0")
-    // const deleteALl = await Product.deleteMany();
-    // console.log(deleteALl);
+    const page = parseInt(req.body.page || "0");
 
-    const products = await Product.find(query).limit(PAGE_SIZE).skip(PAGE_SIZE * page).populate("Reviews.user")
-      .sort({ createdAt: -1 }).exec();
+    // Sorting logic based on the sort option selected
+    let sortOption = {};
+    switch (req.body.sortBy) {
+      case "lth":
+        sortOption.Price = 1; // Price: Low to High
+        break;
+      case "htl":
+        sortOption.Price = -1; // Price: High to Low
+        break;
+      case "a-z":
+        sortOption.Title = 1; // Product Name: A-Z
+        break;
+      case "z-a":
+        sortOption.Title = -1; // Product Name: Z-A
+        break;
+      case "createdAt":
+      default:
+        sortOption.createdAt = -1; // Released Date (default)
+        break;
+    }
+
+    const products = await Product.find(query)
+      .limit(PAGE_SIZE)
+      .skip(PAGE_SIZE * page)
+      .populate("Reviews.user")
+      .sort(sortOption)
+      .exec();
+
     const count = await Product.countDocuments(query);
     if (products) {
       res.status(200).send({ products, count });
     } else {
-      res.status(404).json({ errorMessage: 'No Products found!' });
+      res.status(404).json({ errorMessage: "No Products found!" });
     }
   } catch (error) {
     console.log(error);
     res.status(400).send(error);
   }
-}
+};
+
 
 exports.getFeaturedProducts = async (req, res) => {
   // createIndexes();

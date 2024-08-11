@@ -12,7 +12,7 @@ const ShopPage = () => {
   const router = useRouter();
   const { setFilterValuesFun } = useGlobalContext();
   const [productsArray, setProductsArray] = useState([]);
-  const [sortValue, setSortValue] = useState("");
+  const [sortValue, setSortValue] = useState("createdAt");
   const [parts, setParts] = useState([]);
   const [makes, setMakes] = useState([]);
   const [make, setMake] = useState(router.query.Make);
@@ -26,7 +26,7 @@ const ShopPage = () => {
 
   const getAllData = async () => {
     setLoading(true);
-    await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/get`, { page: current - 1, pageSize: "20", priceRange, Make: make, Model: model, Part: part, PartAccessorries: partAccessory }).then(res => {
+    await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/get`, { page: current - 1, pageSize: "20", priceRange, Make: make, Model: model, Part: part, PartAccessorries: partAccessory, sortBy: sortValue }).then(res => {
       setLoading(false);
       if (res.status === 200) {
         setProductsArray(res.data?.products);
@@ -108,34 +108,11 @@ const ShopPage = () => {
     return () => {
 
     }
-  }, [current, make, model, partAccessory, part, priceRange]);
-
-
-
-  const sortProducts = (products, sortBy) => {
-    switch (sortBy) {
-      case "lth":
-        return products.sort((a, b) => a.Price - b.Price);
-      case "htl":
-        return products.sort((a, b) => b.Price - a.Price);
-      case "a-z":
-        return products.sort((a, b) => a.Title.localeCompare(b.Title));
-      case "z-a":
-        return products.sort((a, b) => b.Title.localeCompare(a.Title));
-      case "createdAt":
-        return products.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-      default:
-        return products;
-    }
-  };
+  }, [current, make, model, partAccessory, part, priceRange, sortValue]);
 
 
   const handleSortChange = (value) => {
     setSortValue(value);
-    if (sortValue) {
-      const sorted = sortProducts(productsArray, value);
-      setProductsArray(sorted);
-    }
   };
 
   return (
@@ -163,7 +140,6 @@ const ShopPage = () => {
             :
             <Row gutter={[23, 23]} className="p-4">
               {
-                // productsArray?.length > 0 ?
                 productsArray?.map((product, index) => {
                   return (
                     <Col xs={12} md={8} lg={6} key={index}>
@@ -171,10 +147,6 @@ const ShopPage = () => {
                     </Col>
                   )
                 })
-                // :
-                // <Col xs={24} className="text-center">
-                //   <h3 className='text-[36px] font-bold'>No Products Found!</h3>
-                // </Col>
               }
             </Row>
         }
