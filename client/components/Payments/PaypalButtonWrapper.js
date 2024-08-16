@@ -27,10 +27,8 @@ export const PaypalButtonWrapper = ({ currency, showSpinner, placeOrder, amount 
     return (<>
         {(showSpinner && isPending) && <div className="spinner" />}
         <PayPalButtons
-            style={style}
-            disabled={false}
             forceReRender={[amount, currency, style]}
-            fundingSource={undefined}
+            // fundingSource={undefined}
             createOrder={(data, actions) => {
                 return actions.order
                     .create({
